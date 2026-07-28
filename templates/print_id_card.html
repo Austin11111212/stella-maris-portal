@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student ID Card</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:30px;
+}
+
+.id-card{
+
+    width:380px;
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+    border:2px solid #0d47a1;
+}
+
+.card-header{
+
+    background:#0d47a1;
+
+    color:white;
+
+    text-align:center;
+
+    padding:20px;
+}
+
+.card-header img{
+
+    width:70px;
+    margin-bottom:10px;
+}
+
+.card-header h2{
+
+    font-size:20px;
+}
+
+.card-header p{
+
+    font-size:13px;
+}
+
+.student-section{
+
+    text-align:center;
+
+    padding:25px;
+}
+
+.student-photo{
+
+    width:120px;
+    height:120px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:4px solid #0d47a1;
+
+    margin-bottom:15px;
+}
+
+.student-name{
+
+    color:#0d47a1;
+
+    font-size:22px;
+
+    font-weight:700;
+}
+
+.student-class{
+
+    color:#666;
+    margin-top:5px;
+}
+
+.info{
+
+    padding:20px;
+}
+
+.info-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:10px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.info-row strong{
+
+    color:#0d47a1;
+}
+
+.qr-section{
+
+    text-align:center;
+
+    padding:20px;
+}
+
+.qr-section img{
+
+    width:120px;
+}
+
+.footer{
+
+    background:#f5f5f5;
+
+    text-align:center;
+
+    padding:15px;
+
+    font-size:12px;
+
+    color:#666;
+}
+
+.print-btn{
+
+    display:block;
+
+    width:200px;
+
+    margin:20px auto;
+
+    text-align:center;
+
+    background:#0d47a1;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    font-weight:600;
+}
+
+@media print{
+
+    .print-btn{
+        display:none;
+    }
+
+    body{
+        background:white;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div>
+
+<div class="id-card">
+
+    <div class="card-header">
+
+        <img src="{{ url_for('static',
+        filename='images/logo.png') }}">
+
+        <h2>STELLA MARIS COLLEGE</h2>
+
+        <p>Lagos, Nigeria</p>
+
+    </div>
+
+    <div class="student-section">
+
+        {% if student.passport %}
+
+        <img src="{{ url_for('static',
+        filename='uploads/' + student.passport) }}"
+        class="student-photo">
+
+        {% else %}
+
+        <img src="{{ url_for('static',
+        filename='images/default.png') }}"
+        class="student-photo">
+
+        {% endif %}
+
+        <div class="student-name">
+
+            {{ student.name }}
+
+        </div>
+
+        <div class="student-class">
+
+            {{ student.class }}
+
+        </div>
+
+    </div>
+
+    <div class="info">
+
+        <div class="info-row">
+            <strong>Student ID</strong>
+            <span>{{ student.student_id }}</span>
+        </div>
+
+        <div class="info-row">
+            <strong>Gender</strong>
+            <span>{{ student.gender }}</span>
+        </div>
+
+        <div class="info-row">
+            <strong>Parent Phone</strong>
+            <span>{{ student.parent_phone }}</span>
+        </div>
+
+        <div class="info-row">
+            <strong>Session</strong>
+            <span>2025/2026</span>
+        </div>
+
+    </div>
+
+    <div class="qr-section">
+
+        <h4>Attendance QR Code</h4>
+
+        <img src="{{ qr_code }}">
+
+        <p style="margin-top:10px;">
+            Scan Daily For Attendance
+        </p>
+
+    </div>
+
+    <div class="footer">
+
+        Property of Stella Maris College
+
+    </div>
+
+</div>
+
+<a href="#" onclick="window.print()"
+class="print-btn">
+
+🖨 Print ID Card
+
+</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QR Attendance Scanner</title>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+        }
+
+        .container{
+            max-width:900px;
+            margin:40px auto;
+            padding:20px;
+        }
+
+        .card{
+
+            background:white;
+
+            border-radius:20px;
+
+            padding:30px;
+
+            box-shadow:0 10px 25px rgba(0,0,0,.08);
+        }
+
+        .header{
+
+            text-align:center;
+
+            margin-bottom:30px;
+        }
+
+        .header h1{
+
+            color:#0b3d91;
+
+            margin-bottom:10px;
+        }
+
+        .header p{
+
+            color:#666;
+        }
+
+        #reader{
+
+            width:100%;
+
+            max-width:600px;
+
+            margin:auto;
+        }
+
+        .result{
+
+            margin-top:25px;
+
+            padding:20px;
+
+            background:#e8f5e9;
+
+            border-radius:12px;
+
+            text-align:center;
+
+            display:none;
+        }
+
+        .result h3{
+
+            color:#2e7d32;
+        }
+
+        .student-box{
+
+            margin-top:25px;
+
+            background:#f8f9fa;
+
+            padding:20px;
+
+            border-radius:15px;
+        }
+
+        .student-box p{
+            margin:8px 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="header">
+
+            <h1>Student Attendance Scanner</h1>
+
+            <p>
+                Scan Student QR Code
+            </p>
+
+        </div>
+
+        <div id="reader"></div>
+
+        <div id="result" class="result">
+
+            <h3>
+                QR Code Detected Successfully
+            </h3>
+
+        </div>
+
+        <div id="studentData"
+             class="student-box"
+             style="display:none;">
+
+            <p>
+                <strong>Student ID:</strong>
+                <span id="studentId"></span>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function onScanSuccess(decodedText){
+
+    document.getElementById(
+        "result"
+    ).style.display="block";
+
+    document.getElementById(
+        "studentData"
+    ).style.display="block";
+
+    document.getElementById(
+        "studentId"
+    ).innerText=decodedText;
+
+    fetch("/scan_qr",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            student_id:decodedText
+        })
+
+    })
+
+    .then(response=>response.json())
+
+    .then(data=>{
+
+        alert(data.message);
+
+    });
+
+}
+
+let html5QrcodeScanner =
+new Html5QrcodeScanner(
+
+    "reader",
+
+    {
+        fps:10,
+        qrbox:250
+    }
+
+);
+
+html5QrcodeScanner.render(
+    onScanSuccess
+);
+
+</script>
+
+</body>
+
+</html>

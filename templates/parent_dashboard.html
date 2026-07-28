@@ -1,0 +1,369 @@
+{% extends "parent_layout.html" %}
+
+{% block title %}
+Parent Dashboard
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.dashboard-title{
+    font-size:32px;
+    font-weight:700;
+    color:#0b3d91;
+    margin-bottom:25px;
+}
+
+.profile-card{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    display:flex;
+    gap:25px;
+    flex-wrap:wrap;
+    align-items:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.profile-image{
+    width:140px;
+    height:140px;
+    border-radius:20px;
+    object-fit:cover;
+    border:4px solid #1565c0;
+}
+
+.profile-info h2{
+    color:#0b3d91;
+    margin-bottom:10px;
+}
+
+.profile-info p{
+    margin:6px 0;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.stat-card h2{
+    color:#0b3d91;
+    margin:0;
+}
+
+.stat-card p{
+    margin-top:10px;
+    color:#666;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#0b3d91;
+    margin-bottom:15px;
+}
+
+.info-row{
+    margin-bottom:10px;
+}
+
+.badge-present{
+    background:#28a745;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+}
+
+.badge-absent{
+    background:#dc3545;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+}
+
+.table-responsive{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th{
+    background:#0b3d91;
+    color:white;
+    padding:12px;
+}
+
+table td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+.action-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-top:20px;
+}
+
+.btn{
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+    color:white;
+    font-weight:600;
+}
+
+.btn-report{
+    background:#28a745;
+}
+
+.btn-attendance{
+    background:#1565c0;
+}
+
+.btn-contact{
+    background:#f39c12;
+}
+
+.notice-box{
+    background:#fff8e1;
+    border-left:5px solid #ffc107;
+    padding:15px;
+    border-radius:10px;
+}
+
+@media(max-width:768px){
+
+    .profile-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+}
+
+</style>
+
+<h1 class="dashboard-title">
+    Parent Dashboard
+</h1>
+
+<div class="profile-card">
+
+    {% if student.passport %}
+    <img src="{{ url_for('static',
+    filename='uploads/' + student.passport) }}"
+    class="profile-image">
+    {% endif %}
+
+    <div class="profile-info">
+
+        <h2>{{ student.name }}</h2>
+
+        <p><strong>Student ID:</strong>
+        {{ student.student_id }}</p>
+
+        <p><strong>Class:</strong>
+        {{ student.class }}</p>
+
+        <p><strong>Gender:</strong>
+        {{ student.gender }}</p>
+
+        <p><strong>Parent Phone:</strong>
+        {{ student.parent_phone }}</p>
+
+    </div>
+
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <h2>{{ attendance_percentage }}%</h2>
+        <p>Attendance Rate</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ today_checkin }}</h2>
+        <p>Today's Check-In</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ today_checkout }}</h2>
+        <p>Today's Check-Out</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ student.average_score }}</h2>
+        <p>Average Score</p>
+    </div>
+
+</div>
+
+<div class="grid">
+
+    <div class="card">
+
+        <h3>Attendance Summary</h3>
+
+        <div class="info-row">
+            <strong>Days Present:</strong>
+            {{ present_days }}
+        </div>
+
+        <div class="info-row">
+            <strong>Days Absent:</strong>
+            {{ absent_days }}
+        </div>
+
+        <div class="info-row">
+            <strong>Late Arrivals:</strong>
+            {{ late_days }}
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Academic Summary</h3>
+
+        <div class="info-row">
+            <strong>Total Score:</strong>
+            {{ student.total }}
+        </div>
+
+        <div class="info-row">
+            <strong>Grade:</strong>
+            {{ student.grade }}
+        </div>
+
+        <div class="info-row">
+            <strong>Remark:</strong>
+            {{ student.remark }}
+        </div>
+
+        <div class="info-row">
+            <strong>Position:</strong>
+            {{ student.position }}
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3>Recent Attendance History</h3>
+
+    <div class="table-responsive">
+
+        <table>
+
+            <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+            </tr>
+
+            {% for record in attendance_history %}
+
+            <tr>
+
+                <td>{{ record.date }}</td>
+
+                <td>
+
+                    {% if record.status == "Present" %}
+                    <span class="badge-present">
+                        Present
+                    </span>
+                    {% else %}
+                    <span class="badge-absent">
+                        Absent
+                    </span>
+                    {% endif %}
+
+                </td>
+
+                <td>{{ record.checkin }}</td>
+
+                <td>{{ record.checkout }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3>Teacher Comments</h3>
+
+    <div class="notice-box">
+
+        {{ teacher_comment or
+        "No comments available at the moment." }}
+
+    </div>
+
+</div>
+
+<div class="action-buttons">
+
+    <a href="{{ url_for('student_report',
+    student_id=student.student_id) }}"
+    class="btn btn-report">
+
+        View Result
+
+    </a>
+
+    <a href="{{ url_for('attendance_history') }}"
+    class="btn btn-attendance">
+
+        Attendance History
+
+    </a>
+
+    <a href="tel:{{ student.parent_phone }}"
+    class="btn btn-contact">
+
+        Contact School
+
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,396 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Enter Result
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fas fa-file-signature"></i>
+
+            Enter Student Result
+
+        </h2>
+
+    </div>
+
+    <!-- ==========================
+    STUDENT DETAILS
+    =========================== -->
+
+    <div class="student-summary">
+
+        <div class="student-info">
+
+            <h3>{{ student.full_name }}</h3>
+
+            <span class="badge">
+
+                {{ student.student_id }}
+
+            </span>
+
+        </div>
+
+        <div class="student-grid">
+
+            <div>
+
+                <strong>Class</strong><br>
+
+                {{ student.class }}
+
+            </div>
+
+            <div>
+
+                <strong>Session</strong><br>
+
+                {{ session }}
+
+            </div>
+
+            <div>
+
+                <strong>Term</strong><br>
+
+                {{ term }}
+
+            </div>
+
+            <div>
+
+                <strong>Subject</strong><br>
+
+                {{ subject }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- ==========================
+RESULT FORM
+========================== -->
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <!-- CA1 -->
+
+            <div class="form-group">
+
+                <label>Continuous Assessment 1</label>
+
+                <input id="ca1" type="number" name="ca1" min="0" max="20" value="{{ result.get('ca1', '') }}"
+                    class="form-control" oninput="calculateTotal()" required>
+
+                <small>Maximum: 20</small>
+
+            </div>
+
+            <!-- CA2 -->
+
+            <div class="form-group">
+
+                <label>Continuous Assessment 2</label>
+
+                <input id="ca2" type="number" name="ca2" min="0" max="20" value="{{ result.get('ca2', '') }}"
+                    class="form-control" oninput="calculateTotal()" required>
+
+                <small>Maximum: 20</small>
+
+            </div>
+
+            <!-- Exam -->
+
+            <div class="form-group">
+
+                <label>Examination</label>
+
+                <input id="exam" type="number" name="exam" min="0" max="60" value="{{ result.get('exam', '') }}"
+                    class="form-control" oninput="calculateTotal()" required>
+
+                <small>Maximum: 60</small>
+
+            </div>
+
+            <!-- Total -->
+
+            <div class="form-group">
+
+                <label>Total Score</label>
+
+<input
+    id="total"
+    type="number"
+    class="form-control"
+    value="{{ result.get('total', '') }}"
+    readonly>
+
+                <small>Automatically Calculated</small>
+
+            </div>
+
+        </div>
+        <!-- GRADE -->
+
+<div class="form-group">
+
+    <label>Grade</label>
+
+<input
+    id="grade"
+    type="text"
+    class="form-control"
+    value="{{ result.get('grade', '') }}"
+    readonly>
+
+</div>
+
+<!-- REMARK -->
+
+<div class="form-group">
+
+    <label>Remark</label>
+
+<input
+    id="remark"
+    type="text"
+    class="form-control"
+    value="{{ result.get('remark', '') }}"
+    readonly>
+
+</div>
+
+        <br>
+
+        <div style="display:flex;gap:15px;flex-wrap:wrap;">
+
+            <button type="submit" class="btn-primary">
+
+                <i class="fas fa-save"></i>
+
+                Save Result
+
+            </button>
+
+<a href="{{ url_for(
+    'upload_results',
+    session=session,
+    term=term,
+    class=student.class,
+    subject=subject
+) }}" class="btn-warning">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<style>
+    .student-summary {
+
+        background: #f7f9fc;
+
+        padding: 20px;
+
+        border-radius: 10px;
+
+        margin-bottom: 20px;
+
+    }
+
+    .student-info {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 20px;
+
+    }
+
+    .student-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 20px;
+
+    }
+
+    .badge {
+
+        background: #1565c0;
+
+        color: white;
+
+        padding: 6px 12px;
+
+        border-radius: 20px;
+
+        font-size: 13px;
+
+    }
+
+    .form-grid {
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 20px;
+
+    }
+
+    .form-group {
+
+        display: flex;
+
+        flex-direction: column;
+
+    }
+
+    .form-group label {
+
+        font-weight: 600;
+
+        margin-bottom: 8px;
+
+    }
+
+    .form-group small {
+
+        color: #777;
+
+        margin-top: 5px;
+
+    }
+
+    @media(max-width:768px) {
+
+        .student-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .form-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .student-info {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+        }
+
+    }
+</style>
+
+<script>
+
+function calculateTotal() {
+
+    let ca1 = parseFloat(document.getElementById("ca1").value) || 0;
+
+    let ca2 = parseFloat(document.getElementById("ca2").value) || 0;
+
+    let exam = parseFloat(document.getElementById("exam").value) || 0;
+
+    let total = ca1 + ca2 + exam;
+
+    // ==========================
+    // DISPLAY TOTAL
+    // ==========================
+
+    document.getElementById("total").value = total;
+
+    // ==========================
+    // CALCULATE GRADE
+    // ==========================
+
+    let grade = "";
+    let remark = "";
+
+    if (total >= 75) {
+
+        grade = "A";
+        remark = "Excellent";
+
+    }
+
+    else if (total >= 65) {
+
+        grade = "B";
+        remark = "Very Good";
+
+    }
+
+    else if (total >= 50) {
+
+        grade = "C";
+        remark = "Good";
+
+    }
+
+    else if (total >= 40) {
+
+        grade = "D";
+        remark = "Fair";
+
+    }
+
+    else {
+
+        grade = "F";
+        remark = "Fail";
+
+    }
+
+    // ==========================
+    // DISPLAY GRADE & REMARK
+    // ==========================
+
+    document.getElementById("grade").value = grade;
+
+    document.getElementById("remark").value = remark;
+
+}
+
+// ==========================
+// RUN WHEN PAGE LOADS
+// ==========================
+
+window.onload = calculateTotal;
+
+</script>
+
+{% endblock %}

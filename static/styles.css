@@ -1,0 +1,666 @@
+/* =========================
+   🌍 GLOBAL RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Arial, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+/* =========================
+   🌤 BODY
+========================= */
+
+body{
+
+    background:
+        linear-gradient(
+            rgba(10,25,60,0.15),
+            rgba(10,25,60,0.15)
+        ),
+        #eef3f9;
+
+    color:#222;
+
+    min-height:100vh;
+}
+
+/* =========================
+   🔐 LOGIN PAGE
+========================= */
+
+.login-container{
+
+    background:#ffffff;
+
+    width:100%;
+    max-width:430px;
+
+    padding:40px;
+
+    border-radius:22px;
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.12);
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%, -50%);
+
+    animation:fadeIn 0.5s ease;
+
+    overflow:hidden;
+}
+
+/* =========================
+   ✨ TOP BORDER
+========================= */
+
+.login-container::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:7px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0d47a1,
+            #1976d2,
+            #42a5f5
+        );
+}
+
+/* =========================
+   🎬 ANIMATION
+========================= */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translate(-50%, -45%);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translate(-50%, -50%);
+
+    }
+
+}
+
+/* =========================
+   🏫 LOGO
+========================= */
+
+.logo{
+
+    text-align:center;
+
+    font-size:72px;
+
+    margin-bottom:10px;
+
+    animation:floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-4px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* =========================
+   📝 TITLES
+========================= */
+
+h1,
+h2,
+h3,
+h4{
+
+    color:#0d47a1;
+}
+
+h2{
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+    font-size:30px;
+
+    font-weight:700;
+}
+
+/* =========================
+   📄 SUBTITLE
+========================= */
+
+.subtitle{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:28px;
+
+    font-size:14px;
+
+    line-height:1.7;
+}
+
+/* =========================
+   🏷 LABELS
+========================= */
+
+label{
+
+    font-weight:600;
+
+    display:block;
+
+    margin-bottom:6px;
+
+    margin-top:12px;
+
+    color:#333;
+
+    font-size:14px;
+}
+
+/* =========================
+   📥 INPUTS
+========================= */
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #d6d6d6;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    margin-bottom:15px;
+
+    transition:0.3s ease;
+
+    background:#fafafa;
+}
+
+/* INPUT FOCUS */
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:#1976d2;
+
+    background:white;
+
+    outline:none;
+
+    box-shadow:
+        0 0 10px rgba(25,118,210,0.22);
+
+    transform:translateY(-1px);
+}
+
+/* =========================
+   🔘 BUTTON
+========================= */
+
+button,
+.btn{
+
+    width:100%;
+
+    padding:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1565c0,
+            #1976d2
+        );
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+
+    margin-top:8px;
+
+    text-decoration:none;
+
+    display:inline-block;
+
+    text-align:center;
+}
+
+/* BUTTON HOVER */
+
+button:hover,
+.btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 22px rgba(0,0,0,0.18);
+}
+
+/* =========================
+   ⚠️ ALERT
+========================= */
+
+.alert{
+
+    background:#ffebee;
+
+    color:#c62828;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    font-weight:600;
+}
+
+/* SUCCESS ALERT */
+
+.success{
+
+    background:#e8f5e9;
+
+    color:#2e7d32;
+}
+
+/* =========================
+   🔗 ADMIN LINK
+========================= */
+
+.admin-link{
+
+    text-align:center;
+
+    margin-top:20px;
+}
+
+.admin-link a{
+
+    color:#1976d2;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    font-size:14px;
+
+    transition:0.3s;
+}
+
+.admin-link a:hover{
+
+    color:#0d47a1;
+
+    text-decoration:underline;
+}
+
+/* =========================
+   🏫 FOOTER
+========================= */
+
+.footer{
+
+    text-align:center;
+
+    margin-top:25px;
+
+    color:#777;
+
+    font-size:13px;
+
+    line-height:1.8;
+}
+
+/* =========================
+   📊 DASHBOARD
+========================= */
+
+.dashboard-container{
+
+    width:95%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:25px;
+}
+
+.topbar{
+
+    background:
+        linear-gradient(
+            135deg,
+            #0d47a1,
+            #1976d2
+        );
+
+    color:white;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.12);
+}
+
+.topbar h1{
+
+    color:white;
+
+    margin-bottom:10px;
+}
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px,1fr));
+
+    gap:20px;
+
+    margin-bottom:25px;
+}
+
+.card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+
+    transition:0.3s;
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+}
+
+.card h2{
+
+    margin-bottom:10px;
+}
+
+/* =========================
+   📚 TABLES
+========================= */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:15px;
+
+    background:white;
+}
+
+table th{
+
+    background:#0d47a1;
+
+    color:white;
+
+    padding:14px;
+
+    font-size:14px;
+}
+
+table td{
+
+    border:1px solid #ddd;
+
+    padding:12px;
+
+    text-align:center;
+
+    font-size:14px;
+}
+
+/* =========================
+   👤 STUDENT CARD
+========================= */
+
+.student-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    margin-top:25px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.08);
+}
+
+.student-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:20px;
+}
+
+/* =========================
+   🧾 REPORT CARD
+========================= */
+
+.report-card{
+
+    background:white;
+
+    width:100%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.1);
+}
+
+.school-header{
+
+    text-align:center;
+
+    margin-bottom:25px;
+}
+
+.school-header img{
+
+    width:100px;
+
+    height:100px;
+
+    object-fit:cover;
+
+    margin-bottom:10px;
+}
+
+.result-table th{
+
+    background:#1565c0;
+}
+
+.grade-box{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:8px;
+
+    background:#1565c0;
+
+    color:white;
+
+    font-weight:bold;
+}
+
+/* =========================
+   ✨ BADGES
+========================= */
+
+.badge{
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.badge-success{
+
+    background:#e8f5e9;
+
+    color:#2e7d32;
+}
+
+.badge-danger{
+
+    background:#ffebee;
+
+    color:#c62828;
+}
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+
+@media (max-width:900px){
+
+    .student-header{
+
+        flex-direction:column;
+    }
+
+    table{
+
+        display:block;
+
+        overflow-x:auto;
+    }
+}
+
+@media (max-width:500px){
+
+    .login-container{
+
+        width:92%;
+
+        padding:28px;
+    }
+
+    h2{
+
+        font-size:24px;
+    }
+
+    .logo{
+
+        font-size:60px;
+    }
+
+    .dashboard-container{
+
+        width:100%;
+
+        padding:15px;
+    }
+
+    .topbar{
+
+        padding:20px;
+    }
+
+}

@@ -1,0 +1,254 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Upload Results
+{% endblock %}
+
+{% block content %}
+
+<!-- ==========================================
+UPLOAD RESULT FILTER
+========================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fas fa-upload"></i>
+
+            Upload Student Results
+
+        </h2>
+
+    </div>
+
+    <form method="GET">
+
+        <div class="form-grid">
+
+            <!-- Session -->
+
+            <div class="form-group">
+
+                <label>Academic Session</label>
+
+                <select name="session" class="form-control">
+
+                    {% for session in sessions %}
+
+                    <option value="{{ session }}"
+                        {% if selected_session == session %}selected{% endif %}>
+
+                        {{ session }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Term -->
+
+            <div class="form-group">
+
+                <label>Term</label>
+
+                <select name="term" class="form-control">
+
+                    <option value="First Term"
+                        {% if selected_term=="First Term" %}selected{% endif %}>
+                        First Term
+                    </option>
+
+                    <option value="Second Term"
+                        {% if selected_term=="Second Term" %}selected{% endif %}>
+                        Second Term
+                    </option>
+
+                    <option value="Third Term"
+                        {% if selected_term=="Third Term" %}selected{% endif %}>
+                        Third Term
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Class -->
+
+            <div class="form-group">
+
+                <label>Class</label>
+
+                <select name="class" class="form-control">
+
+                    <option value="JSS1"
+                        {% if selected_class=="JSS1" %}selected{% endif %}>JSS1</option>
+
+                    <option value="JSS2"
+                        {% if selected_class=="JSS2" %}selected{% endif %}>JSS2</option>
+
+                    <option value="JSS3"
+                        {% if selected_class=="JSS3" %}selected{% endif %}>JSS3</option>
+
+                    <option value="SS1"
+                        {% if selected_class=="SS1" %}selected{% endif %}>SS1</option>
+
+                    <option value="SS2"
+                        {% if selected_class=="SS2" %}selected{% endif %}>SS2</option>
+
+                    <option value="SS3"
+                        {% if selected_class=="SS3" %}selected{% endif %}>SS3</option>
+
+                </select>
+
+            </div>
+
+            <!-- Subject -->
+
+            <div class="form-group">
+
+                <label>Subject</label>
+
+                <select name="subject" class="form-control">
+
+                    <option value="Mathematics"
+                        {% if selected_subject=="Mathematics" %}selected{% endif %}>
+                        Mathematics
+                    </option>
+
+                    <option value="English Language"
+                        {% if selected_subject=="English Language" %}selected{% endif %}>
+                        English Language
+                    </option>
+
+                    <option value="Biology"
+                        {% if selected_subject=="Biology" %}selected{% endif %}>
+                        Biology
+                    </option>
+
+                    <option value="Chemistry"
+                        {% if selected_subject=="Chemistry" %}selected{% endif %}>
+                        Chemistry
+                    </option>
+
+                    <option value="Physics"
+                        {% if selected_subject=="Physics" %}selected{% endif %}>
+                        Physics
+                    </option>
+
+                    <option value="Computer Studies"
+                        {% if selected_subject=="Computer Studies" %}selected{% endif %}>
+                        Computer Studies
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn-primary">
+
+            <i class="fas fa-users"></i>
+
+            Load Students
+
+        </button>
+
+    </form>
+
+</div>
+
+<!-- ==========================================
+STUDENT LIST
+========================================== -->
+
+{% if students %}
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            <i class="fas fa-users"></i>
+
+            Students in {{ selected_class }}
+
+        </h2>
+
+    </div>
+
+    <div style="overflow-x:auto;">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Class</th>
+                    <th>Result Entry</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>{{ loop.index }}</td>
+
+                    <td>{{ student.student_id }}</td>
+
+                    <td>{{ student.full_name }}</td>
+
+                    <td>{{ student.class }}</td>
+
+                    <td>
+
+                        <a href="{{ url_for(
+                            'enter_result',
+                            student_id=student.student_id,
+                            session=selected_session,
+                            term=selected_term,
+                            subject=selected_subject
+                        ) }}"
+                        class="btn-primary">
+
+                            <i class="fas fa-pen"></i>
+
+                            Enter Result
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

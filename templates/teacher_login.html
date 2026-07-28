@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Login | Stella Maris College</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+
+            min-height:100vh;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            background:linear-gradient(
+                135deg,
+                #0d47a1,
+                #1565c0
+            );
+
+            padding:20px;
+        }
+
+        .login-container{
+
+            width:100%;
+            max-width:450px;
+
+            background:white;
+
+            border-radius:20px;
+
+            padding:40px;
+
+            box-shadow:0 10px 30px rgba(0,0,0,.2);
+        }
+
+        .logo{
+
+            text-align:center;
+
+            margin-bottom:20px;
+        }
+
+        .logo img{
+
+            width:90px;
+            height:90px;
+            object-fit:contain;
+        }
+
+        .logo h1{
+
+            color:#0d47a1;
+
+            font-size:24px;
+
+            margin-top:10px;
+        }
+
+        .logo p{
+
+            color:#666;
+
+            font-size:14px;
+        }
+
+        .form-title{
+
+            text-align:center;
+
+            margin-bottom:25px;
+
+            color:#333;
+        }
+
+        .input-group{
+
+            margin-bottom:20px;
+        }
+
+        .input-group label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            font-weight:600;
+
+            color:#333;
+        }
+
+        .input-box{
+
+            position:relative;
+        }
+
+        .input-box i{
+
+            position:absolute;
+
+            left:15px;
+
+            top:50%;
+
+            transform:translateY(-50%);
+
+            color:#777;
+        }
+
+        .input-box input{
+
+            width:100%;
+
+            padding:14px 14px 14px 45px;
+
+            border:1px solid #ddd;
+
+            border-radius:10px;
+
+            font-size:15px;
+        }
+
+        .input-box input:focus{
+
+            outline:none;
+
+            border-color:#1565c0;
+        }
+
+        .btn-login{
+
+            width:100%;
+
+            padding:14px;
+
+            border:none;
+
+            border-radius:10px;
+
+            background:#1565c0;
+
+            color:white;
+
+            font-size:16px;
+
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:.3s;
+        }
+
+        .btn-login:hover{
+
+            background:#0d47a1;
+        }
+
+        .footer{
+
+            text-align:center;
+
+            margin-top:20px;
+
+            color:#666;
+
+            font-size:13px;
+        }
+
+        .alert{
+
+            background:#ffebee;
+
+            color:#c62828;
+
+            padding:12px;
+
+            border-radius:8px;
+
+            margin-bottom:20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+
+        <img src="{{ url_for('static',
+        filename='images/logo.png') }}"
+        alt="School Logo">
+
+        <h1>Stella Maris College</h1>
+
+        <p>Teacher Portal</p>
+
+    </div>
+
+    <h2 class="form-title">
+        Teacher Login
+    </h2>
+
+    {% with messages =
+    get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category,message in messages %}
+
+            <div class="alert">
+                {{ message }}
+            </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+    <form method="POST">
+
+        <div class="input-group">
+
+            <label>
+                Teacher ID
+            </label>
+
+            <div class="input-box">
+
+                <i class="fas fa-user"></i>
+
+                <input
+                    type="text"
+                    name="teacher_id"
+                    placeholder="Enter Teacher ID"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>
+                Password
+            </label>
+
+            <div class="input-box">
+
+                <i class="fas fa-lock"></i>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn-login">
+
+            <i class="fas fa-sign-in-alt"></i>
+
+            Login
+
+        </button>
+
+    </form>
+
+    <div class="footer">
+
+        © 2026 Stella Maris College
+
+        <br>
+
+        Teacher Management Portal
+
+    </div>
+
+</div>
+
+</body>
+</html>

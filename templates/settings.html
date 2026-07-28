@@ -1,0 +1,1030 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Portal Settings
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* ======================================
+RESET
+====================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ======================================
+PAGE
+====================================== */
+
+.settings-page{
+
+    width:100%;
+
+    padding:30px;
+
+}
+
+.settings-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+}
+
+/* ======================================
+HEADER
+====================================== */
+
+.settings-header{
+
+    background:linear-gradient(135deg,#0d47a1,#1976d2);
+
+    color:white;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:25px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+}
+
+.settings-header h1{
+
+    font-size:34px;
+
+    margin-bottom:10px;
+
+}
+
+.settings-header p{
+
+    font-size:15px;
+
+    line-height:1.8;
+
+    opacity:.95;
+
+}
+
+.status-box{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.status-card{
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(10px);
+
+    padding:18px 24px;
+
+    border-radius:15px;
+
+    min-width:170px;
+
+    text-align:center;
+
+}
+
+.status-card small{
+
+    display:block;
+
+    margin-bottom:8px;
+
+}
+
+.status-card strong{
+
+    font-size:20px;
+
+}
+
+/* ======================================
+CONTENT
+====================================== */
+
+.settings-content{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.section-title{
+
+    font-size:28px;
+
+    color:#1565c0;
+
+    margin-bottom:10px;
+
+}
+
+.section-description{
+
+    color:#666;
+
+    margin-bottom:30px;
+
+    line-height:1.8;
+
+}
+/* ======================================
+CARD
+====================================== */
+
+.settings-card{
+
+    background:#fff;
+
+    border:1px solid #e5e5e5;
+
+    border-radius:18px;
+
+    padding:30px;
+
+}
+
+.settings-card h3{
+
+    color:#1565c0;
+
+    margin-bottom:25px;
+
+    font-size:24px;
+
+}
+
+/* ======================================
+FORM GRID
+====================================== */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+.full-width{
+
+    grid-column:1 / -1;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    font-weight:bold;
+
+    margin-bottom:8px;
+
+    color:#444;
+
+}
+
+.form-control{
+
+    width:100%;
+
+    padding:13px;
+
+    border:1px solid #ccc;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+}
+
+textarea.form-control{
+
+    resize:none;
+
+}
+
+.save-btn{
+
+    background:#1565c0;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 30px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.save-btn:hover{
+
+    background:#0d47a1;
+
+}
+
+@media(max-width:900px){
+
+.form-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.full-width{
+
+grid-column:auto;
+
+}
+
+}
+</style>
+
+<div class="settings-page">
+
+    <div class="settings-container">
+
+        <!-- ======================================
+        HEADER
+        ======================================= -->
+
+        <div class="settings-header">
+
+            <div>
+
+                <h1>
+
+                    ⚙ Portal Settings
+
+                </h1>
+
+                <p>
+
+                    Configure the Stella Maris College Portal.
+                    Every change made here affects the entire school system.
+
+                </p>
+
+            </div>
+
+            <div class="status-box">
+
+                <div class="status-card">
+
+                    <small>Current Session</small>
+
+                    <strong>
+
+                        {{ school.current_session }}
+
+                    </strong>
+
+                </div>
+
+                <div class="status-card">
+
+                    <small>Current Term</small>
+
+                    <strong>
+
+                        {{ school.current_term }}
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ======================================
+        CONTENT
+        ======================================= -->
+
+        <div class="settings-content">
+
+            <h2 class="section-title">
+
+                Portal Configuration
+
+            </h2>
+
+            <p class="section-description">
+
+                Welcome to the Portal Settings page.
+                This area allows you to manage the school information,
+                academic session, portal appearance, administrators,
+                report card configuration and every system-wide setting.
+
+            </p>
+            <!-- ======================================
+SCHOOL INFORMATION
+====================================== -->
+
+<form method="POST"
+      action="{{ url_for('update_school_settings') }}"
+      enctype="multipart/form-data">
+
+    <div class="settings-card">
+
+        <h3>
+
+            🏫 School Information
+
+        </h3>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+
+                    School Name
+
+                </label>
+
+<input
+    type="text"
+    name="name"
+    value="{{ school.name }}"
+    class="form-control"
+    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    School Motto
+
+                </label>
+
+                <input
+                    type="text"
+                    name="motto"
+                    value="{{ school.motto }}"
+                    class="form-control">
+
+            </div>
+
+            <div class="form-group full-width">
+
+                <label>
+
+                    School Address
+
+                </label>
+
+                <textarea
+                    name="address"
+                    class="form-control"
+                    rows="3">{{ school.address }}</textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Phone Number
+
+                </label>
+
+                <input
+                    type="text"
+                    name="phone"
+                    value="{{ school.phone }}"
+                    class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Email Address
+
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ school.email }}"
+                    class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Website
+
+                </label>
+
+                <input
+                    type="text"
+                    name="website"
+                    value="{{ school.website }}"
+                    class="form-control">
+
+            </div>
+
+           <div class="form-group">
+
+    <label>Principal</label>
+
+    <input
+        type="text"
+        name="principal"
+        value="{{ school.principal or '' }}"
+        class="form-control">
+
+</div>
+
+            <div class="form-group">
+
+                <label>
+
+                    School Logo
+
+                </label>
+
+                <input
+                    type="file"
+                    name="logo"
+                    class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    School Stamp
+
+                </label>
+
+                <input
+                    type="file"
+                    name="stamp"
+                    class="form-control">
+
+            </div>
+            
+
+        </div>
+
+        <div style="margin-top:25px;">
+
+            <button
+                type="submit"
+                class="save-btn">
+
+                💾 Save School Information
+
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
+<!-- ======================================
+PHASE 3
+ACADEMIC SESSION SETTINGS
+====================================== -->
+
+<div class="settings-card">
+
+    <h3>
+        📅 Academic Session Settings
+    </h3>
+
+    <form
+        method="POST"
+        action="{{ url_for('update_academic_settings') }}"
+    >
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Current Academic Session
+                </label>
+
+                <input
+                    type="text"
+                    name="current_session"
+                    class="form-control"
+                    value="{{ school.current_session }}"
+                    placeholder="2026/2027"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Current Term
+                </label>
+
+                <select
+                    name="current_term"
+                    class="form-control"
+                >
+
+                    <option
+                        value="First Term"
+                        {% if school.current_term=="First Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        First Term
+                    </option>
+
+                    <option
+                        value="Second Term"
+                        {% if school.current_term=="Second Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        Second Term
+                    </option>
+
+                    <option
+                        value="Third Term"
+                        {% if school.current_term=="Third Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        Third Term
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Next Term Begins
+                </label>
+
+                <input
+                    type="date"
+                    name="next_term_begins"
+                    class="form-control"
+                    value="{{ school.next_term_begins }}"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    School Closed
+                </label>
+
+                <input
+                    type="date"
+                    name="school_closed"
+                    class="form-control"
+                    value="{{ school.school_closed }}"
+                >
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button
+            class="save-btn"
+            type="submit"
+        >
+            💾 Save Academic Settings
+        </button>
+
+    </form>
+
+</div>
+<!-- ======================================
+PHASE 3
+SYSTEM CONFIGURATION
+====================================== -->
+
+<div class="settings-card">
+
+    <h3>
+
+        🖥 System Configuration
+
+    </h3>
+
+    <form
+        method="POST"
+        action="{{ url_for('update_system_settings') }}"
+    >
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+
+                    School Type
+
+                </label>
+
+                <select
+                    name="school_type"
+                    class="form-control"
+                >
+
+                    <option value="Day School">Day School</option>
+
+                    <option value="Boarding School">Boarding School</option>
+
+                    <option value="Mixed">Mixed</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Result Approval
+
+                </label>
+
+                <select
+                    name="result_approval"
+                    class="form-control"
+                >
+
+                    <option value="Yes">
+
+                        Principal Approval Required
+
+                    </option>
+
+                    <option value="No">
+
+                        Auto Approve Results
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Student Login
+
+                </label>
+
+                <select
+                    name="student_login"
+                    class="form-control"
+                >
+
+                    <option value="Enabled">
+
+                        Enabled
+
+                    </option>
+
+                    <option value="Disabled">
+
+                        Disabled
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Parent Login
+
+                </label>
+
+                <select
+                    name="parent_login"
+                    class="form-control"
+                >
+
+                    <option value="Enabled">
+
+                        Enabled
+
+                    </option>
+
+                    <option value="Disabled">
+
+                        Disabled
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Teacher Login
+
+                </label>
+
+                <select
+                    name="teacher_login"
+                    class="form-control"
+                >
+
+                    <option value="Enabled">
+
+                        Enabled
+
+                    </option>
+
+                    <option value="Disabled">
+
+                        Disabled
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Maximum Subjects
+
+                </label>
+
+                <input
+                    type="number"
+                    name="maximum_subjects"
+                    class="form-control"
+                    value="20"
+                >
+
+            </div>
+
+            <div class="form-group full-width">
+
+                <label>
+
+                    Portal Notice
+
+                </label>
+
+                <textarea
+                    name="portal_notice"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Displayed on student dashboard..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button
+            class="save-btn"
+            type="submit"
+        >
+
+            💾 Save System Configuration
+
+        </button>
+
+    </form>
+
+</div>
+
+        </div>
+<!-- ======================================
+PHASE 4
+PORTAL APPEARANCE & BRANDING
+====================================== -->
+
+<div class="settings-card">
+
+    <h3>
+
+        🎨 Portal Appearance & Branding
+
+    </h3>
+
+    <form
+        method="POST"
+        action="{{ url_for('update_portal_appearance') }}"
+        enctype="multipart/form-data"
+    >
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+
+                    Portal Title
+
+                </label>
+
+                <input
+                    type="text"
+                    name="portal_title"
+                    class="form-control"
+                    value="{{ school.get('portal_title','Stella Maris College Portal') }}"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Theme Colour
+
+                </label>
+
+                <input
+                    type="color"
+                    name="theme_color"
+                    class="form-control"
+                    value="{{ school.get('theme_color','#1565c0') }}"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    School Logo
+
+                </label>
+
+                <input
+                    type="file"
+                    name="logo"
+                    class="form-control"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    School Stamp
+
+                </label>
+
+                <input
+                    type="file"
+                    name="stamp"
+                    class="form-control"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Dashboard Banner
+
+                </label>
+
+                <input
+                    type="file"
+                    name="banner"
+                    class="form-control"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Portal Favicon
+
+                </label>
+
+                <input
+                    type="file"
+                    name="favicon"
+                    class="form-control"
+                >
+
+            </div>
+
+            <div class="form-group full-width">
+
+                <label>
+
+                    Footer Text
+
+                </label>
+
+                <textarea
+                    name="footer_text"
+                    class="form-control"
+                    rows="3"
+                >{{ school.get('footer_text','© Stella Maris College. All Rights Reserved.') }}</textarea>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button
+            class="save-btn"
+            type="submit"
+        >
+
+            💾 Save Portal Appearance
+
+        </button>
+
+    </form>
+
+</div>
+
+    </div>
+
+</div>
+
+{% endblock %}

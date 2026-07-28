@@ -1,0 +1,187 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Classes - {{ school_name }}
+{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Classes</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f7fb;
+    margin:0;
+}
+
+.main{
+    padding:20px;
+}
+
+.header{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+.class-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.class-card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+}
+
+.class-name{
+    font-size:20px;
+    font-weight:bold;
+    color:#0d47a1;
+}
+
+.student{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid #eee;
+}
+
+.student:last-child{
+    border-bottom:none;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:10px 15px;
+    background:#0d47a1;
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h1>School Classes</h1>
+        <p>{{ current_term }} • {{ current_session }}</p>
+
+        <p>
+            Total Classes: {{ classes|length }} |
+            Total Students: {{ total_students }}
+        </p>
+
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search class or student..."
+        onkeyup="searchClasses()">
+    </div>
+
+    <!-- CLASS GRID -->
+    <div class="class-grid">
+
+        {% for class_name, class_data in classes.items() %}
+
+        <div class="class-card class-item">
+
+            <div class="class-name">{{ class_name }}</div>
+
+            <p><b>Teacher:</b> {{ class_data.teacher or "Not Assigned" }}</p>
+
+            <p><b>Phone:</b> {{ class_data.phone or "No Phone" }}</p>
+
+            <p><b>Students:</b> {{ class_data.students|length }}</p>
+
+            <hr>
+
+            {% if class_data.students %}
+
+                {% for student in class_data.students %}
+
+                <div class="student">
+
+                    <div>
+                        <b>{{ student.name }}</b><br>
+                        <small>{{ student.student_id }}</small>
+                    </div>
+
+                    <div>
+                        {{ student.grade or "-" }}
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>No students</p>
+
+            {% endif %}
+
+            <a href="/admin/dashboard" class="btn">View Dashboard</a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<script>
+
+function searchClasses(){
+
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let items = document.getElementsByClassName("class-item");
+
+    for(let i=0;i<items.length;i++){
+        let text = items[i].innerText.toLowerCase();
+        items[i].style.display = text.includes(input) ? "" : "none";
+    }
+}
+
+</script>
+
+</body>
+</html>
+
+{% endblock %}

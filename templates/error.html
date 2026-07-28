@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ error_code }} - {{ school_name }}
+    </title>
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins', sans-serif;
+
+            min-height:100vh;
+
+            overflow:hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(11,61,145,0.95),
+                    rgba(21,101,192,0.92)
+                ),
+                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1');
+
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            padding:20px;
+
+            position:relative;
+        }
+
+        /* BACKGROUND EFFECTS */
+
+        body::before{
+
+            content:"";
+
+            position:absolute;
+
+            width:450px;
+            height:450px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border-radius:50%;
+
+            top:-180px;
+            right:-120px;
+
+            filter:blur(10px);
+        }
+
+        body::after{
+
+            content:"";
+
+            position:absolute;
+
+            width:350px;
+            height:350px;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border-radius:50%;
+
+            bottom:-150px;
+            left:-120px;
+
+            filter:blur(10px);
+        }
+
+        /* ERROR CARD */
+
+        .error-container{
+
+            position:relative;
+
+            z-index:10;
+
+            width:100%;
+            max-width:650px;
+
+            background:
+                rgba(255,255,255,0.12);
+
+            backdrop-filter:blur(18px);
+
+            border:
+                1px solid rgba(255,255,255,0.15);
+
+            border-radius:30px;
+
+            padding:45px 35px;
+
+            text-align:center;
+
+            box-shadow:
+                0 20px 45px rgba(0,0,0,0.25);
+
+            animation:fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn{
+
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+
+        }
+
+        /* SCHOOL LOGO */
+
+        .logo-box{
+
+            margin-bottom:20px;
+        }
+
+        .logo{
+
+            width:110px;
+            height:110px;
+
+            border-radius:50%;
+
+            object-fit:cover;
+
+            border:4px solid rgba(255,255,255,0.25);
+
+            padding:5px;
+
+            background:white;
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* ICON */
+
+        .error-icon{
+
+            width:110px;
+            height:110px;
+
+            margin:20px auto;
+
+            border-radius:50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef5350,
+                    #e53935
+                );
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            color:white;
+
+            font-size:45px;
+
+            box-shadow:
+                0 12px 25px rgba(0,0,0,0.18);
+
+            animation:pulse 2s infinite;
+        }
+
+        @keyframes pulse{
+
+            0%{
+                transform:scale(1);
+            }
+
+            50%{
+                transform:scale(1.05);
+            }
+
+            100%{
+                transform:scale(1);
+            }
+
+        }
+
+        /* ERROR CODE */
+
+        .error-code{
+
+            font-size:95px;
+
+            font-weight:700;
+
+            color:white;
+
+            line-height:1;
+
+            margin-bottom:12px;
+
+            text-shadow:
+                0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* TITLE */
+
+        .error-title{
+
+            font-size:32px;
+
+            font-weight:700;
+
+            color:white;
+
+            margin-bottom:15px;
+        }
+
+        /* MESSAGE */
+
+        .error-message{
+
+            color:rgba(255,255,255,0.92);
+
+            font-size:15px;
+
+            line-height:1.9;
+
+            max-width:500px;
+
+            margin:auto auto 30px auto;
+        }
+
+        /* INFO BOX */
+
+        .info-box{
+
+            background:
+                rgba(255,255,255,0.10);
+
+            border:
+                1px solid rgba(255,255,255,0.15);
+
+            border-radius:18px;
+
+            padding:20px;
+
+            margin-bottom:30px;
+
+            color:white;
+
+            text-align:left;
+        }
+
+        .info-box h3{
+
+            margin-bottom:12px;
+
+            color:#bbdefb;
+
+            font-size:18px;
+        }
+
+        .info-box p{
+
+            margin-bottom:8px;
+
+            font-size:14px;
+
+            line-height:1.7;
+        }
+
+        /* BUTTONS */
+
+        .button-group{
+
+            display:flex;
+
+            justify-content:center;
+
+            flex-wrap:wrap;
+
+            gap:15px;
+        }
+
+        .btn{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            gap:10px;
+
+            padding:14px 22px;
+
+            border-radius:14px;
+
+            text-decoration:none;
+
+            font-size:15px;
+
+            font-weight:600;
+
+            transition:0.3s ease;
+        }
+
+        .btn-home{
+
+            background:white;
+
+            color:#0d47a1;
+        }
+
+        .btn-dashboard{
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #43a047,
+                    #2e7d32
+                );
+
+            color:white;
+        }
+
+        .btn:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:
+                0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* FOOTER */
+
+        .footer{
+
+            margin-top:30px;
+
+            color:rgba(255,255,255,0.82);
+
+            font-size:13px;
+
+            line-height:1.8;
+        }
+
+        .footer span{
+
+            color:white;
+
+            font-weight:600;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:600px){
+
+            .error-container{
+
+                padding:35px 22px;
+            }
+
+            .error-code{
+
+                font-size:70px;
+            }
+
+            .error-title{
+
+                font-size:24px;
+            }
+
+            .error-message{
+
+                font-size:14px;
+            }
+
+            .button-group{
+
+                flex-direction:column;
+            }
+
+            .btn{
+
+                width:100%;
+
+                justify-content:center;
+            }
+
+            .logo{
+
+                width:90px;
+                height:90px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="error-container">
+
+        <!-- SCHOOL LOGO -->
+
+        <div class="logo-box">
+
+            <img
+                src="{{ url_for('static', filename='images/logo.png') }}"
+                alt="School Logo"
+                class="logo"
+            >
+
+        </div>
+
+        <!-- ERROR ICON -->
+
+        <div class="error-icon">
+
+            <i class="fas fa-triangle-exclamation"></i>
+
+        </div>
+
+        <!-- ERROR CODE -->
+
+        <div class="error-code">
+
+            {{ error_code }}
+
+        </div>
+
+        <!-- TITLE -->
+
+        <div class="error-title">
+
+            {{ error_title }}
+
+        </div>
+
+        <!-- MESSAGE -->
+
+        <div class="error-message">
+
+            {{ error_message }}
+
+        </div>
+
+        <!-- INFO -->
+
+        <div class="info-box">
+
+            <h3>
+                📌 Possible Reasons
+            </h3>
+
+            <p>
+                • The page may have been moved or deleted
+            </p>
+
+            <p>
+                • You may not have permission to access this page
+            </p>
+
+            <p>
+                • Your login session may have expired
+            </p>
+
+            <p>
+                • The requested student or result does not exist
+            </p>
+
+        </div>
+
+        <!-- BUTTONS -->
+
+        <div class="button-group">
+
+            <a
+                href="/"
+                class="btn btn-home"
+            >
+
+                <i class="fas fa-house"></i>
+
+                Back To Home
+
+            </a>
+
+            <a
+                href="/admin/dashboard"
+                class="btn btn-dashboard"
+            >
+
+                <i class="fas fa-chart-line"></i>
+
+                Admin Dashboard
+
+            </a>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            {{ school_name or "Stella Maris College" }}
+
+            <br>
+
+            <span>
+                School Management Portal System
+            </span>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

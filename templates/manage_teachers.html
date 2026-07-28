@@ -1,0 +1,181 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Manage Teachers
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+}
+
+.page-header h1{
+    color:#0b3d91;
+}
+
+.btn-add{
+    background:#1565c0;
+    color:white;
+    padding:12px 20px;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:600;
+}
+
+.table-container{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th{
+    background:#0b3d91;
+    color:white;
+    padding:15px;
+    text-align:left;
+}
+
+table td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+.badge{
+    background:#28a745;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.btn{
+    padding:8px 12px;
+    border-radius:8px;
+    color:white;
+    text-decoration:none;
+    font-size:13px;
+    margin-right:5px;
+}
+
+.btn-view{
+    background:#1565c0;
+}
+
+.btn-edit{
+    background:#f39c12;
+}
+
+.btn-delete{
+    background:#dc3545;
+}
+
+.empty{
+    text-align:center;
+    padding:40px;
+    color:#666;
+}
+
+</style>
+
+<div class="page-header">
+
+    <h1>Manage Teachers</h1>
+
+    <a href="{{ url_for('add_teacher') }}"
+       class="btn-add">
+       + Add Teacher
+    </a>
+
+</div>
+
+<div class="table-container">
+
+{% if teachers %}
+
+<table>
+
+<thead>
+<tr>
+    <th>Teacher ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Class</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for teacher in teachers %}
+
+<tr>
+
+    <td>{{ teacher.teacher_id }}</td>
+
+    <td>{{ teacher.name }}</td>
+
+    <td>{{ teacher.email }}</td>
+
+    <td>{{ teacher.class }}</td>
+
+    <td>
+        <span class="badge">
+            Active
+        </span>
+    </td>
+
+    <td>
+
+        <a href="/admin/view_teacher/{{ teacher.teacher_id }}"
+           class="btn btn-view">
+           View
+        </a>
+
+        <a href="/admin/edit_teacher/{{ teacher.teacher_id }}"
+           class="btn btn-edit">
+           Edit
+        </a>
+
+        <a href="/admin/delete_teacher/{{ teacher.teacher_id }}"
+           class="btn btn-delete"
+           onclick="return confirm('Delete this teacher?')">
+           Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
+
+<div class="empty">
+    <h3>No Teachers Found</h3>
+    <p>Add your first teacher to get started.</p>
+</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

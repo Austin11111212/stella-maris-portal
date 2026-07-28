@@ -1,0 +1,1339 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Add Student
+{% endblock %}
+
+{% block content %}
+
+<div class="add-student-page">
+
+    <!-- ===========================
+         PAGE HEADER
+    ============================ -->
+
+    <div class="page-header">
+
+        <div class="page-title">
+
+            <h1>
+
+                <i class="fas fa-user-plus"></i>
+
+                Register New Student
+
+            </h1>
+
+            <p>
+
+                Create a new student profile for Stella Maris College.
+
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="back-dashboard-btn">
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back Dashboard
+
+        </a>
+
+    </div>
+
+    <!-- ===========================
+         FLASH MESSAGES
+    ============================ -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+    <div class="flash-container">
+
+        {% for category, message in messages %}
+
+        <div class="flash-message flash-{{ category }}">
+
+            <i class="fas fa-circle-info"></i>
+
+            {{ message }}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+    {% endwith %}
+
+    <!-- ===========================
+         BREADCRUMB
+    ============================ -->
+
+    <div class="breadcrumb">
+
+        <a href="{{ url_for('dashboard') }}">
+
+            Dashboard
+
+        </a>
+
+        <i class="fas fa-angle-right"></i>
+
+        <span>
+
+            Add Student
+
+        </span>
+
+    </div>
+
+    <!-- ===========================
+         FORM STARTS
+    ============================ -->
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
+    
+
+        <!-- Everything else goes here -->
+         <!-- =====================================================
+PHASE 2
+STUDENT PROFILE CARD
+===================================================== -->
+
+<div class="student-profile-card">
+
+    <!-- Passport Preview -->
+
+    <div class="student-photo">
+
+        <img
+
+            id="passportPreview"
+
+            src="{{ url_for('static', filename='images/default-avatar.png') }}"
+
+            alt="Student Passport">
+
+    </div>
+
+    <!-- Student Information -->
+
+    <div class="student-details">
+
+        <h2>
+
+            New Student Registration
+
+        </h2>
+
+        <p>
+
+            Complete the student's information below before creating the account.
+
+        </p>
+
+        <div class="student-info-grid">
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Academic Session
+
+                </span>
+
+                <span class="value">
+
+                    {{ current_session }}
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Current Term
+
+                </span>
+
+                <span class="value">
+
+                    {{ current_term }}
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    School
+
+                </span>
+
+                <span class="value">
+
+                    {{ school_name }}
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Status
+
+                </span>
+
+                <span class="badge-active">
+
+                    New Registration
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+    
+
+</div>
+<!-- =====================================================
+PHASE 3
+PERSONAL INFORMATION
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-user"></i>
+
+            Personal Information
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <!-- Full Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Full Name <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    name="full_name"
+                    placeholder="Enter student's full name"
+                    required>
+
+            </div>
+
+            <!-- Student ID -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Student ID  <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    name="student_id"
+                    placeholder="Auto Generated (Optional)">
+
+            </div>
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Login Password <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Create student login password"
+                    required>
+
+            </div>
+
+            <!-- Gender -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Gender  <span class="required">*</span>
+
+                </label>
+
+                <select name="gender">
+
+                    <option value="">Select Gender</option>
+
+                    <option value="Male">Male</option>
+
+                    <option value="Female">Female</option>
+
+                </select>
+
+            </div>
+
+            <!-- Date of Birth -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Date of Birth  <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="date"
+                    name="date_of_birth">
+
+            </div>
+
+            <!-- State -->
+
+            <div class="form-group">
+
+                <label>
+
+                    State of Origin  <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    name="state"
+                    placeholder="State of Origin">
+
+            </div>
+
+            <!-- Nationality -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Nationality  <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    name="nationality"
+                    value="Nigerian">
+
+            </div>
+
+            <!-- Religion -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Religion  <span class="required">*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    name="religion">
+
+            </div>
+
+            <!-- Blood Group -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Blood Group  <span class="required">*</span>
+
+                </label>
+
+                <select name="blood_group">
+
+                    <option value="">Select</option>
+
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+
+                </select>
+
+            </div>
+
+            <!-- Genotype -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Genotype  <span class="required">*</span>
+
+                </label>
+
+                <select name="genotype">
+
+                    <option value="">Select</option>
+
+                    <option>AA</option>
+                    <option>AS</option>
+                    <option>SS</option>
+                    <option>AC</option>
+                    <option>SC</option>
+
+                </select>
+
+            </div>
+
+            <!-- House -->
+
+            <div class="form-group">
+
+                <label>
+
+                    House  <span class="required">*</span>
+
+                </label>
+
+                <select name="house">
+
+                    <option value="">Select House</option>
+
+                    <option value="Blue">Blue House</option>
+
+                    <option value="Red">Red House</option>
+
+                    <option value="Green">Green House</option>
+
+                    <option value="Yellow">Yellow House</option>
+
+                </select>
+                <div class="form-group">
+
+    <label>Registration Number</label>
+
+    <input
+        type="text"
+        name="registration_number"
+        class="form-control">
+
+</div>
+<div class="form-group">
+
+    <label>Club / Society</label>
+
+    <select
+        name="club_society"
+        class="form-control">
+
+        <option value="">Select Club</option>
+
+        <option>JET Club</option>
+
+        <option>ICT Club</option>
+
+        <option>Press Club</option>
+
+        <option>Literary & Debating Society</option>
+
+        <option>Drama Club</option>
+
+        <option>Music Club</option>
+
+        <option>Red Cross</option>
+
+        <option>Boys Scout</option>
+
+        <option>Girls Guide</option>
+
+        <option>Young Farmers Club</option>
+
+    </select>
+
+</div>
+
+            </div>
+
+            <!-- Address -->
+
+            <div class="form-group full-width">
+
+                <label>
+
+                    Residential Address  <span class="required">*</span>
+
+                </label>
+
+                <textarea
+                    name="address"
+                    rows="3"
+                    placeholder="Student residential address"></textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 4
+PARENT / GUARDIAN INFORMATION
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-people-roof"></i>
+
+            Parent / Guardian Information
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <!-- Father's Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Father's Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="father_name"
+                    placeholder="Father's Full Name">
+
+            </div>
+
+            <!-- Mother's Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Mother's Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="mother_name"
+                    placeholder="Mother's Full Name">
+
+            </div>
+
+            <!-- Guardian Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Guardian Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="guardian_name"
+                    placeholder="Guardian Name">
+
+            </div>
+
+            <!-- Relationship -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Relationship
+
+                </label>
+
+                <select name="guardian_relationship">
+
+                    <option value="">Select Relationship</option>
+
+                    <option>Father</option>
+
+                    <option>Mother</option>
+
+                    <option>Guardian</option>
+
+                    <option>Brother</option>
+
+                    <option>Sister</option>
+
+                    <option>Uncle</option>
+
+                    <option>Aunt</option>
+
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+            <!-- Father's Phone -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Father's Phone
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="father_phone"
+                    placeholder="080XXXXXXXX">
+
+            </div>
+
+            <!-- Mother's Phone -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Mother's Phone
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="mother_phone"
+                    placeholder="080XXXXXXXX">
+
+            </div>
+
+            <!-- Guardian Phone -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Guardian Phone
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="guardian_phone"
+                    placeholder="080XXXXXXXX">
+
+            </div>
+
+            <!-- Parent Email -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Parent Email
+
+                </label>
+
+                <input
+                    type="email"
+                    name="parent_email"
+                    placeholder="parent@email.com">
+
+            </div>
+
+            <!-- Father's Occupation -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Father's Occupation
+
+                </label>
+
+                <input
+                    type="text"
+                    name="father_occupation"
+                    placeholder="Occupation">
+
+            </div>
+
+            <!-- Mother's Occupation -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Mother's Occupation
+
+                </label>
+
+                <input
+                    type="text"
+                    name="mother_occupation"
+                    placeholder="Occupation">
+
+            </div>
+
+            <!-- Emergency Contact -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Emergency Contact
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="emergency_contact"
+                    placeholder="Emergency Phone">
+
+            </div>
+
+            <!-- Emergency Relationship -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Emergency Relationship
+
+                </label>
+
+                <input
+                    type="text"
+                    name="emergency_relationship"
+                    placeholder="Relationship">
+
+            </div>
+
+            <!-- Parent Address -->
+
+            <div class="form-group full-width">
+
+                <label>
+
+                    Parent / Guardian Address
+
+                </label>
+
+                <textarea
+                    name="parent_address"
+                    rows="3"
+                    placeholder="Parent or Guardian Residential Address"></textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 5
+ACADEMIC INFORMATION
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-graduation-cap"></i>
+
+            Academic Information
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <!-- Class -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Class <span class="required">*</span>
+
+                </label>
+
+                <select name="class" required>
+
+                    <option value="">Select Class</option>
+
+                    {% for cls in classes %}
+
+                    <option value="{{ cls }}">
+
+                        {{ cls }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Class Arm -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Class Arm
+
+                </label>
+
+                <input
+
+                    type="text"
+
+                    name="arm"
+
+                    placeholder="Example: A">
+
+            </div>
+
+            <!-- Roll Number -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Roll Number
+
+                </label>
+
+                <input
+
+                    type="number"
+
+                    name="roll_number"
+
+                    placeholder="Student Roll Number">
+
+            </div>
+
+            <!-- Admission Date -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Admission Date
+
+                </label>
+
+                <input
+
+                    type="date"
+
+                    name="admission_date">
+
+            </div>
+
+            <!-- Student Status -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Student Status
+
+                </label>
+
+                <select name="status">
+
+                    <option value="Active">
+
+                        Active
+
+                    </option>
+
+                    <option value="Transferred">
+
+                        Transferred
+
+                    </option>
+
+                    <option value="Graduated">
+
+                        Graduated
+
+                    </option>
+
+                    <option value="Withdrawn">
+
+                        Withdrawn
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Academic Session -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Academic Session
+
+                </label>
+
+                <input
+
+                    type="text"
+
+                    name="session"
+
+                    value="{{ current_session }}"
+
+                    readonly>
+
+            </div>
+
+            <!-- Current Term -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Current Term
+
+                </label>
+
+                <input
+
+                    type="text"
+
+                    name="term"
+
+                    value="{{ current_term }}"
+
+                    readonly>
+
+            </div>
+
+            <!-- House -->
+
+            <div class="form-group">
+
+                <label>
+
+                    School House
+
+                </label>
+
+                <select name="house">
+
+                    <option value="">Select House</option>
+
+                    <option value="Blue">
+
+                        Blue House
+
+                    </option>
+
+                    <option value="Red">
+
+                        Red House
+
+                    </option>
+
+                    <option value="Green">
+
+                        Green House
+
+                    </option>
+
+                    <option value="Yellow">
+
+                        Yellow House
+
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ==========================================
+PHASE 7
+SUBJECTS OFFERED
+========================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-book-open"></i>
+
+            Subjects Offered
+
+        </h3>
+
+        <p>
+
+            Tick the subjects this student offers.
+
+        </p>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="subjects-grid">
+
+            {% for subject in subjects %}
+
+            <label class="subject-item">
+
+                <input
+                    type="checkbox"
+                    name="subjects"
+                    value="{{ subject }}"
+                    checked>
+
+                <span>
+
+                    {{ subject }}
+
+                </span>
+
+            </label>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 6
+PASSPORT UPLOAD
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-camera"></i>
+
+            Student Passport
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="passport-section">
+
+            <!-- Passport Preview -->
+
+            <div class="passport-preview">
+
+                <img
+
+                    id="passportPreview"
+
+                    src="{{ url_for('static', filename='images/default-avatar.png') }}"
+
+                    alt="Student Passport">
+
+            </div>
+
+            <!-- Upload Controls -->
+
+            <div class="passport-upload">
+
+                <label class="upload-label">
+
+                    Choose Passport Photograph
+
+                </label>
+
+                <input
+
+                    type="file"
+
+                    name="passport"
+
+                    id="passportInput"
+
+                    accept=".jpg,.jpeg,.png,image/*">
+
+                <small>
+
+                    Accepted Formats:
+                    JPG, JPEG, PNG
+
+                    <br>
+
+                    Maximum File Size:
+                    2 MB
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =========================================
+PHASE 7
+ACTION BUTTONS
+========================================= -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-gears"></i>
+
+            Actions
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="action-buttons">
+
+            <!-- Save -->
+
+            <button
+                type="submit"
+                class="btn btn-success"
+                id="saveBtn">
+
+                <i class="fas fa-save"></i>
+
+                Save Student
+
+            </button>
+
+            <!-- Reset -->
+
+            <button
+                type="reset"
+                class="btn btn-warning">
+
+                <i class="fas fa-rotate-left"></i>
+
+                Reset Form
+
+            </button>
+
+            <!-- Cancel -->
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn btn-secondary">
+
+                <i class="fas fa-times"></i>
+
+                Cancel
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+LOADING OVERLAY
+========================================= -->
+
+<div id="loadingOverlay">
+
+    <div class="loader"></div>
+
+    <h3>
+
+        Saving Student...
+
+    </h3>
+
+    <p>
+
+        Please wait...
+
+    </p>
+
+</div>
+    </form>
+    
+</div>
+<script>
+
+const passportInput = document.getElementById("passportInput");
+const passportPreview = document.getElementById("passportPreview");
+
+// Passport Preview
+if (passportInput && passportPreview) {
+
+    passportInput.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+        if (file) {
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                passportPreview.src = e.target.result;
+
+            };
+
+            reader.readAsDataURL(file);
+
+        }
+
+    });
+
+}
+
+// Loading Overlay
+const form = document.querySelector("form");
+
+if (form) {
+
+    form.addEventListener("submit", function () {
+
+        const loadingOverlay = document.getElementById("loadingOverlay");
+
+        if (loadingOverlay) {
+
+           loadingOverlay.style.display="flex";
+
+document.getElementById("saveBtn").disabled=true;
+
+document.getElementById("saveBtn").innerHTML=
+
+'<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+        }
+
+    });
+
+}
+form.addEventListener("submit", function(e){
+
+    const fullName =
+        document.querySelector("[name='name']").value.trim();
+
+    const password =
+        document.querySelector("[name='password']").value.trim();
+
+    const studentClass =
+        document.querySelector("[name='class']").value;
+
+    if(
+
+        fullName === "" ||
+
+        password === "" ||
+
+        studentClass === ""
+
+    ){
+
+        alert("Please complete all required fields.");
+
+        e.preventDefault();
+
+        loadingOverlay.style.display="none";
+
+        return;
+
+    }
+
+});
+
+</script>
+
+
+{% endblock %}

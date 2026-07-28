@@ -1,0 +1,1194 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Edit Student
+{% endblock %}
+
+{% block content %}
+
+<div class="edit-student-page">
+
+    <!-- ===========================
+         PAGE HEADER
+    ============================ -->
+
+    <div class="page-header">
+
+        <div class="page-title">
+
+            <h1>
+                <i class="fas fa-user-pen"></i>
+                Edit Student
+            </h1>
+
+            <p>
+                Update student information and academic profile.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="back-dashboard-btn">
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back Dashboard
+
+        </a>
+
+    </div>
+    <!-- =====================================================
+PHASE 8
+FLASH MESSAGES
+===================================================== -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+<div class="flash-container">
+
+    {% for category, message in messages %}
+
+    <div class="flash-message flash-{{ category }}">
+
+        <i class="fas fa-circle-info"></i>
+
+        {{ message }}
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+{% endwith %}
+
+    <!-- ===========================
+         BREADCRUMB
+    ============================ -->
+
+    <div class="breadcrumb">
+
+        <a href="{{ url_for('dashboard') }}">
+
+            Dashboard
+
+        </a>
+
+        <i class="fas fa-angle-right"></i>
+
+        <span>
+
+            Edit Student
+
+        </span>
+
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+
+  
+    <!-- ===========================
+         CONTENT AREA
+    ============================ -->
+
+    <div class="content-card">
+
+        <!-- PHASE 2 STARTS HERE -->
+         <!-- =====================================================
+PHASE 2
+STUDENT PROFILE CARD
+===================================================== -->
+
+<div class="student-profile-card">
+
+    <!-- Passport -->
+
+    <div class="student-photo">
+
+        {% if student.passport %}
+
+            <img src="{{ url_for('static', filename='uploads/' + student.passport) }}"
+                 alt="Student Passport">
+
+        {% else %}
+
+            <img src="{{ url_for('static', filename='images/default-avatar.png') }}"
+                 alt="Student Passport">
+
+        {% endif %}
+
+    </div>
+
+    <!-- Student Details -->
+
+    <div class="student-details">
+
+        <h2>
+
+            {{ student.full_name }}
+
+        </h2>
+
+        <div class="student-info-grid">
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Admission No
+
+                </span>
+
+                <span class="value">
+
+                    {{ student.student_id }}
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Class
+
+                </span>
+
+                <span class="value">
+
+                    {{ student.class }}
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Gender
+
+                </span>
+
+                <span class="value">
+
+                    {{ student.gender }}
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    House
+
+                </span>
+
+                <span class="value">
+
+                    {{ student.house or "Not Assigned" }}
+
+                </span>
+
+            </div>
+            <div class="form-group">
+
+    <label>Registration Number</label>
+
+    <input
+
+        type="text"
+
+        name="registration_number"
+
+        value="{{ student.registration_number }}"
+
+        class="form-control">
+
+</div>
+<div class="form-group">
+
+<label>Club / Society</label>
+
+<select
+    name="club_society"
+    class="form-control">
+
+<option value="{{ student.club }}">
+
+{{ student.club or "Select Club" }}
+
+</option>
+
+<option>JET Club</option>
+
+<option>ICT Club</option>
+
+<option>Press Club</option>
+
+<option>Literary & Debating Society</option>
+
+<option>Drama Club</option>
+
+<option>Music Club</option>
+
+<option>Red Cross</option>
+
+<option>Boys Scout</option>
+
+<option>Girls Guide</option>
+
+<option>Young Farmers Club</option>
+
+</select>
+
+</div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Session
+
+                </span>
+
+                <span class="value">
+
+                    {{ current_session }}
+
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <span class="label">
+
+                    Status
+
+                </span>
+
+                <span class="badge-active">
+
+                    Active Student
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+PHASE 3
+PERSONAL INFORMATION
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-user"></i>
+
+            Personal Information
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <!-- Full Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Full Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="full_name"
+                    value="{{ student.full_name }}"
+                    required>
+
+            </div>
+
+            <!-- Admission Number -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Admission Number
+
+                </label>
+
+                <input
+                    type="text"
+                    name="student_id"
+                    value="{{ student.student_id }}"
+                    readonly>
+
+            </div>
+
+            <!-- Gender -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Gender
+
+                </label>
+
+                <select name="gender">
+
+                    <option value="Male"
+                        {% if student.gender=="Male" %}selected{% endif %}>
+                        Male
+                    </option>
+
+                    <option value="Female"
+                        {% if student.gender=="Female" %}selected{% endif %}>
+                        Female
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Date of Birth -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Date of Birth
+
+                </label>
+
+                <input
+                    type="date"
+                    name="date_of_birth"
+                    value="{{ student.date_of_birth }}">
+
+            </div>
+
+            <!-- State of Origin -->
+
+            <div class="form-group">
+
+                <label>
+
+                    State of Origin
+
+                </label>
+
+                <input
+                    type="text"
+                    name="state"
+                    value="{{ student.state }}">
+
+            </div>
+
+            <!-- Nationality -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Nationality
+
+                </label>
+
+                <input
+                    type="text"
+                    name="nationality"
+                    value="{{ student.nationality }}">
+
+            </div>
+
+            <!-- Religion -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Religion
+
+                </label>
+
+                <input
+                    type="text"
+                    name="religion"
+                    value="{{ student.religion }}">
+
+            </div>
+
+            <!-- Blood Group -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Blood Group
+
+                </label>
+
+                <input
+                    type="text"
+                    name="blood_group"
+                    value="{{ student.blood_group }}">
+
+            </div>
+
+            <!-- Genotype -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Genotype
+
+                </label>
+
+                <input
+                    type="text"
+                    name="genotype"
+                    value="{{ student.genotype }}">
+
+            </div>
+
+            <!-- House -->
+
+            <div class="form-group">
+
+                <label>
+
+                    House
+
+                </label>
+
+                <input
+                    type="text"
+                    name="house"
+                    value="{{ student.house }}">
+
+            </div>
+
+            <!-- Residential Address -->
+
+            <div class="form-group full-width">
+
+                <label>
+
+                    Residential Address
+
+                </label>
+
+                <textarea
+                    name="address"
+                    rows="3">{{ student.address }}</textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 4
+PARENT / GUARDIAN INFORMATION
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-people-roof"></i>
+
+            Parent / Guardian Information
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <!-- Father's Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Father's Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="father_name"
+                    value="{{ student.father_name }}">
+
+            </div>
+
+            <!-- Mother's Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Mother's Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="mother_name"
+                    value="{{ student.mother_name }}">
+
+            </div>
+
+            <!-- Guardian Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Guardian Name
+
+                </label>
+
+                <input
+                    type="text"
+                    name="guardian_name"
+                    value="{{ student.guardian_name }}">
+
+            </div>
+
+            <!-- Relationship -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Relationship
+
+                </label>
+
+                <input
+                    type="text"
+                    name="guardian_relationship"
+                    value="{{ student.guardian_relationship }}">
+
+            </div>
+
+            <!-- Father Phone -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Father's Phone
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="father_phone"
+                    value="{{ student.father_phone }}">
+
+            </div>
+
+            <!-- Mother Phone -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Mother's Phone
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="mother_phone"
+                    value="{{ student.mother_phone }}">
+
+            </div>
+
+            <!-- Guardian Phone -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Guardian Phone
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="guardian_phone"
+                    value="{{ student.guardian_phone }}">
+
+            </div>
+
+            <!-- Parent Email -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Parent Email
+
+                </label>
+
+                <input
+                    type="email"
+                    name="parent_email"
+                    value="{{ student.parent_email }}">
+
+            </div>
+
+            <!-- Father Occupation -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Father's Occupation
+
+                </label>
+
+                <input
+                    type="text"
+                    name="father_occupation"
+                    value="{{ student.father_occupation }}">
+
+            </div>
+
+            <!-- Mother Occupation -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Mother's Occupation
+
+                </label>
+
+                <input
+                    type="text"
+                    name="mother_occupation"
+                    value="{{ student.mother_occupation }}">
+
+            </div>
+
+            <!-- Emergency Contact -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Emergency Contact
+
+                </label>
+
+                <input
+                    type="tel"
+                    name="emergency_contact"
+                    value="{{ student.emergency_contact }}">
+
+            </div>
+
+            <!-- Emergency Relationship -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Emergency Relationship
+
+                </label>
+
+                <input
+                    type="text"
+                    name="emergency_relationship"
+                    value="{{ student.emergency_relationship }}">
+
+            </div>
+
+            <!-- Parent Address -->
+
+            <div class="form-group full-width">
+
+                <label>
+
+                    Parent / Guardian Address
+
+                </label>
+
+                <textarea
+                    name="parent_address"
+                    rows="3">{{ student.parent_address }}</textarea>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 5
+ACADEMIC INFORMATION
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-graduation-cap"></i>
+
+            Academic Information
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="form-grid">
+
+            <!-- Class -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Class
+
+                </label>
+
+                <select name="class">
+
+                    <option value="JSS1"
+                        {% if student.class=="JSS1" %}selected{% endif %}>
+                        JSS1
+                    </option>
+
+                    <option value="JSS2"
+                        {% if student.class=="JSS2" %}selected{% endif %}>
+                        JSS2
+                    </option>
+
+                    <option value="JSS3"
+                        {% if student.class=="JSS3" %}selected{% endif %}>
+                        JSS3
+                    </option>
+
+                    <option value="SS1"
+                        {% if student.class=="SS1" %}selected{% endif %}>
+                        SS1
+                    </option>
+
+                    <option value="SS2"
+                        {% if student.class=="SS2" %}selected{% endif %}>
+                        SS2
+                    </option>
+
+                    <option value="SS3"
+                        {% if student.class=="SS3" %}selected{% endif %}>
+                        SS3
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Arm -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Class Arm
+
+                </label>
+
+                <input
+                    type="text"
+                    name="arm"
+                    value="{{ student.arm }}">
+
+            </div>
+
+            <!-- Roll Number -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Roll Number
+
+                </label>
+
+                <input
+                    type="text"
+                    name="roll_number"
+                    value="{{ student.roll_number }}">
+
+            </div>
+
+            <!-- Admission Date -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Admission Date
+
+                </label>
+
+                <input
+                    type="date"
+                    name="admission_date"
+                    value="{{ student.admission_date }}">
+
+            </div>
+
+            <!-- House -->
+
+            <div class="form-group">
+
+                <label>
+
+                    School House
+
+                </label>
+
+                <select name="house">
+
+                    <option value="">Select House</option>
+
+                    <option value="Blue"
+                        {% if student.house=="Blue" %}selected{% endif %}>
+                        Blue House
+                    </option>
+
+                    <option value="Red"
+                        {% if student.house=="Red" %}selected{% endif %}>
+                        Red House
+                    </option>
+
+                    <option value="Green"
+                        {% if student.house=="Green" %}selected{% endif %}>
+                        Green House
+                    </option>
+
+                    <option value="Yellow"
+                        {% if student.house=="Yellow" %}selected{% endif %}>
+                        Yellow House
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Admission Status -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Student Status
+
+                </label>
+
+                <select name="status">
+
+                    <option value="Active"
+                        {% if student.status=="Active" %}selected{% endif %}>
+                        Active
+                    </option>
+
+                    <option value="Graduated"
+                        {% if student.status=="Graduated" %}selected{% endif %}>
+                        Graduated
+                    </option>
+
+                    <option value="Transferred"
+                        {% if student.status=="Transferred" %}selected{% endif %}>
+                        Transferred
+                    </option>
+
+                    <option value="Withdrawn"
+                        {% if student.status=="Withdrawn" %}selected{% endif %}>
+                        Withdrawn
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Academic Session -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Academic Session
+
+                </label>
+
+                <input
+                    type="text"
+                    name="session"
+                    value="{{ student.session or current_session }}">
+
+            </div>
+
+            <!-- Current Term -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Current Term
+
+                </label>
+
+                <select name="term">
+
+                    <option value="First"
+                        {% if student.term=="First" %}selected{% endif %}>
+                        First Term
+                    </option>
+
+                    <option value="Second"
+                        {% if student.term=="Second" %}selected{% endif %}>
+                        Second Term
+                    </option>
+
+                    <option value="Third"
+                        {% if student.term=="Third" %}selected{% endif %}>
+                        Third Term
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 6
+PASSPORT UPLOAD
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-header">
+
+        <h3>
+
+            <i class="fas fa-camera"></i>
+
+            Student Passport
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="passport-section">
+
+            <!-- Current Passport -->
+
+            <div class="passport-preview">
+
+                {% if student.passport %}
+
+                    <img
+                        id="passportPreview"
+                        src="{{ url_for('static', filename='uploads/' + student.passport) }}"
+                        alt="Student Passport">
+
+                {% else %}
+
+                    <img
+                        id="passportPreview"
+                        src="{{ url_for('static', filename='images/default-avatar.png') }}"
+                        alt="Student Passport">
+
+                {% endif %}
+
+            </div>
+
+            <!-- Upload Controls -->
+
+            <div class="passport-upload">
+
+                <label class="upload-label">
+
+                    Select New Passport
+
+                </label>
+
+                <input
+                    type="file"
+                    name="passport"
+                    id="passportInput"
+                    accept="image/*">
+
+                <small>
+
+                    Accepted formats:
+                    JPG, JPEG, PNG
+
+                    <br>
+
+                    Maximum Size:
+                    2MB
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+PHASE 7
+ACTION BUTTONS
+===================================================== -->
+
+<div class="form-card">
+
+    <div class="card-body">
+
+        <div class="action-buttons">
+
+            <!-- Save -->
+
+            <button
+                type="submit"
+                class="btn-primary">
+
+                <i class="fas fa-save"></i>
+
+                Save Changes
+
+            </button>
+
+            <!-- Reset -->
+
+            <button
+                type="reset"
+                class="btn-warning">
+
+                <i class="fas fa-rotate-left"></i>
+
+                Reset
+
+            </button>
+
+            <!-- Print -->
+
+            <button
+                type="button"
+                class="btn-info"
+                onclick="window.print()">
+
+                <i class="fas fa-print"></i>
+
+                Print Profile
+
+            </button>
+
+            <!-- Back -->
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Back to Dashboard
+
+            </a>
+
+            <!-- Delete -->
+
+            <a
+                href="{{ url_for('delete_student', student_id=student.student_id) }}"
+                class="btn-danger"
+
+                onclick="return confirm('Are you sure you want to delete this student?');">
+
+                <i class="fas fa-trash"></i>
+
+                Delete Student
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+</div>
+ 
+
+    </div>
+     
+    
+
+</div>
+  <div id="loadingOverlay">
+
+    <div class="loader"></div>
+
+    <h3>
+
+        Saving Student Information...
+
+    </h3>
+
+</div>
+  </form>
+
+
+{% endblock %}

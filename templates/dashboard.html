@@ -1,0 +1,1085 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<!-- ==========================================
+PHASE 6
+PAGE HEADER
+========================================== -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Admin Dashboard</h1>
+
+        <p>
+            Welcome to Stella Maris College Management Portal
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+STATISTICS
+========================================== -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon blue">
+
+            <i class="fas fa-user-graduate"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <h2>{{ total_students }}</h2>
+
+            <p>Total Students</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon green">
+
+            <i class="fas fa-user-tie"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <h2>{{ total_teachers }}</h2>
+
+            <p>Total Teachers</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon orange">
+
+            <i class="fas fa-school"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <h2>{{ class_counts|length }}</h2>
+
+            <p>Total Classes</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon red">
+
+            <i class="fas fa-calendar-check"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <h2>{{ today_attendance }}</h2>
+
+            <p>Present Today</p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 7
+SECOND ROW
+===================================================== -->
+
+<div class="dashboard-row">
+
+    <!-- ==========================================
+    QUICK ACTIONS
+    =========================================== -->
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <h2>
+
+                Quick Actions
+
+            </h2>
+
+        </div>
+
+        <div class="quick-actions">
+
+            <a href="{{ url_for('add_student') }}"
+               class="action-btn blue">
+
+                <i class="fas fa-user-plus"></i>
+
+                <span>Add Student</span>
+
+            </a>
+
+            <a href="{{ url_for('add_teacher') }}"
+               class="action-btn green">
+
+                <i class="fas fa-user-tie"></i>
+
+                <span>Add Teacher</span>
+
+            </a>
+
+            <a href="{{ url_for('manage_teachers') }}"
+               class="action-btn orange">
+
+                <i class="fas fa-users"></i>
+
+                <span>Teachers</span>
+
+            </a>
+
+            <a href="{{ url_for('attendance_history') }}"
+               class="action-btn red">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <span>Attendance</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+    SEARCH
+    =========================================== -->
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <h2>
+
+                Search Students
+
+            </h2>
+
+        </div>
+
+        <div class="student-search">
+
+            <input
+                type="text"
+                id="studentSearch"
+                placeholder="Search student by name...">
+
+            <button>
+
+                <i class="fas fa-search"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+GRADE STATISTICS
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            Grade Statistics
+
+        </h2>
+
+    </div>
+
+    <table class="grade-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Grade</th>
+
+                <th>Students</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>A</td>
+
+                <td>{{ grade_counts["A"] }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>B</td>
+
+                <td>{{ grade_counts["B"] }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>C</td>
+
+                <td>{{ grade_counts["C"] }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>F</td>
+
+                <td>{{ grade_counts["F"] }}</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+<!-- =====================================================
+PHASE 8
+RESULT MANAGEMENT
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            📚 Result Management
+
+        </h2>
+
+    </div>
+
+    <form method="GET" action="{{ url_for('dashboard') }}">
+
+        <div style="
+            display:flex;
+            gap:20px;
+            flex-wrap:wrap;
+            align-items:flex-end;
+            margin-bottom:25px;
+        ">
+
+            <div>
+
+                <label><strong>Academic Session</strong></label>
+
+                <select
+                    name="session"
+                    class="form-control">
+
+                    {% for session in sessions %}
+
+                    <option
+                        value="{{ session }}"
+                        {% if request.args.get('session', school.current_session) == session %}
+                        selected
+                        {% endif %}
+                    >
+
+                        {{ session }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div>
+
+                <label><strong>Term</strong></label>
+
+                <select
+                    name="term"
+                    class="form-control">
+
+                    <option
+                        value="First Term"
+                        {% if request.args.get('term', school.current_term) == "First Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        First Term
+                    </option>
+
+                    <option
+                        value="Second Term"
+                        {% if request.args.get('term', school.current_term) == "Second Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        Second Term
+                    </option>
+
+                    <option
+                        value="Third Term"
+                        {% if request.args.get('term', school.current_term) == "Third Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        Third Term
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div>
+
+                <button
+                    type="submit"
+                    class="btn-primary">
+
+                    🔍 Load Results
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- =====================================================
+RECENT STUDENTS
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            Recent Students
+
+        </h2>
+
+    </div>
+
+    <div class="students-list">
+
+        {% for student in students %}
+
+        <div class="student-card">
+
+            <!-- Passport -->
+
+            <div class="student-image">
+
+                {% if student.passport %}
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' + student.passport) }}">
+
+                {% else %}
+
+                <img
+                    src="{{ url_for('static', filename='images/default.png') }}">
+
+                {% endif %}
+
+            </div>
+
+            <!-- Student Details -->
+
+            <div class="student-details">
+
+                <h3>
+
+                    {{ student.name }}
+
+                </h3>
+
+                <p>
+
+                    <strong>ID:</strong>
+
+                    {{ student.student_id }}
+
+                </p>
+
+                <p>
+
+                    <strong>Class:</strong>
+
+                    {{ student.class }}
+
+                </p>
+
+                <p>
+
+                    <strong>Average:</strong>
+
+                    {{ student.average_score }}
+
+                </p>
+
+                <p>
+
+                    <strong>Performance:</strong>
+
+                    {{ student.remark }}
+
+                </p>
+
+            </div>
+
+            <!-- Grade -->
+
+            <div class="student-grade">
+
+                <span class="grade-badge">
+
+                    {{ student.grade }}
+
+                </span>
+
+            </div>
+
+            <!-- Buttons -->
+
+            <div class="student-buttons">
+
+                <a
+                    href="{{ url_for('student_profile_admin',
+                    student_id=student.student_id) }}"
+                    class="btn-primary">
+
+                    Profile
+
+                </a>
+
+                <a
+                    href="{{ url_for(
+                        'student_report',
+                        student_id=student.student_id,
+                        session=request.args.get('session', school.current_session),
+                        term=request.args.get('term', school.current_term)
+                    ) }}"
+                    class="btn-success">
+
+                    Result
+
+                </a>
+
+                <a
+                    href="{{ url_for(
+                        'edit_student',
+                        student_id=student.student_id
+                    ) }}"
+                    class="btn-secondary">
+
+                    Edit Student
+
+                </a>
+
+                <a
+                    href="{{ url_for(
+                        'edit_results',
+                        student_id=student.student_id,
+                        session=request.args.get('session', school.current_session),
+                        term=request.args.get('term', school.current_term)
+                    ) }}"
+                    class="btn-warning">
+
+                    Edit Result
+
+                </a>
+
+                <a
+                    href="{{ url_for(
+                        'student_id_card',
+                        student_id=student.student_id
+                    ) }}"
+                    class="btn-info">
+
+                    ID Card
+
+                </a>
+
+                <a
+                    href="{{ url_for(
+                        'delete_student',
+                        student_id=student.student_id
+                    ) }}"
+                    class="btn-danger"
+                    onclick="return confirm('Delete this student?')">
+
+                    Delete
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 9
+PREMIUM DASHBOARD WIDGETS
+===================================================== -->
+
+<div class="widgets-grid">
+
+    <!-- Student Performance -->
+
+    <div class="widget-card">
+
+        <div class="widget-header">
+
+            <h2>
+
+                Student Performance
+
+            </h2>
+
+        </div>
+
+        <div class="widget-body">
+
+            <canvas id="gradeChart"></canvas>
+            
+
+        </div>
+        
+
+    </div>
+
+    <!-- Attendance -->
+
+    <div class="widget-card">
+
+        <div class="widget-header">
+
+            <h2>
+
+                Attendance Summary
+
+            </h2>
+
+        </div>
+
+        <div class="attendance-box">
+
+            <div>
+
+                <h3>
+
+                    {{ today_attendance }}
+
+                </h3>
+
+                <span>
+
+                    Present
+
+                </span>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    {{ absent_today }}
+
+                </h3>
+
+                <span>
+
+                    Absent
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Top Students -->
+
+    <div class="widget-card">
+
+        <div class="widget-header">
+
+            <h2>
+
+                Top Performing Students
+
+            </h2>
+
+        </div>
+
+        <div class="top-students">
+
+            {% for student in students[:5] %}
+
+            <div class="top-student">
+
+                <strong>
+
+                    {{ student.name }}
+
+                </strong>
+
+                <span>
+
+                    {{ student.average_score }}
+
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <!-- Calendar -->
+
+    <div class="widget-card">
+
+        <div class="widget-header">
+
+            <h2>
+
+                Calendar
+
+            </h2>
+
+        </div>
+
+        <div class="calendar-widget">
+
+            <h1 id="calendarDay"></h1>
+
+            <p id="calendarMonth"></p>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+const gradeCounts = {{ grade_counts|tojson|safe }};
+
+</script>
+<div class="widget-card">
+
+    <div class="widget-header">
+
+        <h2>
+
+            Recent Notifications
+
+        </h2>
+
+    </div>
+
+    <div class="notification-list">
+
+        <div class="notification-item">
+
+            <div class="notification-icon blue">
+
+                <i class="fas fa-user-plus"></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+
+                    New Student Registered
+
+                </h4>
+
+                <small>
+
+                    10 minutes ago
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="notification-item">
+
+            <div class="notification-icon green">
+
+                <i class="fas fa-check-circle"></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+
+                    Attendance Submitted
+
+                </h4>
+
+                <small>
+
+                    Today
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="notification-item">
+
+            <div class="notification-icon orange">
+
+                <i class="fas fa-file-alt"></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+
+                    Results Updated
+
+                </h4>
+
+                <small>
+
+                    Yesterday
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="widget-card">
+
+    <div class="widget-header">
+
+        <h2>
+
+            Upcoming Events
+
+        </h2>
+
+    </div>
+
+    <div class="event-item">
+
+        <strong>
+
+            PTA Meeting
+
+        </strong>
+
+        <span>
+
+            18 July
+
+        </span>
+
+    </div>
+
+    <div class="event-item">
+
+        <strong>
+
+            Examination Begins
+
+        </strong>
+
+        <span>
+
+            22 July
+
+        </span>
+
+    </div>
+
+    <div class="event-item">
+
+        <strong>
+
+            Mid-Term Break
+
+        </strong>
+
+        <span>
+
+            30 July
+
+        </span>
+
+    </div>
+
+</div>
+<div class="widget-card">
+
+    <div class="widget-header">
+
+        <h2>
+
+            Recent Activities
+
+        </h2>
+
+    </div>
+
+    <ul class="activity-list">
+
+        <li>
+
+            Student result uploaded.
+
+        </li>
+
+        <li>
+
+            Teacher added.
+
+        </li>
+
+        <li>
+
+            Attendance marked.
+
+        </li>
+
+        {# <li>
+
+            Parent payment confirmed.
+
+        </li> #}
+
+    </ul>
+
+</div>
+<div class="widget-card">
+
+    <div class="widget-header">
+
+        <h2>
+
+            Teacher Summary
+
+        </h2>
+
+    </div>
+
+    <div class="teacher-summary">
+
+        <div class="teacher-stat">
+
+            <h3>
+
+                {{ total_teachers }}
+
+            </h3>
+
+            <span>
+
+                Total Teachers
+
+            </span>
+
+        </div>
+
+        <div class="teacher-stat">
+
+            <h3>
+
+                {{ class_counts|length }}
+
+            </h3>
+
+            <span>
+
+                Active Classes
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 11.2
+SCHOOL INFORMATION
+===================================================== -->
+
+<div class="widget-card">
+
+    <div class="widget-header">
+
+        <h2>
+
+            School Information
+
+        </h2>
+
+    </div>
+
+    <div class="school-info-widget">
+
+        <div class="school-logo">
+
+            <img src="{{ url_for('static', filename='images/logo.png') }}"
+                 alt="School Logo">
+
+        </div>
+
+        <div class="school-details">
+
+            <h3>
+
+                {{ school_name }}
+
+            </h3>
+
+            <p>
+
+                <strong>Academic Session:</strong>
+
+                {{ current_session }}
+
+            </p>
+
+            <p>
+
+                <strong>Current Term:</strong>
+
+                {{ current_term }}
+
+            </p>
+
+            <p>
+
+                <strong>Total Students:</strong>
+
+                {{ total_students }}
+
+            </p>
+
+            <p>
+
+                <strong>Total Teachers:</strong>
+
+                {{ total_teachers }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 11.3
+LIVE CLOCK
+===================================================== -->
+
+<div class="widget-card">
+
+    <div class="widget-header">
+
+        <h2>
+
+            Current Date & Time
+
+        </h2>
+
+    </div>
+
+    <div class="clock-widget">
+
+        <div class="clock-icon">
+
+            <i class="fas fa-clock"></i>
+
+        </div>
+
+        <div class="clock-display">
+
+            <h1 id="liveTime">
+
+                00:00:00
+
+            </h1>
+
+            <h3 id="liveDate">
+
+                Loading...
+
+            </h3>
+
+            <p id="liveDay">
+
+                Monday
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

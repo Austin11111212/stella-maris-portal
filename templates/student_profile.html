@@ -1,0 +1,176 @@
+{% extends "student_layout.html" %}
+
+{% block title %}
+Student Profile - Stella Maris College
+{% endblock %}
+
+{% block content %}
+<style>
+    .profile-card{
+
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.profile-top{
+
+    display:flex;
+    gap:25px;
+    align-items:center;
+
+}
+
+.passport{
+
+    width:150px;
+    height:150px;
+    border-radius:15px;
+    object-fit:cover;
+
+}
+
+.summary-grid{
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin:20px 0;
+
+}
+
+.summary-box{
+
+    background:#1565c0;
+    color:#fff;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+
+}
+
+.summary-box h3{
+
+    margin:0;
+    font-size:28px;
+
+}
+
+.summary-box p{
+
+    margin-top:5px;
+
+}
+
+.profile-table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+.profile-table th,
+.profile-table td{
+
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align:left;
+
+}
+
+.profile-table th{
+
+    width:220px;
+    color:#1565c0;
+
+}
+</style>
+<!-- ==========================================
+STUDENT PROFILE
+========================================== -->
+
+<div class="profile-card">
+
+    <!-- PASSPORT -->
+
+    <div class="profile-top">
+
+        <img src="{{ url_for('static', filename='uploads/' + student.passport) if student.passport else url_for('static', filename='images/default-avatar.png') }}"
+             class="passport">
+
+        <div>
+
+            <h2>{{ student.full_name }}</h2>
+
+            <p><strong>ID:</strong> {{ student.student_id }}</p>
+
+            <p><strong>Registration No:</strong> {{ student.registration_number }}</p>
+
+            <p><strong>Class:</strong> {{ student.class }}</p>
+
+            <p><strong>Gender:</strong> {{ student.gender }}</p>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- ACADEMIC SUMMARY -->
+
+    <div class="summary-grid">
+
+        <div class="summary-box">
+            <h3>{{ student.average_score }}</h3>
+            <p>Average</p>
+        </div>
+
+        <div class="summary-box">
+            <h3>{{ student.grade }}</h3>
+            <p>Grade</p>
+        </div>
+
+        <div class="summary-box">
+            <h3>{{ student.position }}</h3>
+            <p>Position</p>
+        </div>
+
+        <div class="summary-box">
+            <h3>{{ student.total_subjects }}</h3>
+            <p>Subjects</p>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- SCHOOL DETAILS -->
+
+    <table class="profile-table">
+
+        <tr>
+            <th>School</th>
+            <td>{{ school.name }}</td>
+        </tr>
+
+        <tr>
+            <th>Principal</th>
+            <td>{{ student.principal }}</td>
+        </tr>
+
+        <tr>
+            <th>Form Teacher</th>
+            <td>{{ student.form_teacher }}</td>
+        </tr>
+
+        <tr>
+            <th>Next Term Begins</th>
+            <td>{{ student.next_term_begins or school.next_term_begins }}</td>
+        </tr>
+
+    </table>
+
+</div>
+{% endblock %}

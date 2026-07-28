@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Class Management - Stella Maris College
+    </title>
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins', sans-serif;
+
+            background:#f4f7fb;
+
+            min-height:100vh;
+        }
+
+        a{
+            text-decoration:none;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+
+            position:fixed;
+
+            top:0;
+            left:0;
+
+            width:260px;
+
+            height:100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #0b3d91,
+                    #1565c0
+                );
+
+            padding:25px 20px;
+
+            overflow-y:auto;
+        }
+
+        .logo{
+
+            text-align:center;
+
+            margin-bottom:35px;
+        }
+
+        .logo img{
+
+            width:90px;
+            height:90px;
+
+            border-radius:50%;
+
+            object-fit:cover;
+
+            border:4px solid rgba(255,255,255,0.2);
+        }
+
+        .logo h2{
+
+            color:white;
+
+            margin-top:12px;
+        }
+
+        .menu a{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:12px;
+
+            padding:14px;
+
+            border-radius:12px;
+
+            margin-bottom:10px;
+
+            color:white;
+
+            transition:0.3s;
+        }
+
+        .menu a:hover{
+
+            background:rgba(255,255,255,0.15);
+        }
+
+        /* MAIN */
+
+        .main{
+
+            margin-left:260px;
+
+            padding:25px;
+        }
+
+        .topbar{
+
+            background:white;
+
+            padding:22px;
+
+            border-radius:18px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            flex-wrap:wrap;
+
+            gap:15px;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.05);
+
+            margin-bottom:25px;
+        }
+
+        .topbar h1{
+
+            color:#0b3d91;
+        }
+
+        /* CLASS CARD */
+
+        .class-card{
+
+            background:white;
+
+            padding:25px;
+
+            border-radius:20px;
+
+            margin-bottom:25px;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .class-header{
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            flex-wrap:wrap;
+
+            gap:15px;
+
+            margin-bottom:20px;
+        }
+
+        .class-title{
+
+            font-size:26px;
+
+            font-weight:700;
+
+            color:#1565c0;
+        }
+
+        .badge{
+
+            background:#1565c0;
+
+            color:white;
+
+            padding:8px 14px;
+
+            border-radius:20px;
+
+            font-size:14px;
+
+            font-weight:600;
+        }
+
+        .info-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(250px,1fr));
+
+            gap:18px;
+
+            margin-bottom:25px;
+        }
+
+        .info-box{
+
+            background:#f5f8ff;
+
+            padding:18px;
+
+            border-radius:15px;
+        }
+
+        .info-box h4{
+
+            color:#0b3d91;
+
+            margin-bottom:8px;
+
+            font-size:15px;
+        }
+
+        .info-box p{
+
+            color:#444;
+
+            font-size:15px;
+        }
+
+        /* FORM */
+
+        .form-section{
+
+            margin-top:15px;
+        }
+
+        .form-title{
+
+            font-size:20px;
+
+            color:#0b3d91;
+
+            margin-bottom:18px;
+        }
+
+        .form-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(250px,1fr));
+
+            gap:18px;
+        }
+
+        .form-group{
+
+            margin-bottom:18px;
+        }
+
+        .form-group label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            color:#333;
+
+            font-weight:500;
+        }
+
+        .input-box{
+
+            position:relative;
+        }
+
+        .input-box i{
+
+            position:absolute;
+
+            top:50%;
+            left:15px;
+
+            transform:translateY(-50%);
+
+            color:#1565c0;
+        }
+
+        .input-box input{
+
+            width:100%;
+
+            padding:14px 14px 14px 45px;
+
+            border:1px solid #dbe3f0;
+
+            border-radius:12px;
+
+            font-size:15px;
+
+            background:white;
+        }
+
+        .input-box input:focus{
+
+            outline:none;
+
+            border-color:#1565c0;
+        }
+
+        /* BUTTON */
+
+        .btn{
+
+            margin-top:10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1565c0,
+                    #42a5f5
+                );
+
+            color:white;
+
+            border:none;
+
+            padding:14px 22px;
+
+            border-radius:12px;
+
+            font-size:15px;
+
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .btn:hover{
+
+            transform:translateY(-2px);
+        }
+
+        /* STUDENTS */
+
+        .student-list{
+
+            margin-top:30px;
+        }
+
+        .student-list h3{
+
+            margin-bottom:15px;
+
+            color:#0b3d91;
+        }
+
+        .student-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(250px,1fr));
+
+            gap:15px;
+        }
+
+        .student-item{
+
+            background:#f8fbff;
+
+            padding:15px;
+
+            border-radius:14px;
+
+            border:1px solid #e5edf8;
+
+            transition:0.3s;
+        }
+
+        .student-item:hover{
+
+            transform:translateY(-2px);
+
+            box-shadow:
+                0 5px 12px rgba(0,0,0,0.05);
+        }
+
+        .student-item h4{
+
+            color:#1565c0;
+
+            margin-bottom:5px;
+        }
+
+        .student-item p{
+
+            color:#555;
+
+            font-size:14px;
+        }
+
+        /* EMPTY */
+
+        .empty{
+
+            background:#fff3cd;
+
+            color:#856404;
+
+            padding:15px;
+
+            border-radius:12px;
+
+            margin-top:15px;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:900px){
+
+            .sidebar{
+
+                position:relative;
+
+                width:100%;
+
+                height:auto;
+            }
+
+            .main{
+
+                margin-left:0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            <img
+                src="{{ url_for('static', filename='images/logo.png') }}"
+                alt="School Logo"
+            >
+
+            <h2>
+                Stella Maris
+            </h2>
+
+        </div>
+
+        <div class="menu">
+
+            <a href="/admin/dashboard">
+
+                <i class="fas fa-chart-line"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="/admin/add_student">
+
+                <i class="fas fa-user-plus"></i>
+
+                Add Student
+
+            </a>
+
+            <a href="/admin/logout">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Class Management
+
+                </h1>
+
+                <p>
+
+                    Manage classes, teachers and students
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- CLASS LIST -->
+
+        {% if classes %}
+
+            {% for class_name, info in classes.items() %}
+
+                <div class="class-card">
+
+                    <div class="class-header">
+
+                        <div class="class-title">
+
+                            {{ class_name }}
+
+                        </div>
+
+                        <div class="badge">
+
+                            {{ info.students|length }} Students
+
+                        </div>
+
+                    </div>
+
+                    <!-- INFO -->
+
+                    <div class="info-grid">
+
+                        <div class="info-box">
+
+                            <h4>
+
+                                Class Teacher
+
+                            </h4>
+
+                            <p>
+
+                                {{ info.teacher or "Not Assigned" }}
+
+                            </p>
+
+                        </div>
+
+                        <div class="info-box">
+
+                            <h4>
+
+                                Teacher Phone
+
+                            </h4>
+
+                            <p>
+
+                                {{ info.phone or "Not Available" }}
+
+                            </p>
+
+                        </div>
+
+                        <div class="info-box">
+
+                            <h4>
+
+                                Total Students
+
+                            </h4>
+
+                            <p>
+
+                                {{ info.students|length }}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- UPDATE FORM -->
+
+                    <div class="form-section">
+
+                        <div class="form-title">
+
+                            Update Class Information
+
+                        </div>
+
+                        <form
+                            action="/admin/update_class/{{ class_name }}"
+                            method="POST"
+                        >
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Teacher Name
+
+                                    </label>
+
+                                    <div class="input-box">
+
+                                        <i class="fas fa-user-tie"></i>
+
+                                        <input
+                                            type="text"
+                                            name="teacher"
+                                            placeholder="Enter Class Teacher"
+                                            value="{{ info.teacher }}"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Teacher Phone
+
+                                    </label>
+
+                                    <div class="input-box">
+
+                                        <i class="fas fa-phone"></i>
+
+                                        <input
+                                            type="text"
+                                            name="phone"
+                                            placeholder="Enter Phone Number"
+                                            value="{{ info.phone }}"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="btn"
+                            >
+
+                                <i class="fas fa-floppy-disk"></i>
+
+                                Update Class
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- STUDENTS -->
+
+                    <div class="student-list">
+
+                        <h3>
+
+                            Students in {{ class_name }}
+
+                        </h3>
+
+                        {% if info.students %}
+
+                            <div class="student-grid">
+
+                                {% for student in info.students %}
+
+                                    <div class="student-item">
+
+                                        <h4>
+
+                                            {{ student.name }}
+
+                                        </h4>
+
+                                        <p>
+
+                                            ID:
+                                            {{ student.student_id }}
+
+                                        </p>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="empty">
+
+                                No students found in this class.
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="class-card">
+
+                <div class="empty">
+
+                    No classes available.
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

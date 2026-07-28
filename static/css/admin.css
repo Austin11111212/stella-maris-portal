@@ -1,0 +1,2613 @@
+/* =====================================================
+PHASE 2.1
+ROOT VARIABLES
+===================================================== */
+
+:root{
+
+    --primary:#0b3d91;
+
+    --primary-light:#1565c0;
+
+    --secondary:#f4f7fb;
+
+    --success:#28a745;
+
+    --warning:#f39c12;
+
+    --danger:#dc3545;
+
+    --info:#17a2b8;
+
+    --dark:#1f2937;
+
+    --gray:#6b7280;
+
+    --light:#f8fafc;
+
+    --white:#ffffff;
+
+    --border:#e5e7eb;
+
+    --sidebar-width:280px;
+
+    --topbar-height:80px;
+
+    --radius:15px;
+
+    --shadow:0 5px 20px rgba(0,0,0,.08);
+
+    --transition:.3s ease;
+
+}
+
+
+/* =====================================================
+PHASE 2.2
+RESET
+===================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:"Poppins",sans-serif;
+
+    background:var(--secondary);
+
+    color:var(--dark);
+
+    overflow-x:hidden;
+
+}
+
+
+/* =====================================================
+PHASE 2.3
+HEADINGS
+===================================================== */
+
+h1{
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+h2{
+
+    font-size:26px;
+
+    font-weight:600;
+
+}
+
+h3{
+
+    font-size:20px;
+
+    font-weight:600;
+
+}
+
+h4{
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
+
+p{
+
+    color:var(--gray);
+
+    line-height:1.7;
+
+}
+
+
+/* =====================================================
+PHASE 2.4
+LINKS
+===================================================== */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+/* =====================================================
+PHASE 2.5
+LISTS
+===================================================== */
+
+ul{
+
+    list-style:none;
+
+}
+
+
+/* =====================================================
+PHASE 2.6
+IMAGES
+===================================================== */
+
+img{
+
+    max-width:100%;
+
+    display:block;
+
+}
+
+
+/* =====================================================
+PHASE 2.7
+BUTTONS
+===================================================== */
+
+button{
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+}
+
+
+/* =====================================================
+PHASE 2.8
+INPUTS
+===================================================== */
+
+input,
+select,
+textarea{
+
+    font-family:inherit;
+
+    outline:none;
+
+}
+
+
+/* =====================================================
+PHASE 2.10
+CONTENT AREA
+===================================================== */
+
+.main-container{
+    padding:30px;
+
+}
+/* =====================================================
+PHASE 3
+PROFESSIONAL SIDEBAR
+===================================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:var(--sidebar-width);
+
+    height:100vh;
+
+    background:linear-gradient(
+        180deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+    display:flex;
+
+    flex-direction:column;
+
+    color:white;
+
+    box-shadow:var(--shadow);
+
+    overflow-y:auto;
+
+}
+
+.logo-area{
+
+    padding:30px 20px;
+
+    text-align:center;
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+.logo-area img{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:white;
+
+    padding:6px;
+
+}
+
+.logo-area h2{
+
+    margin-top:15px;
+
+    color:white;
+
+}
+
+.logo-area p{
+
+    color:#dbeafe;
+
+    font-size:14px;
+
+}
+
+.menu{
+
+    flex:1;
+
+    padding:20px;
+
+}
+
+.menu-title{
+
+    margin:25px 0 10px;
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    color:#cbd5e1;
+
+    letter-spacing:1px;
+
+}
+
+.menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:14px 18px;
+
+    margin-bottom:8px;
+
+    border-radius:12px;
+
+    color:white;
+
+    transition:var(--transition);
+
+}
+
+.menu a:hover{
+
+    background:rgba(255,255,255,.12);
+
+    transform:translateX(5px);
+
+}
+
+.menu a.active{
+
+    background:white;
+
+    color:var(--primary);
+
+    font-weight:600;
+
+}
+
+.menu i{
+
+    width:20px;
+
+    text-align:center;
+
+}
+
+.sidebar-bottom{
+
+    padding:20px;
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+}
+
+.logout-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    background:#dc3545;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    color:white;
+
+    transition:.3s;
+
+}
+
+.logout-btn:hover{
+
+    background:#bb2d3b;
+
+}
+/* =====================================================
+PHASE 4
+MAIN LAYOUT
+===================================================== */
+.main{
+
+    margin-left:var(--sidebar-width);
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:var(--secondary);
+
+}
+
+/* =====================================================
+TOPBAR
+===================================================== */
+
+.topbar{
+
+    height:var(--topbar-height);
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+/* LEFT */
+
+.topbar-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.menu-toggle{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:12px;
+
+    background:var(--light);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.menu-toggle:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+/* SEARCH */
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:#f1f5f9;
+
+    padding:12px 18px;
+
+    border-radius:40px;
+
+    width:380px;
+
+}
+
+.search-box input{
+
+    border:none;
+
+    background:none;
+
+    width:100%;
+
+    font-size:15px;
+
+}
+
+/* RIGHT */
+
+.topbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+/* SESSION */
+
+.session-box{
+
+    text-align:right;
+
+}
+
+.session-box h4{
+
+    color:var(--primary);
+
+}
+
+.session-box p{
+
+    font-size:13px;
+
+}
+
+/* ICONS */
+
+.top-icon{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:#f1f5f9;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.top-icon:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+.notification-count{
+
+    position:absolute;
+
+    top:-5px;
+
+    right:-5px;
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    background:red;
+
+    color:white;
+
+    font-size:11px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+/* PROFILE */
+
+.admin-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    cursor:pointer;
+
+}
+
+.admin-profile img{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+/* =====================================================
+PHASE 5
+FLASH MESSAGE SYSTEM
+===================================================== */
+
+.flash-area{
+
+    padding:20px 30px 0;
+
+}
+
+.alert{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:18px 20px;
+
+    border-radius:15px;
+
+    margin-bottom:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    animation:slideDown .4s ease;
+
+}
+
+.alert-success{
+
+    background:#d1fae5;
+
+    color:#065f46;
+
+}
+
+.alert-danger{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+
+}
+
+.alert-warning{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+}
+
+.alert-info{
+
+    background:#dbeafe;
+
+    color:#1e40af;
+
+}
+
+.alert-icon{
+
+    font-size:24px;
+
+}
+
+.alert-text{
+
+    flex:1;
+
+    font-weight:500;
+
+}
+
+.alert-close{
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    color:inherit;
+
+}
+
+@keyframes slideDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+/* =====================================================
+PHASE 6
+PAGE HEADER
+===================================================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+.page-header h1{
+
+    color:var(--primary);
+
+    margin-bottom:8px;
+
+}
+
+.page-header p{
+
+    font-size:15px;
+
+}
+
+/* =====================================================
+STATISTICS GRID
+===================================================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:25px;
+
+}
+
+/* =====================================================
+STAT CARD
+===================================================== */
+
+.stat-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.stat-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    color:white;
+
+}
+
+.blue{
+
+    background:#2563eb;
+
+}
+
+.green{
+
+    background:#10b981;
+
+}
+
+.orange{
+
+    background:#f59e0b;
+
+}
+
+.red{
+
+    background:#ef4444;
+
+}
+
+.stat-content h2{
+
+    font-size:34px;
+
+    color:var(--dark);
+
+}
+
+.stat-content p{
+
+    margin-top:5px;
+
+    color:var(--gray);
+
+}
+/* =====================================================
+PHASE 7
+DASHBOARD ROW
+===================================================== */
+
+.dashboard-row{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:25px;
+
+    margin-top:30px;
+
+}
+
+/* =====================================================
+CARD
+===================================================== */
+
+.dashboard-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+    margin-top:30px;
+
+}
+
+.card-header{
+
+    margin-bottom:20px;
+
+}
+
+.card-header h2{
+
+    font-size:22px;
+
+    color:var(--primary);
+
+}
+
+/* =====================================================
+QUICK ACTIONS
+===================================================== */
+
+.quick-actions{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+.action-btn{
+
+    height:90px;
+
+    border-radius:15px;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    transition:.3s;
+
+    font-weight:600;
+
+}
+
+.action-btn:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.action-btn i{
+
+    font-size:28px;
+
+}
+
+/* =====================================================
+SEARCH
+===================================================== */
+
+.student-search{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.student-search input{
+
+    flex:1;
+
+    padding:14px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+}
+
+.student-search button{
+
+    width:55px;
+
+    border-radius:10px;
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+/* =====================================================
+GRADE TABLE
+===================================================== */
+
+.grade-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.grade-table th{
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:14px;
+
+}
+
+.grade-table td{
+
+    padding:14px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.grade-table tr:hover{
+
+    background:#f8fafc;
+
+}
+/* =====================================================
+PHASE 8
+STUDENT LIST
+===================================================== */
+
+.students-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.student-card{
+
+    display:grid;
+
+    grid-template-columns:
+
+        90px
+
+        1.5fr
+
+        120px
+
+        320px;
+
+    gap:20px;
+
+    align-items:center;
+
+    background:#fafafa;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    transition:.3s;
+
+}
+
+.student-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+}
+
+.student-image img{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.student-details h3{
+
+    color:var(--primary);
+
+    margin-bottom:8px;
+
+}
+
+.student-details p{
+
+    margin:4px 0;
+
+    font-size:14px;
+
+}
+
+.student-grade{
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.grade-badge{
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:10px 20px;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+}
+
+.student-buttons{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+}
+
+.student-buttons a{
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    color:white;
+
+    font-size:14px;
+
+    transition:.3s;
+
+}
+
+.student-buttons a:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.btn-primary{
+
+    background:#2563eb;
+
+}
+
+.btn-success{
+
+    background:#10b981;
+
+}
+
+.btn-warning{
+
+    background:#f59e0b;
+
+}
+
+.btn-info{
+
+    background:#0ea5e9;
+
+}
+
+.btn-danger{
+
+    background:#ef4444;
+
+}
+
+/* Mobile */
+
+@media(max-width:992px){
+
+.student-card{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+}
+
+.student-image{
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.student-grade{
+
+justify-content:center;
+
+}
+
+.student-buttons{
+
+justify-content:center;
+
+}
+
+}
+/* =====================================================
+PHASE 9
+PREMIUM WIDGETS
+===================================================== */
+
+.widgets-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:25px;
+
+    margin-top:35px;
+
+}
+
+.widget-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.widget-header{
+
+    margin-bottom:20px;
+
+}
+
+.widget-header h2{
+
+    color:var(--primary);
+
+}
+
+.widget-body{
+
+    height:260px;
+
+}
+
+.attendance-box{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    text-align:center;
+
+}
+
+.attendance-box h3{
+
+    font-size:38px;
+
+    color:var(--primary);
+
+}
+
+.attendance-box span{
+
+    color:#777;
+
+}
+
+.top-student{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.calendar-widget{
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+.calendar-widget h1{
+
+    font-size:64px;
+
+    color:var(--primary);
+
+}
+
+.calendar-widget p{
+
+    font-size:20px;
+
+    color:#666;
+
+}
+.notification-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.notification-item{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+}
+
+.notification-icon{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+}
+
+.notification-item h4{
+
+    margin-bottom:4px;
+
+}
+
+.notification-item small{
+
+    color:#777;
+
+}
+.event-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+.activity-list{
+
+    padding-left:20px;
+
+}
+
+.activity-list li{
+
+    margin-bottom:12px;
+
+}
+.teacher-summary{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    margin-top:20px;
+
+}
+
+.teacher-stat{
+
+    text-align:center;
+
+}
+
+.teacher-stat h3{
+
+    font-size:42px;
+
+    color:var(--primary);
+
+}
+
+.teacher-stat span{
+
+    color:#777;
+
+}
+/* =====================================================
+PHASE 11.2
+SCHOOL INFORMATION
+===================================================== */
+
+.school-info-widget{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.school-logo img{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:4px solid var(--primary);
+
+}
+
+.school-details h3{
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+}
+
+.school-details p{
+
+    margin:8px 0;
+
+    color:#555;
+
+}
+
+@media(max-width:768px){
+
+    .school-info-widget{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+}
+/* =====================================================
+PHASE 11.3
+LIVE CLOCK
+===================================================== */
+
+.clock-widget{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:25px;
+
+    padding:20px;
+
+}
+
+.clock-icon{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:38px;
+
+}
+
+.clock-display{
+
+    text-align:left;
+
+}
+
+.clock-display h1{
+
+    font-size:42px;
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+    font-weight:700;
+
+}
+
+.clock-display h3{
+
+    color:#444;
+
+    margin-bottom:6px;
+
+}
+
+.clock-display p{
+
+    color:#777;
+
+    font-size:16px;
+
+}
+
+@media(max-width:768px){
+
+    .clock-widget{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .clock-display{
+
+        text-align:center;
+
+    }
+
+}
+.btn-secondary{
+    display: inline-block;
+    background: #4169E1; /* Royal Blue */
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+    border: none;
+}
+
+.btn-secondary:hover{
+    background: #2f54c7;
+    color: #fff;
+}
+/* ==========================================
+EDIT STUDENT
+========================================== */
+
+.edit-student-page{
+
+    padding:30px;
+
+}
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+    margin-bottom:20px;
+
+}
+
+.page-title h1{
+
+    font-size:34px;
+
+    color:#0d47a1;
+
+    margin-bottom:8px;
+
+}
+
+.page-title p{
+
+    color:#666;
+
+    font-size:15px;
+
+}
+
+.back-dashboard-btn{
+
+    background:#4169E1;
+
+    color:#fff;
+
+    padding:14px 22px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.back-dashboard-btn:hover{
+
+    background:#2748c7;
+
+    color:#fff;
+
+}
+
+.breadcrumb{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:30px;
+
+    color:#777;
+
+    font-size:15px;
+
+}
+
+.breadcrumb a{
+
+    color:#0d47a1;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.content-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    min-height:500px;
+
+}
+/* =====================================================
+PHASE 2
+STUDENT PROFILE CARD
+===================================================== */
+
+.student-profile-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    display:flex;
+
+    gap:30px;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.student-photo img{
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:6px solid #2563eb;
+
+}
+
+.student-details{
+
+    flex:1;
+
+}
+
+.student-details h2{
+
+    color:#1e3a8a;
+
+    margin-bottom:20px;
+
+    font-size:28px;
+
+}
+
+.student-info-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+
+}
+
+.info-item{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.label{
+
+    font-size:13px;
+
+    color:#777;
+
+    margin-bottom:5px;
+
+}
+
+.value{
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:#222;
+
+}
+
+.badge-active{
+
+    display:inline-block;
+
+    width:max-content;
+
+    padding:6px 16px;
+
+    background:#16a34a;
+
+    color:#fff;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+@media(max-width:768px){
+
+    .student-profile-card{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+}
+/* =====================================================
+PHASE 3
+PERSONAL INFORMATION
+===================================================== */
+
+.form-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    overflow:hidden;
+
+}
+
+.card-header{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    padding:18px 25px;
+
+}
+
+.card-header h3{
+
+    margin:0;
+
+    font-size:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.card-body{
+
+    padding:30px;
+
+}
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:20px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#444;
+
+}
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea{
+
+    padding:12px 15px;
+
+    border:1px solid #dcdcdc;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+.full-width{
+
+    grid-column:1/-1;
+
+}
+
+textarea{
+
+    resize:vertical;
+
+}
+/* =====================================================
+PHASE 6
+PASSPORT
+===================================================== */
+
+.passport-section{
+
+    display:flex;
+
+    gap:40px;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+}
+
+.passport-preview{
+
+    width:180px;
+
+    text-align:center;
+
+}
+
+.passport-preview img{
+
+    width:180px;
+
+    height:180px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    border:4px solid #2563eb;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.passport-upload{
+
+    flex:1;
+
+}
+
+.upload-label{
+
+    display:block;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+
+}
+
+.passport-upload input[type=file]{
+
+    width:100%;
+
+    padding:12px;
+
+    border:2px dashed #2563eb;
+
+    border-radius:10px;
+
+    background:#f8fbff;
+
+    cursor:pointer;
+
+}
+
+.passport-upload small{
+
+    display:block;
+
+    margin-top:10px;
+
+    color:#777;
+
+    line-height:1.8;
+
+}
+
+@media(max-width:768px){
+
+.passport-section{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+}
+/* =====================================================
+PHASE 7
+ACTION BUTTONS
+===================================================== */
+
+.action-buttons{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    justify-content:center;
+
+}
+
+.action-buttons a,
+
+.action-buttons button{
+
+    padding:14px 24px;
+
+    border:none;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.btn-primary{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+.btn-primary:hover{
+
+    background:#1d4ed8;
+
+}
+
+.btn-warning{
+
+    background:#f59e0b;
+
+    color:#fff;
+
+}
+
+.btn-warning:hover{
+
+    background:#d97706;
+
+}
+
+.btn-info{
+
+    background:#0891b2;
+
+    color:#fff;
+
+}
+
+.btn-info:hover{
+
+    background:#0e7490;
+
+}
+
+.btn-secondary{
+
+    background:#6b7280;
+
+    color:#fff;
+
+}
+
+.btn-secondary:hover{
+
+    background:#4b5563;
+
+}
+
+.btn-danger{
+
+    background:#dc2626;
+
+    color:#fff;
+
+}
+
+.btn-danger:hover{
+
+    background:#b91c1c;
+
+}
+
+@media(max-width:768px){
+
+.action-buttons{
+
+    flex-direction:column;
+
+}
+
+.action-buttons a,
+
+.action-buttons button{
+
+    width:100%;
+
+    justify-content:center;
+
+}
+
+}
+/* =====================================
+PASSPORT UPLOAD
+===================================== */
+
+.passport-section{
+
+    display:flex;
+
+    gap:40px;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+}
+
+.passport-preview{
+
+    width:170px;
+
+    height:190px;
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    background:#f8fafc;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.passport-preview img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.passport-upload{
+
+    flex:1;
+
+}
+
+.passport-upload input{
+
+    margin-top:12px;
+
+}
+
+.passport-upload small{
+
+    display:block;
+
+    margin-top:10px;
+
+    color:#64748b;
+
+    line-height:1.8;
+
+}
+/*==================================
+ACTION BUTTONS
+==================================*/
+
+.action-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    justify-content:flex-end;
+
+}
+
+.btn{
+
+    padding:14px 28px;
+
+    border:none;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:#fff;
+
+}
+
+.btn-success{
+
+    background:#198754;
+
+}
+
+.btn-success:hover{
+
+    background:#157347;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-warning{
+
+    background:#ffc107;
+
+    color:#000;
+
+}
+
+.btn-warning:hover{
+
+    background:#e0a800;
+
+}
+
+.btn-secondary{
+
+    background:#6c757d;
+
+}
+
+.btn-secondary:hover{
+
+    background:#5a6268;
+
+}
+
+/*==================================
+LOADING SCREEN
+==================================*/
+
+#loadingOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(255,255,255,.95);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    z-index:99999;
+
+}
+
+.loader{
+
+    width:60px;
+
+    height:60px;
+
+    border:6px solid #ddd;
+
+    border-top:6px solid #0d6efd;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+
+    margin-bottom:20px;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+/*==================================
+FLASH MESSAGE
+==================================*/
+
+.flash-container{
+
+    margin-bottom:25px;
+
+}
+
+.flash-message{
+
+    padding:16px;
+
+    border-radius:10px;
+
+    margin-bottom:12px;
+
+    color:white;
+
+    animation:fadeDown .5s;
+
+}
+
+.flash-success{
+
+    background:#198754;
+
+}
+
+.flash-danger{
+
+    background:#dc3545;
+
+}
+
+.flash-warning{
+
+    background:#ffc107;
+
+    color:#000;
+
+}
+
+.flash-info{
+
+    background:#0dcaf0;
+
+    color:#000;
+
+}
+
+/*==================================
+REQUIRED STAR
+==================================*/
+
+.required{
+
+    color:red;
+
+    margin-left:3px;
+
+}
+
+/*==================================
+ANIMATION
+==================================*/
+
+@keyframes fadeDown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+.form-card{
+
+    animation:fadeUp .5s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:#0d6efd;
+
+    box-shadow:0 0 8px rgba(13,110,253,.25);
+
+    outline:none;
+
+}
+/*==========================
+SUBJECTS
+==========================*/
+
+.subjects-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:10px;
+
+}
+
+.subject-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.subject-item:hover{
+
+    background:#f5f7ff;
+
+    border-color:#1d4ed8;
+
+}
+
+.subject-item input{
+
+    width:18px;
+
+    height:18px;
+
+}
+/* =====================================================
+RESULT ACTIVITY LOG
+===================================================== */
+
+.status-badge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    background:#1565c0;
+
+    color:#fff;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+.btn-danger{
+
+    background:#d32f2f;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 14px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+}
+
+.btn-danger:hover{
+
+    background:#b71c1c;
+
+}

@@ -1,0 +1,1049 @@
+{% extends "student_layout.html" %}
+
+{% block title %}
+Student Dashboard
+{% endblock %}
+
+{% block content %}
+<style>
+
+.student-dashboard{
+
+    max-width:1200px;
+    margin:auto;
+
+}
+
+.dashboard-header{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    margin-bottom:25px;
+
+}
+
+.school-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.school-info img{
+
+    width:80px;
+
+    height:80px;
+
+    object-fit:contain;
+
+}
+
+.school-info h2{
+
+    margin:0;
+
+    color:#0b3d91;
+
+}
+
+.school-info p{
+
+    margin:4px 0;
+
+    color:#666;
+
+}
+
+.filter-box{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    align-items:end;
+
+}
+
+.filter-box select{
+
+    min-width:220px;
+
+    padding:10px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+}
+
+.filter-box button{
+
+    background:#1565c0;
+
+    color:white;
+
+    border:none;
+
+    padding:11px 22px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.filter-box button:hover{
+
+    background:#0d47a1;
+
+}
+
+.info-card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+
+    margin-bottom:25px;
+
+}
+
+.info-card table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.info-card td{
+
+    padding:10px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.info-card td:first-child{
+
+    font-weight:bold;
+
+    width:180px;
+
+}
+
+</style>
+
+<div class="student-dashboard">
+
+    <!-- ==========================================
+    HEADER
+    =========================================== -->
+
+    <div class="dashboard-header">
+
+        <div class="school-info">
+
+            <img src="{{ url_for('static', filename=school.logo) }}">
+
+            <div>
+
+                <h2>{{ school.name }}</h2>
+
+                <p>Student Academic Portal</p>
+
+                <p>
+
+                    Welcome,
+
+                    <strong>{{ student.full_name }}</strong>
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================
+        SESSION / TERM
+        =========================== -->
+
+        <form method="GET"
+              action="{{ url_for('student_dashboard') }}"
+              class="filter-box">
+
+            <div>
+
+                <label>Academic Session</label><br>
+
+                <select name="session">
+
+                    {% for s in sessions %}
+
+                    <option value="{{ s }}"
+                    {% if s==selected_session %}selected{% endif %}>
+
+                        {{ s }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div>
+
+                <label>Term</label><br>
+
+                <select name="term">
+
+                    {% for t in terms %}
+
+                    <option value="{{ t }}"
+                    {% if t==selected_term %}selected{% endif %}>
+
+                        {{ t }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <button type="submit">
+
+                📄 View Result
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- ==========================================
+    STUDENT INFORMATION
+    =========================================== -->
+
+    <div class="info-card">
+
+        <h3>Student Information</h3>
+
+        <table>
+
+            <tr>
+
+                <td>Admission No.</td>
+
+                <td>{{ student.student_id }}</td>
+
+                <td>Class</td>
+
+                <td>{{ student.class }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Gender</td>
+
+                <td>{{ student.gender }}</td>
+
+                <td>House</td>
+
+                <td>{{ student.house }}</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Academic Session</td>
+
+                <td>{{ selected_session }}</td>
+
+                <td>Current Term</td>
+
+                <td>{{ selected_term }}</td>
+
+            </tr>
+
+        </table>
+
+    </div>
+    <!-- ==========================================
+ACADEMIC SUMMARY
+========================================== -->
+
+<style>
+
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+.summary-card{
+
+    background:#fff;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.summary-card h2{
+
+    margin:0;
+
+    color:#1565c0;
+
+    font-size:32px;
+
+}
+
+.summary-card p{
+
+    margin-top:10px;
+
+    color:#555;
+
+    font-weight:bold;
+
+}
+
+</style>
+
+<div class="summary-grid">
+
+    <div class="summary-card">
+
+        <h2>{{ student.total }}</h2>
+
+        <p>Total Score</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h2>{{ "%.2f"|format(student.average_score) }}</h2>
+
+        <p>Average Score</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h2>{{ student.grade }}</h2>
+
+        <p>Overall Grade</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h2>{{ student.position }}</h2>
+
+        <p>Class Position</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h2>{{ student.total_subjects }}</h2>
+
+        <p>Total Subjects</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h2>{{ student.passed_subjects }}</h2>
+
+        <p>Passed Subjects</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h2>{{ student.failed_subjects }}</h2>
+
+        <p>Failed Subjects</p>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h2>{{ "%.0f"|format(student.attendance_percentage) }}%</h2>
+
+        <p>Attendance</p>
+
+    </div>
+</div>
+<!-- ==========================================
+PHASE 4
+ACADEMIC PERFORMANCE
+========================================== -->
+
+<style>
+
+.results-card{
+
+    background:#ffffff;
+
+    border-radius:15px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+    padding:20px;
+
+    margin-bottom:30px;
+
+}
+
+.results-card h3{
+
+    color:#0b3d91;
+
+    margin-bottom:20px;
+
+}
+
+.results-wrapper{
+
+    overflow-x:auto;
+
+}
+
+.results-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:850px;
+
+}
+
+.results-table th{
+
+    background:#1565c0;
+
+    color:white;
+
+    padding:12px;
+
+    font-size:14px;
+
+    text-align:center;
+
+}
+
+.results-table td{
+
+    border:1px solid #e5e5e5;
+
+    padding:10px;
+
+    text-align:center;
+
+    font-size:14px;
+
+}
+
+.results-table tbody tr:nth-child(even){
+
+    background:#f8fbff;
+
+}
+
+.results-table tbody tr:hover{
+
+    background:#eef6ff;
+
+}
+
+.subject-column{
+
+    text-align:left !important;
+
+    font-weight:bold;
+
+}
+
+.grade-pass{
+
+    color:#2e7d32;
+
+    font-weight:bold;
+
+}
+
+.grade-fail{
+
+    color:#c62828;
+
+    font-weight:bold;
+
+}
+
+.total-score{
+
+    font-weight:bold;
+
+    color:#0b3d91;
+
+}
+
+.no-result{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#777;
+
+    font-size:16px;
+
+}
+
+</style>
+
+<div class="results-card">
+
+    <h3>📚 Academic Performance</h3>
+
+    {% if student.results %}
+
+    <div class="results-wrapper">
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>S/N</th>
+                    <th>Subject</th>
+                    <th>CA</th>
+                    <th>Exam</th>
+                    <th>Total</th>
+                    <th>Grade</th>
+                    <th>Remark</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for subject, r in student.results.items() %}
+
+                <tr>
+
+                    <td>{{ loop.index }}</td>
+
+                    <td class="subject-column">
+                        {{ subject }}
+                    </td>
+
+                    <td>
+                        {{ r.get("test",0) }}
+                    </td>
+
+                    <td>
+                        {{ r.get("exam",0) }}
+                    </td>
+
+                    <td class="total-score">
+                        {{ r.get("total",0) }}
+                    </td>
+
+                    <td>
+
+                        {% if r.get("remark","") == "Pass" %}
+
+                            <span class="grade-pass">
+                                {{ r.get("grade","-") }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="grade-fail">
+                                {{ r.get("grade","-") }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if r.get("remark","") == "Pass" %}
+
+                            <span class="grade-pass">
+                                {{ r.get("remark","-") }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="grade-fail">
+                                {{ r.get("remark","-") }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="no-result">
+
+        <h4>No Result Available</h4>
+
+        <p>
+
+            Your result for the selected session and term has not been published yet.
+
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+<!-- ==========================================
+PHASE 5
+ATTENDANCE • AFFECTIVE • PSYCHOMOTOR
+REMARKS • PROMOTION
+========================================== -->
+
+<style>
+
+.phase5-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+    margin-top:30px;
+
+}
+
+.phase5-card{
+
+    background:#fff;
+
+    border-radius:15px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+    overflow:hidden;
+
+}
+
+.phase5-header{
+
+    padding:14px 18px;
+
+    color:#fff;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+.phase5-blue{
+
+    background:#1565c0;
+
+}
+
+.phase5-green{
+
+    background:#28a745;
+
+}
+
+.phase5-purple{
+
+    background:#6f42c1;
+
+}
+
+.phase5-orange{
+
+    background:#ff9800;
+
+}
+
+.phase5-dark{
+
+    background:#263238;
+
+}
+
+.phase5-body{
+
+    padding:18px;
+
+}
+
+.phase5-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.phase5-table th{
+
+    text-align:left;
+
+    background:#f7f7f7;
+
+    padding:10px;
+
+    border-bottom:1px solid #ddd;
+
+    width:65%;
+
+}
+
+.phase5-table td{
+
+    padding:10px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.remark-box{
+
+    min-height:120px;
+
+    background:#fafafa;
+
+    border-left:5px solid #1565c0;
+
+    padding:15px;
+
+    border-radius:8px;
+
+    margin-bottom:15px;
+
+    line-height:1.7;
+
+}
+
+.signature{
+
+    margin-top:15px;
+
+    font-weight:bold;
+
+    color:#0b3d91;
+
+}
+
+@media(max-width:900px){
+
+.phase5-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+</style>
+
+<div class="phase5-grid">
+
+    <!-- Attendance -->
+
+    <div class="phase5-card">
+
+        <div class="phase5-header phase5-blue">
+
+            📅 Attendance Record
+
+        </div>
+
+        <div class="phase5-body">
+
+            <table class="phase5-table">
+
+                <tr>
+
+                    <th>School Days Opened</th>
+
+                    <td>{{ student.attendance.get("opened",0) }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Days Present</th>
+
+                    <td>{{ student.attendance.get("present",0) }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Days Absent</th>
+
+                    <td>{{ student.attendance.get("absent",0) }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Attendance Percentage</th>
+
+                    <td>
+
+                        <strong>
+
+                        {{ "%.0f"|format(student.attendance_percentage) }}%
+
+                        </strong>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Affective -->
+
+    <div class="phase5-card">
+
+        <div class="phase5-header phase5-green">
+
+            ⭐ Affective Domain
+
+        </div>
+
+        <div class="phase5-body">
+
+            <table class="phase5-table">
+
+                {% for key,value in student.affective.items() %}
+
+                <tr>
+
+                    <th>{{ key.replace("_"," ").title() }}</th>
+
+                    <td>{{ value or "-" }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Psychomotor -->
+
+<div class="phase5-card" style="margin-top:20px;">
+
+    <div class="phase5-header phase5-purple">
+
+        ⚽ Psychomotor Skills
+
+    </div>
+
+    <div class="phase5-body">
+
+        <table class="phase5-table">
+
+            {% for key,value in student.psychomotor.items() %}
+
+            <tr>
+
+                <th>{{ key.replace("_"," ").title() }}</th>
+
+                <td>{{ value or "-" }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- Remarks -->
+
+<div class="phase5-grid" style="margin-top:20px;">
+
+    <div class="phase5-card">
+
+        <div class="phase5-header phase5-orange">
+
+            👩‍🏫 Class Teacher's Remark
+
+        </div>
+
+        <div class="phase5-body">
+
+            <div class="remark-box">
+
+                {{ student.teacher_remark or "No remark available." }}
+
+            </div>
+
+            <div class="signature">
+
+                Form Teacher<br>
+
+                {{ student.form_teacher or "-" }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="phase5-card">
+
+        <div class="phase5-header phase5-dark">
+
+            👨‍💼 Principal's Remark
+
+        </div>
+
+        <div class="phase5-body">
+
+            <div class="remark-box">
+
+                {{ student.principal_remark or "No remark available." }}
+
+            </div>
+
+            <div class="signature">
+
+                Principal<br>
+
+                {{ student.principal or "-" }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Promotion -->
+
+<div class="phase5-card" style="margin-top:20px;">
+
+    <div class="phase5-header phase5-blue">
+
+        🎓 Promotion Decision
+
+    </div>
+
+    <div class="phase5-body">
+
+        <table class="phase5-table">
+
+            <tr>
+
+                <th>Promotion Status</th>
+
+                <td>
+
+                    <strong>
+
+                        {{ student.promotion_status or "-" }}
+
+                    </strong>
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>Next Term Begins</th>
+
+                <td>
+
+                    {{ student.next_term_begins or "-" }}
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+{% endblock %}

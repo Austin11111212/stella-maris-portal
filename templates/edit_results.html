@@ -1,0 +1,1115 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Edit Student Results
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.results-page{
+
+    max-width:1400px;
+
+    margin:30px auto;
+
+    padding:20px;
+
+}
+
+.results-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:linear-gradient(90deg,#0d6efd,#2563eb);
+
+    color:#fff;
+
+    padding:25px 30px;
+
+    border-radius:12px;
+
+    margin-bottom:25px;
+
+}
+
+.header-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.school-logo{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    padding:5px;
+
+}
+
+.header-left h2{
+
+    margin:0;
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+.header-left p{
+
+    margin-top:4px;
+
+    opacity:.9;
+
+}
+
+.btn-back{
+
+    background:#fff;
+
+    color:#0d6efd;
+
+    padding:12px 20px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.btn-back:hover{
+
+    text-decoration:none;
+
+    background:#f4f4f4;
+
+}
+
+.results-card{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    padding:30px;
+
+}
+
+</style>
+
+<div class="results-page">
+
+    <!-- ===========================
+    PAGE HEADER
+    ============================ -->
+
+    <div class="results-header">
+
+        <div class="header-left">
+
+            <img
+
+                src="{{ url_for('static', filename=school_logo if school_logo else 'images/logo.png') }}"
+
+                class="school-logo"
+
+                alt="School Logo"
+
+            >
+
+            <div>
+
+                <h2>{{ school_name }}</h2>
+
+                <p>Edit Student Academic Results</p>
+
+            </div>
+
+        </div>
+
+        <a
+
+            href="{{ url_for('student_profile_admin', student_id=student.student_id) }}"
+
+            class="btn-back"
+
+        >
+
+            ← Back
+
+        </a>
+
+    </div>
+
+    <!-- ===========================
+    MAIN FORM
+    ============================ -->
+
+    <div class="results-card">
+
+        <form
+
+            method="POST"
+
+            action="{{ url_for('update_results', student_id=student.student_id) }}"
+
+        >
+<!-- =========================================
+PHASE 2
+SESSION + STUDENT INFORMATION
+========================================= -->
+
+<div class="card mb-4 border-0 shadow-sm">
+
+    <div class="card-header bg-primary text-white">
+
+        <h4 class="mb-0">
+            Academic Session & Student Information
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <!-- SESSION -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">
+                    <strong>Academic Session</strong>
+                </label>
+
+                <select
+                    name="session"
+                    class="form-control"
+                >
+
+                    <option
+                        value="2025/2026 Academic Session"
+                        {% if current_session=="2025/2026 Academic Session" %}
+                        selected
+                        {% endif %}
+                    >
+                        2025/2026 Academic Session
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- TERM -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">
+                    <strong>Term</strong>
+                </label>
+
+                <select
+                    name="term"
+                    class="form-control"
+                >
+
+                    <option
+                        value="First Term"
+                        {% if current_term=="First Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        First Term
+                    </option>
+
+                    <option
+                        value="Second Term"
+                        {% if current_term=="Second Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        Second Term
+                    </option>
+
+                    <option
+                        value="Third Term"
+                        {% if current_term=="Third Term" %}
+                        selected
+                        {% endif %}
+                    >
+                        Third Term
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- STATUS -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">
+                    <strong>Status</strong>
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ student.status }}"
+                    readonly
+                >
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">
+                    <strong>Student Name</strong>
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ student.student_name or student.full_name or student.name }}"
+                    readonly
+                >
+
+            </div>
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+                    <strong>Student ID</strong>
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ student.student_id }}"
+                    readonly
+                >
+
+            </div>
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+                    <strong>Class</strong>
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ student.class }}"
+                    readonly
+                >
+
+            </div>
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+                    <strong>Arm</strong>
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ student.arm }}"
+                    readonly
+                >
+
+            </div>
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+                    <strong>Gender</strong>
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    value="{{ student.gender }}"
+                    readonly
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =========================================
+PHASE 3
+ACADEMIC RESULTS
+========================================= -->
+
+<div class="card mb-4 border-0 shadow-sm">
+
+    <div class="card-header bg-success text-white">
+
+        <h4 class="mb-0">
+            Academic Results
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th style="width:60px;">S/N</th>
+
+                        <th>Subject</th>
+
+                        <th style="width:120px;">CA (40)</th>
+
+                        <th style="width:120px;">Exam (60)</th>
+
+                        <th style="width:120px;">Total</th>
+
+                        <th style="width:120px;">Grade</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for subject in subjects %}
+
+                    {% set mark = results.get(subject,{}) %}
+
+                    {% set total = mark.get('test',0) + mark.get('exam',0) %}
+
+                    <tr>
+
+                        <td class="text-center">
+
+                            {{ loop.index }}
+
+                        </td>
+
+                        <td>
+
+                            <strong>{{ subject }}</strong>
+
+                        </td>
+
+                        <td>
+
+                            <input
+
+                                type="number"
+
+                                class="form-control"
+
+                                name="{{ subject }}_test"
+
+                                value="{{ mark.get('test',0) }}"
+
+                                min="0"
+
+                                max="40"
+
+                            >
+
+                        </td>
+
+                        <td>
+
+                            <input
+
+                                type="number"
+
+                                class="form-control"
+
+                                name="{{ subject }}_exam"
+
+                                value="{{ mark.get('exam',0) }}"
+
+                                min="0"
+
+                                max="60"
+
+                            >
+
+                        </td>
+
+                        <td class="text-center">
+
+                            <strong>
+
+                                {{ total }}
+
+                            </strong>
+
+                        </td>
+
+                        <td class="text-center">
+
+                            <span class="badge bg-primary">
+
+                                {{ mark.get("grade","-") }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =========================================
+PHASE 4
+ATTENDANCE RECORD
+========================================= -->
+
+<div class="card mb-4 border-0 shadow-sm">
+
+    <div class="card-header bg-warning">
+
+        <h4 class="mb-0 text-dark">
+            Attendance Record
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <!-- School Opened -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+                    <strong>School Opened</strong>
+                </label>
+
+                <input
+
+                    type="number"
+
+                    class="form-control"
+
+                    name="opened"
+
+                    value="{{ attendance.get('opened',0) }}"
+
+                    min="0"
+
+                >
+
+            </div>
+
+            <!-- Days Present -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+                    <strong>Days Present</strong>
+                </label>
+
+                <input
+
+                    type="number"
+
+                    class="form-control"
+
+                    name="present"
+
+                    value="{{ attendance.get('present',0) }}"
+
+                    min="0"
+
+                >
+
+            </div>
+
+            <!-- Days Absent -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+                    <strong>Days Absent</strong>
+                </label>
+
+                <input
+
+                    type="number"
+
+                    class="form-control"
+
+                    name="absent"
+
+                    value="{{ attendance.get('absent',0) }}"
+
+                    min="0"
+
+                >
+
+            </div>
+
+            <!-- Attendance Percentage -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+                    <strong>Attendance %</strong>
+                </label>
+
+                <input
+
+                    type="text"
+
+                    class="form-control"
+
+                    value="{{ attendance.get('attendance_percentage',0) }}%"
+
+                    readonly
+
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =========================================
+PHASE 5
+AFFECTIVE DOMAIN
+========================================= -->
+
+<div class="card mb-4 border-0 shadow-sm">
+
+    <div class="card-header bg-info text-white">
+
+        <h4 class="mb-0">
+            Affective Domain
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>Trait</th>
+
+                    <th width="180">Rating (1-5)</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% set traits = [
+
+                    ("punctuality","Punctuality"),
+
+                    ("attendance_rating","Attendance"),
+
+                    ("neatness","Neatness"),
+
+                    ("honesty","Honesty"),
+
+                    ("politeness","Politeness"),
+
+                    ("leadership","Leadership"),
+
+                    ("obedience","Obedience"),
+
+                    ("relationship","Relationship"),
+
+                    ("cooperation","Cooperation"),
+
+                    ("self_control","Self Control")
+
+                ] %}
+
+                {% for field,label in traits %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>{{ label }}</strong>
+
+                    </td>
+
+                    <td>
+
+                        <select
+
+                            name="{{ field }}"
+
+                            class="form-control"
+
+                        >
+
+                            {% for i in range(1,6) %}
+
+                            <option
+
+                                value="{{ i }}"
+
+                                {% if affective.get(field)|string == i|string %}
+
+                                selected
+
+                                {% endif %}
+
+                            >
+
+                                {{ i }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <small class="text-muted">
+
+            5 = Excellent • 4 = Very Good • 3 = Good • 2 = Fair • 1 = Poor
+
+        </small>
+
+    </div>
+
+</div>
+<!-- =========================================
+PHASE 6
+PSYCHOMOTOR DOMAIN
+========================================= -->
+
+<div class="card mb-4 border-0 shadow-sm">
+
+    <div class="card-header bg-secondary text-white">
+
+        <h4 class="mb-0">
+            Psychomotor Domain
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>Skill</th>
+
+                    <th width="180">Rating (1-5)</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% set skills = [
+
+                    ("handwriting","Handwriting"),
+
+                    ("sports","Sports"),
+
+                    ("drawing","Drawing"),
+
+                    ("craft","Craft"),
+
+                    ("music","Music"),
+
+                    ("creativity","Creativity"),
+
+                    ("communication","Communication"),
+
+                    ("practical_work","Practical Work"),
+
+                    ("computer_skills","Computer Skills"),
+
+                    ("team_work","Team Work")
+
+                ] %}
+
+                {% for field,label in skills %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>{{ label }}</strong>
+
+                    </td>
+
+                    <td>
+
+                        <select
+
+                            name="{{ field }}"
+
+                            class="form-control"
+
+                        >
+
+                            {% for i in range(1,6) %}
+
+                            <option
+
+                                value="{{ i }}"
+
+                                {% if psychomotor.get(field)|string == i|string %}
+
+                                selected
+
+                                {% endif %}
+
+                            >
+
+                                {{ i }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <small class="text-muted">
+
+            5 = Excellent • 4 = Very Good • 3 = Good • 2 = Fair • 1 = Poor
+
+        </small>
+
+    </div>
+
+</div>
+<!-- =========================================
+PHASE 7
+REMARKS & PROMOTION
+========================================= -->
+
+<div class="card mb-4 border-0 shadow-sm">
+
+    <div class="card-header bg-dark text-white">
+
+        <h4 class="mb-0">
+            Remarks & Promotion
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <!-- Position -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+                    <strong>Class Position</strong>
+                </label>
+
+                <input
+
+                    type="text"
+
+                    class="form-control"
+
+                    name="position"
+
+                    value="{{ student.position or '' }}"
+
+                >
+
+            </div>
+
+            <!-- Promotion -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+                    <strong>Promotion Status</strong>
+                </label>
+
+                <!-- <select
+
+                    name="promotion_status"
+
+                    class="form-control"
+
+                >
+
+                    <option value="Promoted"
+                    {% if student.promotion_status=="Promoted" %}
+                    selected
+                    {% endif %}>
+                        Promoted
+                    </option>
+
+                    <option value="Repeat"
+                    {% if student.promotion_status=="Repeat" %}
+                    selected
+                    {% endif %}>
+                        Repeat
+                    </option>
+
+                    <option value="Graduated"
+                    {% if student.promotion_status=="Graduated" %}
+                    selected
+                    {% endif %}>
+                        Graduated
+                    </option>
+
+                </select> -->
+
+            </div>
+
+            <!-- Next Term -->
+
+            <!-- <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    <strong>Next Term Begins</strong>
+                </label>
+
+                <input
+
+                    type="date"
+
+                    class="form-control"
+
+                    name="next_term_begins"
+
+                    value="{{ school.next_term_begins or '' }}"
+
+                >
+
+            </div>
+
+        </div> -->
+
+        <div class="row">
+
+            <!-- Form Teacher -->
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    <strong>Form Teacher</strong>
+                </label>
+
+                <input
+
+                    type="text"
+
+                    class="form-control"
+
+                    name="form_teacher"
+
+                    value="{{ student.form_teacher or '' }}"
+
+                >
+
+            </div>
+
+            <!-- Principal -->
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    <strong>Principal</strong>
+                </label>
+
+                <input
+
+                    type="text"
+
+                    class="form-control"
+
+                    name="principal"
+
+                    value="{{ student.principal or school.principal }}"
+
+                >
+
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                <strong>Class Teacher's Remark</strong>
+
+            </label>
+
+            <textarea
+
+                class="form-control"
+
+                rows="3"
+
+                name="teacher_remark"
+
+            >{{ student.teacher_remark or '' }}</textarea>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                <strong>Principal's Remark</strong>
+
+            </label>
+
+            <textarea
+
+                class="form-control"
+
+                rows="3"
+
+                name="principal_remark"
+
+            >{{ student.principal_remark or '' }}</textarea>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =========================================
+PHASE 8
+ACTION BUTTONS
+========================================= -->
+
+<div class="card border-0 shadow-sm mb-4">
+
+    <div class="card-body text-center">
+
+        <!-- Keep current session and term -->
+
+        <input
+            type="hidden"
+            name="session"
+            value="{{ current_session }}"
+        >
+
+        <input
+            type="hidden"
+            name="term"
+            value="{{ current_term }}"
+        >
+
+        <button
+            type="submit"
+            class="btn btn-success btn-lg px-5 me-2"
+        >
+            💾 Save Results
+        </button>
+
+        <button
+            type="reset"
+            class="btn btn-warning btn-lg px-5 me-2"
+        >
+            🔄 Reset Form
+        </button>
+
+        <a
+            href="{{ url_for('student_profile_admin', student_id=student.student_id) }}"
+            class="btn btn-secondary btn-lg px-5"
+        >
+            ← Back to Student Profile
+        </a>
+
+    </div>
+
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}

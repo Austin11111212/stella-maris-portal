@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        Teacher Portal
+        {% endblock %}
+    </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Poppins,sans-serif;
+        }
+
+        body{
+            background:#f4f6fb;
+        }
+
+        /* Sidebar */
+
+        .sidebar{
+            position:fixed;
+            left:0;
+            top:0;
+            width:260px;
+            height:100vh;
+            background:#0b3d91;
+            color:white;
+            overflow-y:auto;
+        }
+
+        .logo{
+            text-align:center;
+            padding:25px;
+            border-bottom:1px solid rgba(255,255,255,.2);
+        }
+
+        .logo img{
+            width:90px;
+            height:90px;
+            border-radius:50%;
+            background:white;
+            padding:5px;
+        }
+
+        .logo h2{
+            margin-top:10px;
+            font-size:20px;
+        }
+
+        .logo p{
+            color:#ddd;
+            font-size:13px;
+        }
+
+        .menu{
+            padding:20px;
+        }
+
+        .menu a{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            color:white;
+            text-decoration:none;
+            padding:14px;
+            border-radius:10px;
+            margin-bottom:10px;
+            transition:.3s;
+        }
+
+        .menu a:hover{
+            background:rgba(255,255,255,.15);
+        }
+
+        /* Main */
+
+        .main{
+            margin-left:260px;
+            padding:30px;
+        }
+
+        .topbar{
+            background:white;
+            padding:20px;
+            border-radius:15px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+            margin-bottom:25px;
+        }
+
+        .teacher-box{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .avatar{
+            width:45px;
+            height:45px;
+            border-radius:50%;
+            background:#1565c0;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-weight:bold;
+        }
+
+        .content{
+            background:white;
+            padding:25px;
+            border-radius:15px;
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+        }
+
+        .alert{
+            padding:12px;
+            border-radius:8px;
+            margin-bottom:15px;
+        }
+
+        .alert-success{
+            background:#d4edda;
+            color:#155724;
+        }
+
+        .alert-danger{
+            background:#f8d7da;
+            color:#721c24;
+        }
+
+        .alert-warning{
+            background:#fff3cd;
+            color:#856404;
+        }
+
+        @media(max-width:768px){
+
+            .sidebar{
+                position:relative;
+                width:100%;
+                height:auto;
+            }
+
+            .main{
+                margin-left:0;
+            }
+
+            .topbar{
+                flex-direction:column;
+                gap:15px;
+                text-align:center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='images/logo.png') }}">
+
+        <h2>Stella Maris</h2>
+
+        <p>Teacher Portal</p>
+
+    </div>
+
+    <div class="menu">
+
+        <a href="{{ url_for('teacher_dashboard') }}">
+            <i class="fas fa-house"></i>
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('teacher_profile') }}">
+            <i class="fas fa-user"></i>
+            My Profile
+        </a>
+
+        <a href="{{ url_for('teacher_classes') }}">
+            <i class="fas fa-school"></i>
+            My Classes
+        </a>
+
+        <a href="{{ url_for('teacher_students') }}">
+            <i class="fas fa-users"></i>
+            Students
+        </a>
+
+        <a href="{{ url_for('teacher_results') }}">
+            <i class="fas fa-file-alt"></i>
+            Upload Results
+        </a>
+
+        <a href="{{ url_for('attendance_history') }}">
+            <i class="fas fa-calendar-check"></i>
+            Attendance
+        </a>
+
+        <a href="{{ url_for('teacher_logout') }}">
+            <i class="fas fa-right-from-bracket"></i>
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+
+        <div>
+
+            <h2>Teacher Dashboard</h2>
+
+            <small>{{ current_session }}</small>
+
+        </div>
+
+        <div class="teacher-box">
+
+            <div class="avatar">
+                {{ session.get("teacher_name","T")[0] }}
+            </div>
+
+            <div>
+
+                <strong>{{ session.get("teacher_name","Teacher") }}</strong><br>
+
+                <small>{{ session.get("teacher_subject","") }}</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category,message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="content">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

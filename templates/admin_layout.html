@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        {% block title %}
+
+        Stella Maris College Portal
+
+        {% endblock %}
+
+    </title>
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Main CSS -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+</head>
+
+<body>
+
+    <!-- ==========================================
+    PHASE 3
+    SIDEBAR
+    =========================================== -->
+    <!-- =====================================================
+PHASE 3
+PROFESSIONAL SIDEBAR
+===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- School Logo -->
+
+        <div class="logo-area">
+
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="School Logo">
+
+            <h2>Stella Maris</h2>
+
+            <p>College Portal System</p>
+
+        </div>
+
+        <!-- Navigation -->
+
+        <nav class="menu">
+
+            <!-- Dashboard -->
+
+            <div class="menu-title">
+
+                Dashboard
+
+            </div>
+
+            <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+
+                <i class="fas fa-chart-pie"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+            <!-- Students -->
+
+            <div class="menu-title">
+
+                Students
+
+            </div>
+
+            <a href="{{ url_for('add_student') }}">
+
+                <i class="fas fa-user-plus"></i>
+
+                <span>Add Student</span>
+
+            </a>
+
+            <a href="{{ url_for('student_classes') }}">
+
+                <i class="fas fa-school"></i>
+
+                <span>Classes</span>
+
+            </a>
+
+            <a href="#">
+
+                <i class="fas fa-id-card"></i>
+
+                <span>ID Cards</span>
+
+            </a>
+
+            <a href="{{ url_for('results') }}" class="{% if request.endpoint == 'results' %}active{% endif %}">
+
+                <i class="fas fa-file-lines"></i>
+
+                <span>Results</span>
+
+            </a>
+            </a>
+
+            <!-- Teachers -->
+
+            <div class="menu-title">
+
+                Teachers
+
+            </div>
+
+            <a href="{{ url_for('add_teacher') }}">
+
+                <i class="fas fa-user-tie"></i>
+
+                <span>Add Teacher</span>
+
+            </a>
+
+            <a href="{{ url_for('manage_teachers') }}">
+
+                <i class="fas fa-users"></i>
+
+                <span>Manage Teachers</span>
+
+            </a>
+
+            <!-- Academic -->
+
+            <div class="menu-title">
+
+                Academic
+
+            </div>
+
+            <a href="{{ url_for('attendance_history') }}">
+
+                <i class="fas fa-calendar-check"></i>
+
+                <span>Attendance</span>
+
+            </a>
+
+            <a href="#">
+
+                <i class="fas fa-book"></i>
+
+                <span>Subjects</span>
+
+            </a>
+            <li>
+                <a href="{{ url_for('broadsheet') }}">
+                    <i class="fas fa-table"></i>
+                    Broadsheet
+                </a>
+            </li>
+
+            <a href="{{ url_for('upload_results') }}"
+                class="{% if request.endpoint == 'upload_results' %}active{% endif %}">
+
+                <i class="fas fa-upload"></i>
+
+                <span>Upload Results</span>
+
+            </a>
+
+            <a href="{{ url_for('results') }}" class="{% if request.endpoint == 'results' %}active{% endif %}">
+
+                <i class="fas fa-file-lines"></i>
+
+                <span>Results Center</span>
+
+            </a>
+
+            <a href="{{ url_for('reports') }}" class="{% if request.endpoint == 'reports' %}active{% endif %}">
+
+                <i class="fas fa-chart-line"></i>
+
+                <span>Reports</span>
+
+            </a>
+
+            <!-- Finance -->
+            <!-- 
+        <div class="menu-title">
+
+            Finance
+
+        </div>
+
+        <a href="#">
+
+            <i class="fas fa-money-bill-wave"></i>
+
+            <span>School Fees</span>
+
+        </a>
+
+        <a href="#">
+
+            <i class="fas fa-wallet"></i>
+
+            <span>Payments</span>
+
+        </a> -->
+
+            <!-- Parents -->
+
+            <div class="menu-title">
+
+                Parents
+
+            </div>
+
+            <a href="#">
+
+                <i class="fas fa-people-roof"></i>
+
+                <span>Parents</span>
+
+            </a>
+
+            <!-- Administration -->
+
+            <div class="menu-title">
+
+                Administration
+
+            </div>
+            <a href="{{ url_for('portal_settings') }}">
+
+                <i class="fas fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </nav>
+
+        <!-- Logout -->
+
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('admin_logout') }}" class="logout-btn">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ==========================================
+    PHASE 4
+    MAIN PAGE
+    =========================================== -->
+
+    <div class="main">
+
+        <!-- Top Navigation -->
+        <!-- =====================================================
+PHASE 4
+PROFESSIONAL TOPBAR
+===================================================== -->
+
+        <header class="topbar">
+
+            <!-- Left -->
+
+            <div class="topbar-left">
+
+                <button class="menu-toggle">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+                <div class="search-box">
+
+                    <i class="fas fa-search"></i>
+
+                    <input type="search" placeholder="Search students, teachers, classes...">
+
+                </div>
+
+            </div>
+
+            <!-- Right -->
+
+            <div class="topbar-right">
+
+                <div class="session-box">
+
+                    <h4>
+
+                        {{ current_term|default("Third Term") }}
+
+                    </h4>
+
+                    <p>
+
+                        {{ current_session|default("2025/2026 Academic Session") }}
+
+                    </p>
+
+                </div>
+
+                <!-- Notifications -->
+
+                <div class="top-icon">
+
+                    <i class="fas fa-bell"></i>
+
+                    <span class="notification-count">
+
+                        {{ notification_count|default(0) }}
+
+                    </span>
+
+                </div>
+
+                <!-- Messages -->
+
+                <div class="top-icon">
+
+                    <i class="fas fa-envelope"></i>
+
+                    <span class="notification-count">
+
+                        {{ message_count|default(0) }}
+
+                    </span>
+
+                </div>
+
+                <!-- Administrator -->
+
+                <div class="admin-profile">
+
+                    <img src="{{ url_for('static', filename='images/default-admin.png') }}" alt="Administrator">
+
+                    <div>
+
+                        <h4>
+
+                            Administrator
+
+                        </h4>
+
+                        <p>
+
+                            System Administrator
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- Flash Messages -->
+        <!-- =====================================================
+PHASE 5
+FLASH MESSAGE AREA
+===================================================== -->
+
+        <section class="flash-area">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+            {% for category, message in messages %}
+
+            <div class="alert alert-{{ category }}">
+
+                <div class="alert-icon">
+
+                    {% if category == "success" %}
+
+                    <i class="fas fa-circle-check"></i>
+
+                    {% elif category == "danger" %}
+
+                    <i class="fas fa-circle-xmark"></i>
+
+                    {% elif category == "warning" %}
+
+                    <i class="fas fa-triangle-exclamation"></i>
+
+                    {% else %}
+
+                    <i class="fas fa-circle-info"></i>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="alert-text">
+
+                    {{ message }}
+
+                </div>
+
+                <button class="alert-close">
+
+                    <i class="fas fa-times"></i>
+
+                </button>
+
+            </div>
+
+            {% endfor %}
+
+            {% endif %}
+
+            {% endwith %}
+
+        </section>
+
+
+
+        <!-- Main Content -->
+
+        <main class="main-container">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </main>
+
+        <!-- Footer -->
+
+
+
+    </div>
+
+    <!-- Main JavaScript -->
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Your JavaScript -->
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Check-In</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0b3d91, #1565c0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .card {
+            background: white;
+            width: 420px;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-bottom: 5px;
+            color: #0b3d91;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #1565c0;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0b3d91;
+        }
+
+        .time-box {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f4f7fb;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .small {
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <!-- Optional Logo -->
+        <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+
+        <h2>Student Check-In</h2>
+        <p>Mark your arrival time at school</p>
+
+        <!-- FLASH MESSAGE -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <p style="color:red;">{{ messages[0] }}</p>
+        {% endif %}
+        {% endwith %}
+
+        <!-- CHECK-IN FORM -->
+        <form method="POST">
+
+            <input type="text" name="student_id" placeholder="Enter Student ID" required>
+
+            <input type="password" name="password" placeholder="Enter Password" required>
+
+            <button type="submit">Check In</button>
+
+        </form>
+
+        <div class="time-box">
+            Today’s Time: <strong id="time"></strong>
+        </div>
+
+        <p class="small">Attendance is recorded automatically</p>
+
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("time").innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+
+</body>
+
+</html>

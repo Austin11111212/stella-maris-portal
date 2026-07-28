@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+Stella Maris College Result Sheet
+
+</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:#edf2f7;
+
+padding:30px;
+
+color:#222;
+
+}
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+background:white;
+
+border-radius:12px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+overflow:hidden;
+
+}
+
+.header{
+
+background:#0b3d91;
+
+color:white;
+
+padding:25px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+.logo{
+
+width:110px;
+
+height:110px;
+
+background:white;
+
+border-radius:50%;
+
+padding:6px;
+
+}
+
+.school-details{
+
+flex:1;
+
+text-align:center;
+
+padding:0 20px;
+
+}
+
+.school-details h1{
+
+font-size:34px;
+
+margin-bottom:8px;
+
+letter-spacing:1px;
+
+}
+
+.school-details h3{
+
+font-weight:500;
+
+margin-bottom:6px;
+
+}
+
+.school-details p{
+
+font-size:14px;
+
+margin:3px;
+
+}
+
+.report-title{
+
+background:#f4f7fb;
+
+padding:18px;
+
+text-align:center;
+
+font-size:26px;
+
+font-weight:bold;
+
+color:#0b3d91;
+
+border-bottom:3px solid #0b3d91;
+
+}
+
+.student-section{
+
+display:grid;
+
+grid-template-columns:220px 1fr;
+
+gap:30px;
+
+padding:30px;
+
+}
+
+.passport{
+
+text-align:center;
+
+}
+
+.passport img{
+
+width:170px;
+
+height:190px;
+
+object-fit:cover;
+
+border-radius:10px;
+
+border:4px solid #0b3d91;
+
+}
+
+.passport h3{
+
+margin-top:12px;
+
+font-size:18px;
+
+}
+
+.bio{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:18px;
+
+}
+
+.bio-card{
+
+background:#f8f9fa;
+
+padding:15px;
+
+border-left:5px solid #0b3d91;
+
+border-radius:8px;
+
+}
+
+.bio-card label{
+
+display:block;
+
+font-size:13px;
+
+color:#666;
+
+margin-bottom:6px;
+
+}
+
+.bio-card strong{
+
+font-size:16px;
+
+}
+
+.summary{
+
+padding:0 30px 30px;
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:20px;
+
+}
+
+.summary-card{
+
+background:linear-gradient(135deg,#0b3d91,#1565c0);
+
+color:white;
+
+padding:25px;
+
+border-radius:12px;
+
+text-align:center;
+
+}
+
+.summary-card h2{
+
+font-size:34px;
+
+margin-bottom:10px;
+
+}
+
+.summary-card p{
+
+font-size:15px;
+
+}
+
+.section-title{
+
+margin:25px 30px 10px;
+
+padding-bottom:8px;
+
+border-bottom:3px solid #0b3d91;
+
+font-size:22px;
+
+color:#0b3d91;
+
+font-weight:bold;
+
+}
+
+@media(max-width:900px){
+
+.student-section{
+
+grid-template-columns:1fr;
+
+}
+
+.bio{
+
+grid-template-columns:1fr;
+
+}
+
+.summary{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.header{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+}
+
+@media print{
+
+body{
+
+background:white;
+
+padding:0;
+
+}
+
+.container{
+
+box-shadow:none;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<img
+src="{{ url_for('static', filename='images/logo.png') }}"
+class="logo">
+
+<div class="school-details">
+
+<h1>STELLA MARIS COLLEGE</h1>
+
+<h3>
+Excellence • Discipline • Service
+</h3>
+
+<p>
+
+PMB 215,
+Port Harcourt Road,
+Owerri,
+Imo State,
+Nigeria
+
+</p>
+
+<p>
+
+Phone:
+0803-123-4567
+
+|
+
+Email:
+info@stellamariscollege.edu.ng
+
+</p>
+
+<p>
+
+Website:
+www.stellamariscollege.edu.ng
+
+</p>
+
+</div>
+
+</div>
+
+<div class="report-title">
+
+THIRD TERM REPORT SHEET
+
+<br>
+
+2025/2026 ACADEMIC SESSION
+
+</div>
+
+<div class="student-section">
+
+<div class="passport">
+
+<img src="{{ student.photo or url_for('static',filename='images/default.png') }}">
+
+<h3>{{ student.name }}</h3>
+
+<p>
+
+{{ student.student_id }}
+
+</p>
+
+</div>
+
+<div class="bio">
+
+<div class="bio-card">
+
+<label>Student Name</label>
+
+<strong>
+
+{{ student.name }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Admission Number</label>
+
+<strong>
+
+{{ student.admission_no }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Student ID</label>
+
+<strong>
+
+{{ student.student_id }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Gender</label>
+
+<strong>
+
+{{ student.gender }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Date of Birth</label>
+
+<strong>
+
+{{ student.date_of_birth }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Class</label>
+
+<strong>
+
+{{ student["class"] }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>House</label>
+
+<strong>
+
+{{ student.house }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Academic Session</label>
+
+<strong>
+
+{{ current_session }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Term</label>
+
+<strong>
+
+{{ current_term }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Position</label>
+
+<strong>
+
+{{ student.position }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Class Population</label>
+
+<strong>
+
+{{ class_population }}
+
+</strong>
+
+</div>
+
+<div class="bio-card">
+
+<label>Form Teacher</label>
+
+<strong>
+
+{{ student.form_teacher }}
+
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="summary">
+
+<div class="summary-card">
+
+<h2>
+
+{{ student.total_score }}
+
+</h2>
+
+<p>
+
+Total Score
+
+</p>
+
+</div>
+
+<div class="summary-card">
+
+<h2>
+
+{{ student.average_score }}
+
+</h2>
+
+<p>
+
+Average Score
+
+</p>
+
+</div>
+
+<div class="summary-card">
+
+<h2>
+
+{{ student.position }}
+
+</h2>
+
+<p>
+
+Class Position
+
+</p>
+
+</div>
+
+<div class="summary-card">
+
+<h2>
+
+{{ student.grade }}
+
+</h2>
+
+<p>
+
+Overall Grade
+
+</p>
+
+</div>
+
+</div>
+
+<h2 class="section-title">
+
+ACADEMIC PERFORMANCE
+
+</h2>
+
+<style>
+
+.result-table{
+
+width:95%;
+
+margin:20px auto;
+
+border-collapse:collapse;
+
+font-size:14px;
+
+}
+
+.result-table th{
+
+background:#0b3d91;
+
+color:white;
+
+padding:12px;
+
+border:1px solid #ccc;
+
+}
+
+.result-table td{
+
+padding:10px;
+
+border:1px solid #ccc;
+
+text-align:center;
+
+}
+
+.result-table tr:nth-child(even){
+
+background:#f8f9fa;
+
+}
+
+.result-table tr:hover{
+
+background:#eef5ff;
+
+}
+
+.subject-name{
+
+text-align:left;
+
+padding-left:12px;
+
+font-weight:600;
+
+}
+
+.academic-summary{
+
+width:95%;
+
+margin:30px auto;
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:20px;
+
+}
+
+.summary-box{
+
+background:white;
+
+border:2px solid #0b3d91;
+
+border-radius:10px;
+
+padding:20px;
+
+}
+
+.summary-box h3{
+
+color:#0b3d91;
+
+margin-bottom:15px;
+
+}
+
+.summary-box table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+.summary-box td{
+
+padding:8px;
+
+border-bottom:1px solid #ddd;
+
+}
+
+.grade-key{
+
+margin:30px auto;
+
+width:95%;
+
+border-collapse:collapse;
+
+}
+
+.grade-key th{
+
+background:#1565c0;
+
+color:white;
+
+padding:10px;
+
+}
+
+.grade-key td{
+
+padding:10px;
+
+text-align:center;
+
+border:1px solid #ddd;
+
+}
+
+</style>
+
+<table class="result-table">
+
+<tr>
+
+<th>S/N</th>
+
+<th style="text-align:left;">Subject</th>
+
+<th>CA</th>
+
+<th>Exam</th>
+
+<th>Total</th>
+
+<th>Grade</th>
+
+<th>Remark</th>
+
+<th>Teacher</th>
+
+<th>Position</th>
+
+<th>Highest</th>
+
+<th>Lowest</th>
+
+<th>Class Avg</th>
+
+</tr>
+
+{% for subject,data in student.results.items() %}
+
+<tr>
+
+<td>
+
+{{ loop.index }}
+
+</td>
+
+<td class="subject-name">
+
+{{ subject }}
+
+</td>
+
+<td>
+
+{{ data.test }}
+
+</td>
+
+<td>
+
+{{ data.exam }}
+
+</td>
+
+<td>
+
+<strong>
+
+{{ data.total }}
+
+</strong>
+
+</td>
+
+<td>
+
+{{ data.grade }}
+
+</td>
+
+<td>
+
+{{ data.remark }}
+
+</td>
+
+<td>
+
+{{ data.teacher or "N/A" }}
+
+</td>
+
+<td>
+
+{{ data.position or "-" }}
+
+</td>
+
+<td>
+
+{{ data.highest or "-" }}
+
+</td>
+
+<td>
+
+{{ data.lowest or "-" }}
+
+</td>
+
+<td>
+
+{{ data.class_average or "-" }}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="academic-summary">
+
+<div class="summary-box">
+
+<h3>
+
+Academic Statistics
+
+</h3>
+
+<table>
+
+<tr>
+
+<td>Total Subjects</td>
+
+<td>
+
+{{ student.total_subjects }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Total Score</td>
+
+<td>
+
+{{ student.total_score }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Average Score</td>
+
+<td>
+
+{{ student.average_score }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Overall Grade</td>
+
+<td>
+
+{{ student.grade }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Overall Position</td>
+
+<td>
+
+{{ student.position }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Promotion Status</td>
+
+<td>
+
+{{ student.promotion_status }}
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="summary-box">
+
+<h3>
+
+Class Performance
+
+</h3>
+
+<table>
+
+<tr>
+
+<td>Class Average</td>
+
+<td>
+
+{{ student.class_average }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Highest Average</td>
+
+<td>
+
+{{ student.highest_average }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Lowest Average</td>
+
+<td>
+
+{{ student.lowest_average }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Number in Class</td>
+
+<td>
+
+{{ class_population }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Attendance %</td>
+
+<td>
+
+{{ student.attendance_percent }}
+
+%</td>
+
+</tr>
+
+<tr>
+
+<td>Promotion</td>
+
+<td>
+
+{{ student.promotion_status }}
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="summary-box">
+
+<h3>
+
+Annual Performance
+
+</h3>
+
+<table>
+
+<tr>
+
+<td>First Term Avg.</td>
+
+<td>
+
+{{ student.first_term_average or "-" }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Second Term Avg.</td>
+
+<td>
+
+{{ student.second_term_average or "-" }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Third Term Avg.</td>
+
+<td>
+
+{{ student.third_term_average or "-" }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Cumulative Average</strong></td>
+
+<td>
+
+<strong>
+
+{{ student.cumulative_average or "-" }}
+
+</strong>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Final Position</td>
+
+<td>
+
+{{ student.final_position or "-" }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Decision</td>
+
+<td>
+
+{{ student.promotion_status }}
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<h2 class="section-title">
+
+GRADING SYSTEM
+
+</h2>
+
+<table class="grade-key">
+
+<tr>
+
+<th>Score</th>
+
+<th>Grade</th>
+
+<th>Remark</th>
+
+</tr>
+
+<tr>
+
+<td>80 - 100</td>
+
+<td>A</td>
+
+<td>Excellent</td>
+
+</tr>
+
+<tr>
+
+<td>70 - 79</td>
+
+<td>B</td>
+
+<td>Very Good</td>
+
+</tr>
+
+<tr>
+
+<td>60 - 69</td>
+
+<td>C</td>
+
+<td>Good</td>
+
+</tr>
+
+<tr>
+
+<td>50 - 59</td>
+
+<td>D</td>
+
+<td>Credit</td>
+
+</tr>
+
+<tr>
+
+<td>40 - 49</td>
+
+<td>E</td>
+
+<td>Pass</td>
+
+</tr>
+
+<tr>
+
+<td>0 - 39</td>
+
+<td>F</td>
+
+<td>Fail</td>
+
+</tr>
+
+</table>
+
+<!-- ====================================== -->
+<!-- ATTENDANCE RECORD -->
+<!-- ====================================== -->
+
+<h2 class="section-title">
+Attendance Record
+</h2>
+
+<style>
+
+.report-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:25px;
+
+margin-top:25px;
+
+}
+
+.report-card{
+
+background:white;
+
+border:2px solid #0b3d91;
+
+border-radius:10px;
+
+padding:20px;
+
+}
+
+.report-card h3{
+
+margin-bottom:15px;
+
+color:#0b3d91;
+
+border-bottom:2px solid #0b3d91;
+
+padding-bottom:8px;
+
+}
+
+.report-card table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+.report-card td{
+
+padding:10px;
+
+border-bottom:1px solid #ddd;
+
+}
+
+.domain-table{
+
+width:100%;
+
+margin-top:15px;
+
+border-collapse:collapse;
+
+}
+
+.domain-table th{
+
+background:#0b3d91;
+
+color:white;
+
+padding:10px;
+
+}
+
+.domain-table td{
+
+padding:9px;
+
+border:1px solid #ddd;
+
+}
+
+.comment-box{
+
+margin-top:30px;
+
+padding:20px;
+
+border:2px solid #0b3d91;
+
+border-radius:10px;
+
+background:#fafafa;
+
+}
+
+.comment-box h3{
+
+color:#0b3d91;
+
+margin-bottom:10px;
+
+}
+
+.signature-area{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:30px;
+
+margin-top:40px;
+
+text-align:center;
+
+}
+
+.signature-box{
+
+padding-top:60px;
+
+border-top:2px solid #333;
+
+}
+
+.watermark{
+
+position:fixed;
+
+top:45%;
+
+left:25%;
+
+font-size:90px;
+
+color:rgba(11,61,145,.05);
+
+transform:rotate(-30deg);
+
+font-weight:bold;
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+.notice{
+
+margin-top:30px;
+
+padding:15px;
+
+background:#fff8dc;
+
+border-left:6px solid #0b3d91;
+
+font-size:14px;
+
+}
+
+@media print{
+
+.watermark{
+
+display:block;
+
+}
+
+.notice{
+
+page-break-inside:avoid;
+
+}
+
+}
+
+</style>
+
+<div class="watermark">
+
+STELLA MARIS COLLEGE
+
+</div>
+
+<div class="report-grid">
+
+<div class="report-card">
+
+<h3>
+
+Attendance Summary
+
+</h3>
+
+<table>
+
+<tr>
+
+<td>School Opened</td>
+
+<td>
+
+{{ student.attendance.opened }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Days Present</td>
+
+<td>
+
+{{ student.attendance.present }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Days Absent</td>
+
+<td>
+
+{{ student.attendance.absent }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Attendance %</td>
+
+<td>
+
+{{ student.attendance_percent }}%
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="report-card">
+
+<h3>
+
+Health Record
+
+</h3>
+
+<table>
+
+<tr>
+
+<td>Height</td>
+
+<td>
+
+{{ student.height or "-" }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Weight</td>
+
+<td>
+
+{{ student.weight or "-" }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Health Status</td>
+
+<td>
+
+{{ student.health_status or "Good" }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Vision</td>
+
+<td>
+
+{{ student.vision or "Normal" }}
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ====================================== -->
+<!-- AFFECTIVE DOMAIN -->
+<!-- ====================================== -->
+
+<h2 class="section-title">
+
+Affective Domain
+
+</h2>
+
+<table class="domain-table">
+
+<tr>
+
+<th>Trait</th>
+
+<th>Rating</th>
+
+</tr>
+
+{% for trait,value in student.affective.items() %}
+
+<tr>
+
+<td>
+
+{{ trait }}
+
+</td>
+
+<td>
+
+{{ value }}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<!-- ====================================== -->
+<!-- PSYCHOMOTOR DOMAIN -->
+<!-- ====================================== -->
+
+<h2 class="section-title">
+
+Psychomotor Domain
+
+</h2>
+
+<table class="domain-table">
+
+<tr>
+
+<th>Skill</th>
+
+<th>Rating</th>
+
+</tr>
+
+{% for skill,value in student.psychomotor.items() %}
+
+<tr>
+
+<td>
+
+{{ skill }}
+
+</td>
+
+<td>
+
+{{ value }}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<!-- ====================================== -->
+<!-- COMMENTS -->
+<!-- ====================================== -->
+
+<div class="comment-box">
+
+<h3>
+
+Class Teacher's Comment
+
+</h3>
+
+<p>
+
+{{ student.teacher_comment or
+"An intelligent student. Keep working hard and maintain good behaviour." }}
+
+</p>
+
+</div>
+
+<div class="comment-box">
+
+<h3>
+
+Principal's Comment
+
+</h3>
+
+<p>
+
+{{ student.principal_comment or
+"A satisfactory performance. Promotion is subject to school regulations." }}
+
+</p>
+
+</div>
+
+<!-- ====================================== -->
+<!-- PROMOTION -->
+<!-- ====================================== -->
+
+<div class="report-grid">
+
+<div class="report-card">
+
+<h3>
+
+Promotion Decision
+
+</h3>
+
+<h2 style="color:green;text-align:center;">
+
+{{ student.promotion_status or "PROMOTED" }}
+
+</h2>
+
+</div>
+
+<div class="report-card">
+
+<h3>
+
+Next Term Resumption
+
+</h3>
+
+<h2 style="text-align:center;">
+
+{{ student.next_term_begins }}
+
+</h2>
+
+</div>
+
+</div>
+
+<!-- ====================================== -->
+<!-- SIGNATURES -->
+<!-- ====================================== -->
+
+<div class="signature-area">
+
+<div class="signature-box">
+
+{{ student.form_teacher }}
+
+<br>
+
+<b>Class Teacher</b>
+
+</div>
+
+<div class="signature-box">
+
+{{ student.principal }}
+
+<br>
+
+<b>Principal</b>
+
+</div>
+
+<div class="signature-box">
+
+Official School Stamp
+
+</div>
+
+</div>
+
+<!-- ====================================== -->
+<!-- FOOTER -->
+<!-- ====================================== -->
+
+<div class="notice">
+
+<b>NOTE:</b>
+
+This result is computer generated by the Stella Maris College School Management Portal.
+
+Any alteration renders this report invalid.
+
+For verification, contact the school administration.
+
+</div>
+
+<hr style="margin-top:40px;">
+
+<div style="display:flex;justify-content:space-between;font-size:13px;">
+
+<div>
+
+Stella Maris College<br>
+
+School Portal Version 1.0
+
+</div>
+
+<div>
+
+Printed on:
+
+{{ current_date }}
+
+</div>
+
+</div>

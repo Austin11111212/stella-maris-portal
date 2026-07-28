@@ -1,0 +1,2264 @@
+{% extends "admin_layout.html" %}
+
+{% block title %}
+Results Center
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+PHASE 1
+RESULTS CENTER HEADER
+===================================================== -->
+
+<div class="page-header">
+
+    <div>
+
+        <h1>
+
+            📊 Results Center
+
+        </h1>
+
+        <p>
+
+            View, search and manage students' academic results.
+
+        </p>
+
+    </div>
+
+    <div>
+
+        <a href="{{ url_for('dashboard') }}" class="btn-secondary">
+
+            <i class="fas fa-arrow-left"></i>
+
+            Dashboard
+
+        </a>
+
+    </div>
+
+
+</div>
+<!-- =====================================================
+PHASE 2
+RESULT FILTERS
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            🔎 Search Student Results
+
+        </h2>
+
+    </div>
+
+    <form method="GET" action="{{ url_for('results') }}">
+
+        <div class="form-grid">
+
+            <!-- Academic Session -->
+
+            <div class="form-group">
+
+                <label>Academic Session</label>
+
+                <select name="session" class="form-control">
+
+                    <option value="">All Sessions</option>
+
+                    {% for session in sessions %}
+
+                    <option value="{{ session }}" {% if selected_session==session %}selected{% endif %}>
+
+                        {{ session }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Term -->
+
+            <div class="form-group">
+
+                <label>Term</label>
+
+                <select name="term" class="form-control">
+
+                    <option value="">All Terms</option>
+
+                    <option value="First Term" {% if selected_term=="First Term" %}selected{% endif %}>
+
+                        First Term
+
+                    </option>
+
+                    <option value="Second Term" {% if selected_term=="Second Term" %}selected{% endif %}>
+
+                        Second Term
+
+                    </option>
+
+                    <option value="Third Term" {% if selected_term=="Third Term" %}selected{% endif %}>
+
+                        Third Term
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Class -->
+
+            <div class="form-group">
+
+                <label>Class</label>
+
+                <select name="class" class="form-control">
+
+                    <option value="">All Classes</option>
+
+                    {% for cls in ["JSS1","JSS2","JSS3","SS1","SS2","SS3"] %}
+
+                    <option value="{{ cls }}" {% if selected_class==cls %}selected{% endif %}>
+
+                        {{ cls }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Student Name -->
+
+            <div class="form-group">
+
+                <label>Student Name</label>
+
+                <input type="text" name="student_name" class="form-control" value="{{ student_name }}"
+                    placeholder="Student Name">
+
+            </div>
+
+            <!-- Student ID -->
+
+            <div class="form-group">
+
+                <label>Student ID</label>
+
+                <input type="text" name="student_id" class="form-control" value="{{ student_id }}"
+                    placeholder="Student ID">
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="btn-primary" type="submit">
+
+            <i class="fas fa-search"></i>
+
+            Search Results
+
+        </button>
+
+        <a href="{{ url_for('results') }}" class="btn-secondary">
+
+            <i class="fas fa-rotate-left"></i>
+
+            Reset
+
+        </a>
+
+    </form>
+
+</div>
+<!-- =====================================================
+PHASE 17
+BULK RESULT ACTIONS
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            ⚡ Bulk Result Actions
+
+        </h2>
+
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+
+        <a href="{{ url_for('approve_all_results',
+                session=selected_session,
+                term=selected_term) }}" class="btn-success">
+
+            <i class="fas fa-check-circle"></i>
+
+            Approve All
+
+        </a>
+
+        <a href="{{ url_for('pending_all_results',
+                session=selected_session,
+                term=selected_term) }}" class="btn-warning">
+
+            <i class="fas fa-clock"></i>
+
+            Pending All
+
+        </a>
+
+        <a href="{{ url_for('publish_all_results',
+                session=selected_session,
+                term=selected_term) }}" class="btn-primary">
+
+            <i class="fas fa-upload"></i>
+
+            Publish All
+
+        </a>
+
+        <a href="{{ url_for('lock_all_results',
+                session=selected_session,
+                term=selected_term) }}" class="btn-danger">
+
+            <i class="fas fa-lock"></i>
+
+            Lock All
+
+        </a>
+
+        <a href="{{ url_for('unlock_all_results',
+                session=selected_session,
+                term=selected_term) }}" class="btn-info">
+
+            <i class="fas fa-lock-open"></i>
+
+            Unlock All
+
+        </a>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 3
+RESULTS TABLE
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+            📑 Student Results
+        </h2>
+
+    </div>
+
+    <div class="bulk-actions mb-3" style="display:flex;gap:10px;align-items:center;">
+
+        <button id="approveSelected" class="btn btn-success">
+            ✔ Approve Selected
+        </button>
+
+        <button id="publishSelected" class="btn btn-primary">
+            📢 Publish Selected
+        </button>
+
+        <button id="lockSelected" class="btn btn-danger">
+            🔒 Lock Selected
+        </button>
+        <button id="unlockSelected" class="btn btn-info">
+            <i class="fas fa-lock-open"></i>
+            Unlock Selected
+        </button>
+
+    </div>
+    <input type="hidden" id="currentSession" value="{{ selected_session or school.current_session }}">
+
+    <input type="hidden" id="currentTerm" value="{{ selected_term or school.current_term }}">
+    <div class="table-responsive">
+
+        <table class="table table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        <input type="checkbox" id="selectAll">
+                    </th>
+
+                    <th>#</th>
+
+                    <th>Passport</th>
+
+                    <th>Student Name</th>
+
+                    <th>Student ID</th>
+
+                    <th>Class</th>
+
+                    <th>Session</th>
+
+                    <th>Term</th>
+
+                    <th>Average</th>
+
+                    <th>Grade</th>
+
+                    <th>Position</th>
+
+                    <th>Status</th>
+
+                    <th style="min-width:280px;">
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% if students %}
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>
+                        <input type="checkbox" class="student-checkbox" value="{{ student.student_id }}">
+                    </td>
+
+                    <!-- Number -->
+
+                    <td>{{ loop.index }}</td>
+
+                    <!-- Passport -->
+
+                    <td>
+
+                        {% if student.passport %}
+
+                        <img src="{{ url_for('static', filename='uploads/' + student.passport) }}"
+                            style="width:45px;height:45px;border-radius:50%;object-fit:cover;">
+
+                        {% else %}
+
+                        <img src="{{ url_for('static', filename='images/default.png') }}"
+                            style="width:45px;height:45px;border-radius:50%;object-fit:cover;">
+
+                        {% endif %}
+
+                    </td>
+
+                    <!-- Name -->
+
+                    <td>
+
+                        <strong>{{ student.full_name }}</strong>
+
+                    </td>
+
+                    <!-- ID -->
+
+                    <td>{{ student.student_id }}</td>
+
+                    <!-- Class -->
+
+                    <td>{{ student.class }}</td>
+
+                    <!-- Session -->
+
+                    <td>{{ selected_session or school.current_session }}</td>
+
+                    <!-- Term -->
+
+                    <td>{{ selected_term or school.current_term }}</td>
+
+                    <!-- Average -->
+
+                    <td>
+
+                        {{ "%.2f"|format(student.average_score|default(0)) }}
+
+                    </td>
+
+                    <!-- Grade -->
+
+                    <td>
+
+                        <span class="grade-badge">
+
+                            {{ student.grade|default("-") }}
+
+                        </span>
+
+                    </td>
+
+                    <!-- Position -->
+
+                    <td>
+
+                        {{ student.remark|default("-") }}
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        {% if student.result and student.result.get("approval_status") == "Approved" %}
+
+                        <span class="badge badge-success">
+
+                            <i class="fas fa-check-circle"></i>
+
+                            Approved
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge badge-warning">
+
+                            <i class="fas fa-clock"></i>
+
+                            Pending
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+
+                            <a href="{{ url_for('student_profile_admin',
+                                student_id=student.student_id) }}" class="btn-info">
+
+                                <i class="fas fa-user"></i>
+
+                                Profile
+
+                            </a>
+
+                            <a href="{{ url_for('edit_results',
+                                student_id=student.student_id) }}" class="btn-warning">
+
+                                <i class="fas fa-edit"></i>
+
+                                Edit
+
+                            </a>
+
+                            <a href="{{ url_for(
+    'student_report',
+    student_id=student.student_id,
+    session=(selected_session or school.current_session),
+    term=(selected_term or school.current_term)
+) }}" class="btn btn-success">
+
+                                Report
+
+                            </a>
+<button
+    type="button"
+    class="btn btn-danger delete-result"
+    data-student="{{ student.student_id }}"
+    data-session="{{ selected_session }}"
+    data-term="{{ selected_term }}">
+
+    <i class="fas fa-trash"></i>
+    Delete
+
+</button>
+
+                            {% if student.result and student.result.get("approval_status") == "Approved" %}
+
+                            <a href="{{ url_for('pending_result',
+                                student_id=student.student_id,
+                                session=selected_session,
+                                term=selected_term) }}" class="btn-secondary">
+
+                                <i class="fas fa-rotate-left"></i>
+
+                                Pending
+
+                            </a>
+
+                            {% else %}
+
+                            <a href="{{ url_for('approve_result',
+                                student_id=student.student_id,
+                                session=selected_session,
+                                term=selected_term) }}" class="btn-primary">
+
+                                <i class="fas fa-check"></i>
+
+                                Approve
+
+                            </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="13" style="text-align:center;padding:40px;">
+
+                        <i class="fas fa-folder-open fa-2x"></i>
+
+                        <br><br>
+
+                        No student results found.
+
+                    </td>
+
+                </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+</div>
+<!-- =====================================================
+PHASE 4
+RESULT STATISTICS
+===================================================== -->
+
+<div class="dashboard-grid">
+
+    <!-- Total Students -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-user-graduate"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ students|length }}
+
+            </h2>
+
+            <p>
+
+                Total Students
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Results Available -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-file-lines"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ students|length }}
+
+            </h2>
+
+            <p>
+
+                Results Available
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Excellent -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-award"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ grade_counts.A }}
+
+            </h2>
+
+            <p>
+
+                Excellent (A)
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Good -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-star"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ grade_counts.B }}
+
+            </h2>
+
+            <p>
+
+                Good (B)
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Credit -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-book-open"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ grade_counts.C }}
+
+            </h2>
+
+            <p>
+
+                Credit (C)
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Fail -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-triangle-exclamation"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ grade_counts.F }}
+
+            </h2>
+
+            <p>
+
+                Fail
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 5
+RESULT SUMMARY TABLE
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            📋 Result Summary
+
+        </h2>
+
+    </div>
+
+    <div style="overflow-x:auto;">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>S/N</th>
+
+                    <th>Passport</th>
+
+                    <th>Student Name</th>
+
+                    <th>Student ID</th>
+
+                    <th>Class</th>
+
+                    <th>Average</th>
+
+                    <th>Grade</th>
+
+                    <th>Performance</th>
+
+                    <th>Position</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% if students %}
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>
+
+                        {{ loop.index }}
+
+                    </td>
+
+                    <td>
+
+                        {% if student.passport %}
+
+                        <img src="{{ url_for('static', filename='uploads/' + student.passport) }}" style="
+                                        width:45px;
+                                        height:45px;
+                                        border-radius:50%;
+                                        object-fit:cover;
+                                    ">
+
+                        {% else %}
+
+                        <img src="{{ url_for('static', filename='images/default.png') }}" style="
+                                        width:45px;
+                                        height:45px;
+                                        border-radius:50%;
+                                        object-fit:cover;
+                                    ">
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {{ student.full_name }}
+
+                    </td>
+
+                    <td>
+
+                        {{ student.student_id }}
+
+                    </td>
+
+                    <td>
+
+                        {{ student.class }}
+
+                    </td>
+
+                    <td>
+
+                        {{ "%.2f"|format(student.average_score|default(0)) }}
+
+                    </td>
+
+                    <td>
+
+                        <span class="grade-badge">
+
+                            {{ student.grade|default("-") }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {{ student.remark|default("-") }}
+
+                    </td>
+
+                    <td>
+
+                        <div style="display:flex;gap:5px;flex-wrap:wrap;">
+
+                            <a href="{{ url_for('student_profile_admin',
+                                    student_id=student.student_id) }}" class="btn-info">
+
+                                Profile
+
+                            </a>
+
+                            <a href="{{ url_for('edit_results',
+                                    student_id=student.student_id) }}" class="btn-warning">
+
+                                Edit
+
+                            </a>
+                           <button
+    type="button"
+    class="btn btn-danger delete-result"
+    data-student="{{ student.student_id }}"
+    data-session="{{ selected_session }}"
+    data-term="{{ selected_term }}">
+
+    <i class="fas fa-trash"></i>
+    Delete
+
+</button>
+
+                            <a href="{{ url_for('student_report',
+                                    student_id=student.student_id) }}" class="btn-success">
+
+                                Report
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="10" style="text-align:center;padding:30px;">
+
+                        No Result Found.
+
+                    </td>
+
+                </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 6
+RESULT ANALYTICS
+===================================================== -->
+
+<div class="dashboard-grid">
+
+    <!-- Highest Average -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-trophy"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ highest_average|default("0.00") }}
+
+            </h2>
+
+            <p>
+
+                Highest Average
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Lowest Average -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-arrow-down"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ lowest_average|default("0.00") }}
+
+            </h2>
+
+            <p>
+
+                Lowest Average
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Class Average -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-chart-bar"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ class_average|default("0.00") }}
+
+            </h2>
+
+            <p>
+
+                Class Average
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Pass Rate -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-circle-check"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ pass_rate|default("0") }}%
+
+            </h2>
+
+            <p>
+
+                Pass Rate
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Failed Students -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-circle-xmark"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ failed_students|default(0) }}
+
+            </h2>
+
+            <p>
+
+                Failed Students
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Distinctions -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-medal"></i>
+
+        </div>
+
+        <div class="stat-details">
+
+            <h2>
+
+                {{ distinctions|default(0) }}
+
+            </h2>
+
+            <p>
+
+                Distinctions
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 7
+BULK RESULT ACTIONS
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            ⚙ Bulk Result Actions
+
+        </h2>
+
+    </div>
+
+    <div class="action-grid">
+
+        <!-- Print Broadsheet -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-table"></i>
+
+            <h3>
+
+                Print Broadsheet
+
+            </h3>
+
+            <p>
+
+                Print all students' scores for the selected session and term.
+
+            </p>
+
+        </a>
+
+        <!-- Print Results -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-print"></i>
+
+            <h3>
+
+                Print Results
+
+            </h3>
+
+            <p>
+
+                Print all report cards.
+
+            </p>
+
+        </a>
+
+        <!-- Export Excel -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-file-excel"></i>
+
+            <h3>
+
+                Export Excel
+
+            </h3>
+
+            <p>
+
+                Download results as an Excel spreadsheet.
+
+            </p>
+
+        </a>
+
+        <!-- Export PDF -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-file-pdf"></i>
+
+            <h3>
+
+                Export PDF
+
+            </h3>
+
+            <p>
+
+                Download all results in PDF format.
+
+            </p>
+
+        </a>
+
+        <!-- Publish -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-upload"></i>
+
+            <h3>
+
+                Publish Results
+
+            </h3>
+
+            <p>
+
+                Make results visible to students.
+
+            </p>
+
+        </a>
+
+        <!-- Lock -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-lock"></i>
+
+            <h3>
+
+                Lock Results
+
+            </h3>
+
+            <p>
+
+                Prevent teachers from editing results.
+
+            </p>
+
+        </a>
+
+        <!-- Unlock -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-lock-open"></i>
+
+            <h3>
+
+                Unlock Results
+
+            </h3>
+
+            <p>
+
+                Allow teachers to edit results again.
+
+            </p>
+
+        </a>
+
+        <!-- Statistics -->
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-chart-column"></i>
+
+            <h3>
+
+                Result Statistics
+
+            </h3>
+
+            <p>
+
+                View subject performance and grade analysis.
+
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 8
+ADVANCED RESULT FILTERS
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            🔍 Search & Filter Results
+
+        </h2>
+
+    </div>
+
+    <form method="GET" action="{{ url_for('results') }}">
+
+        <div class="form-grid">
+
+            <!-- Student Name -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Student Name
+
+                </label>
+
+                <input type="text" name="student_name" class="form-control" placeholder="Enter student name"
+                    value="{{ request.args.get('student_name','') }}">
+
+            </div>
+
+            <!-- Student ID -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Student ID
+
+                </label>
+
+                <input type="text" name="student_id" class="form-control" placeholder="Student ID"
+                    value="{{ request.args.get('student_id','') }}">
+
+            </div>
+
+            <!-- Session -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Academic Session
+
+                </label>
+
+                <select name="session" class="form-control">
+
+                    <option value="">
+
+                        All Sessions
+
+                    </option>
+
+                    {% for session in sessions %}
+
+                    <option value="{{ session }}" {% if request.args.get('session')==session %} selected {% endif %}>
+
+                        {{ session }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Term -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Term
+
+                </label>
+
+                <select name="term" class="form-control">
+
+                    <option value="">
+
+                        All Terms
+
+                    </option>
+
+                    <option value="First Term">First Term</option>
+
+                    <option value="Second Term">Second Term</option>
+
+                    <option value="Third Term">Third Term</option>
+
+                </select>
+
+            </div>
+
+            <!-- Class -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Class
+
+                </label>
+
+                <select name="class" class="form-control">
+
+                    <option value="">All Classes</option>
+
+                    <option>JSS1</option>
+
+                    <option>JSS2</option>
+
+                    <option>JSS3</option>
+
+                    <option>SS1</option>
+
+                    <option>SS2</option>
+
+                    <option>SS3</option>
+
+                </select>
+
+            </div>
+
+            <!-- Grade -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Grade
+
+                </label>
+
+                <select name="grade" class="form-control">
+
+                    <option value="">
+
+                        All Grades
+
+                    </option>
+
+                    <option>A1</option>
+
+                    <option>B2</option>
+
+                    <option>B3</option>
+
+                    <option>C4</option>
+
+                    <option>C5</option>
+
+                    <option>C6</option>
+
+                    <option>D7</option>
+
+                    <option>E8</option>
+
+                    <option>F9</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+
+            <button type="submit" class="btn-primary">
+
+                <i class="fas fa-search"></i>
+
+                Search
+
+            </button>
+
+            <a href="{{ url_for('results') }}" class="btn-secondary">
+
+                <i class="fas fa-rotate-left"></i>
+
+                Reset
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+<!-- =====================================================
+PHASE 11
+RESULT APPROVAL & PUBLISHING CENTER
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            ✅ Result Approval & Publishing
+
+        </h2>
+
+    </div>
+
+    <div class="dashboard-grid">
+
+        <!-- Pending Approval -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-hourglass-half"></i>
+
+            </div>
+
+            <div class="stat-details">
+
+                <h2>
+
+                    {{ pending_results|default(0) }}
+
+                </h2>
+
+                <p>
+
+                    Pending Approval
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Approved -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-circle-check"></i>
+
+            </div>
+
+            <div class="stat-details">
+
+                <h2>
+
+                    {{ approved_results|default(0) }}
+
+                </h2>
+
+                <p>
+
+                    Approved Results
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Published -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-globe"></i>
+
+            </div>
+
+            <div class="stat-details">
+
+                <h2>
+
+                    {{ published_results|default(0) }}
+
+                </h2>
+
+                <p>
+
+                    Published Results
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Locked -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fas fa-lock"></i>
+
+            </div>
+
+            <div class="stat-details">
+
+                <h2>
+
+                    {{ locked_results|default(0) }}
+
+                </h2>
+
+                <p>
+
+                    Locked Results
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr style="margin:25px 0;">
+
+    <div class="action-grid">
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-check-double"></i>
+
+            <h3>
+
+                Approve All Results
+
+            </h3>
+
+            <p>
+
+                Approve every result for the selected session and term.
+
+            </p>
+
+        </a>
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-upload"></i>
+
+            <h3>
+
+                Publish Results
+
+            </h3>
+
+            <p>
+
+                Make approved results visible to students.
+
+            </p>
+
+        </a>
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-eye-slash"></i>
+
+            <h3>
+
+                Unpublish Results
+
+            </h3>
+
+            <p>
+
+                Hide results from the student portal.
+
+            </p>
+
+        </a>
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-lock"></i>
+
+            <h3>
+
+                Lock Results
+
+            </h3>
+
+            <p>
+
+                Prevent any further editing.
+
+            </p>
+
+        </a>
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-lock-open"></i>
+
+            <h3>
+
+                Unlock Results
+
+            </h3>
+
+            <p>
+
+                Allow teachers to edit results again.
+
+            </p>
+
+        </a>
+
+        <a href="#" class="action-card">
+
+            <i class="fas fa-file-signature"></i>
+
+            <h3>
+
+                Principal Approval
+
+            </h3>
+
+            <p>
+
+                Approve results with the Principal's authorization.
+
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 12
+RESULT ACTIVITY LOG & AUDIT TRAIL
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            📜 Result Activity Log
+
+        </h2>
+
+    </div>
+
+    <div style="overflow-x:auto;">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Date & Time</th>
+
+                    <th>Administrator</th>
+
+                    <th>Student</th>
+
+                    <th>Action</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% if activity_logs %}
+
+                {% for log in activity_logs %}
+
+                <tr>
+
+                    <td>
+
+                        {{ loop.index }}
+
+                    </td>
+
+                    <td>
+
+                        {{ log.date }}
+
+                    </td>
+
+                    <td>
+
+                        {{ log.admin }}
+
+                    </td>
+
+                    <td>
+
+                        {{ log.student }}
+
+                    </td>
+
+                    <td>
+
+                        {{ log.action }}
+
+                    </td>
+
+                    <td>
+
+                        <span class="status-badge">
+
+                            {{ log.status }}
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="6" style="text-align:center;padding:30px;">
+
+                        No Activity Recorded Yet
+
+                    </td>
+
+                </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+<!-- =====================================================
+PHASE 13
+RESULT ANALYTICS
+===================================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            📊 Result Analytics
+
+        </h2>
+
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:30px;justify-content:center;">
+
+        <div style="width:450px;">
+
+            <canvas id="gradeChart"></canvas>
+
+        </div>
+
+        <div style="width:450px;">
+
+            <canvas id="passFailChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="chartData" style="display:none;" data-ga="{{ grade_counts.A|default(0) }}"
+    data-gb="{{ grade_counts.B|default(0) }}" data-gc="{{ grade_counts.C|default(0) }}"
+    data-gf="{{ grade_counts.F|default(0) }}" data-approved="{{ approved_results|default(0) }}"
+    data-pending="{{ pending_results|default(0) }}">
+</div>
+<!-- ===========================================
+PHASE 14
+SUBJECT PERFORMANCE CHART
+=========================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            📚 Subject Performance
+
+        </h2>
+
+    </div>
+
+    <canvas id="subjectChart"></canvas>
+
+</div>
+<!-- ==========================================
+PHASE 15
+TOP PERFORMING STUDENTS
+========================================== -->
+
+<div class="dashboard-card">
+
+    <div class="card-header">
+
+        <h2>
+
+            🏆 Top Performing Students
+
+        </h2>
+
+    </div>
+
+    <table class="table">
+
+        <thead>
+
+            <tr>
+
+                <th>Rank</th>
+
+                <th>Student</th>
+
+                <th>Class</th>
+
+                <th>Average</th>
+
+                <th>Grade</th>
+
+                <th>Performance</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for student in top_students %}
+
+            <tr>
+
+                <td>
+
+                    {% if loop.index == 1 %}
+                    🥇
+                    {% elif loop.index == 2 %}
+                    🥈
+                    {% elif loop.index == 3 %}
+                    🥉
+                    {% else %}
+                    {{ loop.index }}
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {{ student.full_name }}
+
+                </td>
+
+                <td>
+
+                    {{ student.class }}
+
+                </td>
+
+                <td>
+
+                    {{ "%.2f"|format(student.average_score) }}
+
+                </td>
+
+                <td>
+
+                    {{ student.grade }}
+
+                </td>
+
+                <td>
+
+                    {{ student.remark }}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script>
+    // ===========================================
+    // GET CURRENT SESSION & TERM
+    // ===========================================
+
+    function getCurrentSession() {
+        return document.getElementById("currentSession").value;
+    }
+
+    function getCurrentTerm() {
+        return document.getElementById("currentTerm").value;
+    }
+
+    // ===========================================
+    // GET SELECTED STUDENTS
+    // ===========================================
+
+    function getSelectedStudents() {
+
+        let students = [];
+
+        document.querySelectorAll(".student-checkbox:checked").forEach(function (box) {
+
+            students.push(box.value);
+
+        });
+
+        return students;
+
+    }
+
+    // ===========================================
+    // BULK ACTION
+    // ===========================================
+
+    function performBulkAction(url) {
+
+        const students = getSelectedStudents();
+
+        if (students.length === 0) {
+
+            alert("Please select at least one student.");
+
+            return;
+
+        }
+
+        fetch(url, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                students: students,
+
+                session: getCurrentSession(),
+
+                term: getCurrentTerm()
+
+            })
+
+        })
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                alert(data.message);
+
+                location.reload();
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                alert("Something went wrong.");
+
+            });
+
+    }
+
+    // ===========================================
+    // APPROVE
+    // ===========================================
+
+    document.getElementById("approveSelected").addEventListener("click", function () {
+
+        performBulkAction("/approve_selected_results");
+
+    });
+
+    // ===========================================
+    // PUBLISH
+    // ===========================================
+
+    document.getElementById("publishSelected").addEventListener("click", function () {
+
+        performBulkAction("/publish_selected_results");
+
+    });
+
+    // ===========================================
+    // LOCK
+    // ===========================================
+
+    document.getElementById("lockSelected").addEventListener("click", function () {
+
+        performBulkAction("/lock_selected_results");
+
+    });
+
+    // ===========================================
+    // SELECT ALL
+    // ===========================================
+
+    const selectAll = document.getElementById("selectAll");
+
+    if (selectAll) {
+
+        selectAll.addEventListener("change", function () {
+
+            document.querySelectorAll(".student-checkbox").forEach(function (checkbox) {
+
+                checkbox.checked = selectAll.checked;
+
+            });
+
+        });
+
+    }
+    // ===========================================
+// UNLOCK SELECTED
+// ===========================================
+
+document.getElementById("unlockSelected").addEventListener("click", function () {
+
+    let students = getSelectedStudents();
+
+    if (students.length === 0) {
+
+        alert("Please select at least one student.");
+
+        return;
+
+    }
+
+    fetch("/unlock_selected_results", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+            students: students,
+
+            session: "{{ selected_session }}",
+
+            term: "{{ selected_term }}"
+
+        })
+
+    })
+
+    .then(r => r.json())
+
+    .then(data => {
+
+        alert(data.message);
+
+        location.reload();
+
+    });
+
+});
+// ==========================================
+// DELETE RESULT
+// ==========================================
+
+document.querySelectorAll(".delete-result").forEach(function(btn){
+
+    btn.addEventListener("click", function(){
+
+        let student = this.dataset.student;
+        let session = this.dataset.session;
+        let term = this.dataset.term;
+
+        if(!confirm("Delete this student's result?\n\nThis action cannot be undone.")){
+            return;
+        }
+
+        fetch(`/admin/delete_result/${student}`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                student_id: student,
+
+                session: session,
+
+                term: term
+
+            })
+
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            alert(data.message);
+
+            if(data.success){
+
+                location.reload();
+
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(error);
+
+            alert("Unable to delete result.");
+
+        });
+
+    });
+
+});
+</script>
+{% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+        <style>
+
+        body{
+            font-family:Arial, sans-serif;
+        }
+
+        @media print{
+
+            .no-print{
+                display:none !important;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

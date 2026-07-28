@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Parent Login | Stella Maris College
+    </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            font-family:'Poppins',sans-serif;
+
+            min-height:100vh;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            background:linear-gradient(
+                135deg,
+                #0b3d91,
+                #1565c0
+            );
+
+            padding:20px;
+        }
+
+        .login-container{
+
+            width:100%;
+            max-width:500px;
+
+            background:white;
+
+            border-radius:25px;
+
+            overflow:hidden;
+
+            box-shadow:0 15px 40px rgba(0,0,0,.2);
+        }
+
+        .header{
+
+            background:#0b3d91;
+
+            color:white;
+
+            text-align:center;
+
+            padding:35px 20px;
+        }
+
+        .header img{
+
+            width:90px;
+            height:90px;
+
+            object-fit:contain;
+
+            margin-bottom:15px;
+        }
+
+        .header h1{
+
+            font-size:28px;
+            margin-bottom:8px;
+        }
+
+        .header p{
+
+            opacity:.9;
+            font-size:14px;
+        }
+
+        .form-section{
+
+            padding:35px;
+        }
+
+        .form-title{
+
+            text-align:center;
+
+            color:#0b3d91;
+
+            margin-bottom:25px;
+
+            font-size:24px;
+        }
+
+        .input-group{
+
+            margin-bottom:20px;
+        }
+
+        .input-group label{
+
+            display:block;
+
+            margin-bottom:8px;
+
+            font-weight:600;
+
+            color:#444;
+        }
+
+        .input-wrapper{
+
+            position:relative;
+        }
+
+        .input-wrapper i{
+
+            position:absolute;
+
+            left:15px;
+            top:50%;
+
+            transform:translateY(-50%);
+
+            color:#777;
+        }
+
+        .input-wrapper input{
+
+            width:100%;
+
+            padding:14px 14px 14px 45px;
+
+            border:1px solid #ddd;
+
+            border-radius:10px;
+
+            outline:none;
+
+            font-size:15px;
+        }
+
+        .input-wrapper input:focus{
+
+            border-color:#1565c0;
+        }
+
+        .btn-login{
+
+            width:100%;
+
+            padding:14px;
+
+            border:none;
+
+            border-radius:10px;
+
+            background:#1565c0;
+
+            color:white;
+
+            font-size:16px;
+
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:.3s;
+        }
+
+        .btn-login:hover{
+
+            background:#0b3d91;
+        }
+
+        .links{
+
+            text-align:center;
+
+            margin-top:20px;
+        }
+
+        .links a{
+
+            color:#1565c0;
+
+            text-decoration:none;
+
+            font-size:14px;
+
+            font-weight:500;
+        }
+
+        .links a:hover{
+
+            text-decoration:underline;
+        }
+
+        .alert{
+
+            background:#ffe5e5;
+
+            color:#c62828;
+
+            padding:12px;
+
+            border-radius:8px;
+
+            margin-bottom:20px;
+        }
+
+        .footer{
+
+            text-align:center;
+
+            padding:15px;
+
+            font-size:13px;
+
+            color:#777;
+
+            border-top:1px solid #eee;
+        }
+
+        @media(max-width:600px){
+
+            .form-section{
+                padding:25px;
+            }
+
+            .header h1{
+                font-size:22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="header">
+
+        <img src="{{ url_for('static',
+        filename='images/logo.png') }}">
+
+        <h1>
+            Stella Maris College
+        </h1>
+
+        <p>
+            Parent Monitoring Portal
+        </p>
+
+    </div>
+
+    <div class="form-section">
+
+        <h2 class="form-title">
+            Parent Login
+        </h2>
+
+        {% with messages =
+        get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                <div class="alert">
+                    {{ message }}
+                </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+        <form method="POST">
+
+            <div class="input-group">
+
+                <label>
+                    Parent Phone Number
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fas fa-phone"></i>
+
+                    <input type="text"
+                           name="parent_phone"
+                           placeholder="Enter Phone Number"
+                           required>
+
+                </div>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fas fa-lock"></i>
+
+                    <input type="password"
+                           name="password"
+                           placeholder="Enter Password"
+                           required>
+
+                </div>
+
+            </div>
+
+            <button type="submit"
+                    class="btn-login">
+
+                <i class="fas fa-sign-in-alt"></i>
+
+                Login
+
+            </button>
+
+        </form>
+
+        <div class="links">
+
+            <a href="{{ url_for('student_login') }}">
+                Student Login
+            </a>
+
+            |
+
+            <a href="{{ url_for('home') }}">
+                Home
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        © {{ current_year if current_year else "2026" }}
+        Stella Maris College
+
+    </div>
+
+</div>
+
+</body>
+</html>
