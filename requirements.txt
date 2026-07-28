@@ -5,3 +5,4 @@ dnspython
 python-dotenv
 Werkzeug
 Jinja2
+xhtml2pdf
