@@ -50,8 +50,11 @@ load_dotenv()
 # =========================================
 app = Flask(__name__)
 
-app.secret_key = "stella_maris_secret_key_2026"
 
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "stella_maris_secret_key_2026"
+)
 
 @app.template_filter("format_date")
 def format_date(value):
