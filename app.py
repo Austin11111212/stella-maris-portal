@@ -278,11 +278,14 @@ def login_required(f):
 def recalculate_positions(session, term, student_class):
 
     # Get all published or existing results for this class
-    results = list(results_collection.find({
-        "session": session,
-        "term": term,
-        "class": student_class
-    }))
+    results = []
+
+    if results_collection is not None:
+        results = list(results_collection.find({
+            "session": session,
+            "term": term,
+            "class": student_class
+        }))
 
     # Sort by average_score (highest first)
     results.sort(
@@ -365,7 +368,10 @@ def calculate_grade(score):
 # =========================================
 def get_school_settings():
 
-    settings = settings_collection.find_one({"type": "school_settings"})
+    if settings_collection:
+        settings = settings_collection.find_one({"type": "school_settings"})
+    else:
+        settings = None
 
     if not settings:
 
@@ -627,51 +633,35 @@ def home():
 # =========================================
 # STUDENT LOGIN
 # =========================================
-@app.route(
-    "/login",
-    methods=["GET", "POST"]
-)
+@app.route("/login", methods=["GET", "POST"])
 def student_login():
 
     if request.method == "POST":
 
-        student_id = request.form.get(
-            "student_id"
-        )
+        student_id = request.form.get("student_id", "").strip()
+        password = request.form.get("password", "").strip()
 
-        password = request.form.get(
-            "password"
-        )
+        student = None
 
-        student = students_collection.find_one({
-
-            "student_id": student_id
-
-        })
+        if students_collection is not None:
+            student = students_collection.find_one({
+                "student_id": student_id
+            })
 
         if student and check_password_hash(
             student["password"],
             password
         ):
-
             session["student"] = student_id
-
-            return redirect(
-                url_for("student_dashboard")
-            )
+            return redirect(url_for("student_dashboard"))
 
         flash("Invalid Login Details")
 
     return render_template(
-
         "login.html",
-
         school_name=SCHOOL_INFO["name"],
-
         school_logo=SCHOOL_INFO["logo"]
     )
-
-
 # =========================================
 # ADMIN LOGIN
 # =========================================
@@ -853,9 +843,12 @@ def student_profile_admin(student_id):
         flash("Database connection error", "danger")
         return redirect(url_for("dashboard"))
 
-    student = students_collection.find_one({
-        "student_id": str(student_id).strip()
-    })
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     print("DATABASE RESULT:", student)
 
@@ -1208,9 +1201,12 @@ def edit_results(student_id):
     # GET STUDENT
     # ==========================================
 
-    student = students_collection.find_one({
-        "student_id": student_id
-    })
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
 
@@ -1384,9 +1380,12 @@ def edit_results(student_id):
 @admin_required
 def edit_student(student_id):
 
-    student = students_collection.find_one({
-        "student_id": student_id
-    })
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
         flash("Student not found.", "danger")
@@ -1553,9 +1552,12 @@ def student_dashboard():
     # LOAD STUDENT RECORD
     # =====================================================
 
-    student = students_collection.find_one({
-        "student_id": student_id
-    })
+    student = None
+
+    if students_collection is not None:
+        student = students_collection.find_one({
+            "student_id": session.get("student")
+        })
 
     if not student:
         session.clear()
@@ -1763,9 +1765,12 @@ def student_attendance():
 
     student_id = session.get("student")
 
-    student = students_collection.find_one({
-        "student_id": student_id
-    })
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
 
@@ -1822,9 +1827,12 @@ def student_profile():
     if not student_id:
         return redirect(url_for("student_login"))
 
-    student = students_collection.find_one({
-        "student_id": str(student_id)
-    })
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
         return redirect(url_for("student_login"))
@@ -1919,10 +1927,12 @@ def student_report(student_id):
     # LOAD STUDENT RECORD
     # =====================================================
 
-    student = students_collection.find_one({
-        "student_id": str(student_id)
-    })
+    student = None
 
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
     if not student:
 
         flash(
@@ -2680,11 +2690,12 @@ def download_report(student_id):
     # GET STUDENT
     # ==========================================
 
-    student = students_collection.find_one({
+    student = None
 
-        "student_id": str(student_id)
-
-    })
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
 
@@ -2889,11 +2900,12 @@ def update_results(student_id):
     # GET STUDENT RECORD
     # ======================================================
 
-    student = students_collection.find_one({
+    student = None
 
-        "student_id": student_id
-
-    })
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
 
@@ -3854,9 +3866,12 @@ def teacher_login():
         password = request.form.get("password")
         teacher_phone = request.form.get("phone")
 
-        teacher = teachers_collection.find_one(
-            {"teacher_id": teacher_id}
-        )
+    teacher = None
+
+    if teachers_collection is not None:
+        teacher = teachers_collection.find_one({
+            "teacher_id": session.get("teacher_id")
+        })
 
         if teacher and check_password_hash(
     teacher["teacher_password"],
@@ -3876,9 +3891,12 @@ def teacher_login():
 @teacher_required
 def teacher_dashboard():
 
-    teacher = teachers_collection.find_one({
-        "teacher_id": session.get("teacher_id")
-    })
+    teacher = None
+
+    if teachers_collection is not None:
+        teacher = teachers_collection.find_one({
+            "teacher_id": session.get("teacher_id")
+        })
 
     if not teacher:
         flash("Teacher not found", "danger")
@@ -4085,6 +4103,9 @@ def student_checkin():
             "password"
         )
 
+    student = None
+
+    if students_collection:
         student = students_collection.find_one({
             "student_id": student_id
         })
@@ -4227,9 +4248,12 @@ def scan_qr():
         "student_id"
     )
 
-    student = students_collection.find_one({
-        "student_id": student_id
-    })
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
 
@@ -4246,14 +4270,13 @@ def scan_qr():
         "%I:%M %p"
     )
 
-    attendance = attendance_collection.find_one({
+    attendance = None
 
-        "student_id":
-        student_id,
-
-        "date":
-        today
-    })
+    if attendance_collection is not None:
+        attendance = attendance_collection.find_one({
+            "student_id": student_id,
+            "date": today
+        })
 
     if attendance:
 
@@ -4306,9 +4329,12 @@ def scan_qr():
 @admin_required
 def student_id_card(student_id):
 
-    student = students_collection.find_one(
-        {"student_id": student_id}
-    )
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
         return "Student Not Found"
@@ -4418,39 +4444,7 @@ def teacher_students():
 def teacher_results():
     return "<h2>Teacher Upload Results</h2>"
 
-# =====================================================
-# STUDENT REPORTS
-# =====================================================
 
-# @app.route("/student/reports")
-# @login_required
-# def student_reports():
-
-#     student_id = session.get("student_id")
-
-#     if not student_id:
-#         flash("Please login first.", "danger")
-#         return redirect(url_for("student_login"))
-
-#     student = students_collection.find_one({
-#         "student_id": student_id
-#     })
-
-#     reports = list(
-#         results_collection.find(
-#             {"student_id": student_id},
-#             {"_id": 0}
-#         ).sort([
-#             ("session", -1),
-#             ("term", 1)
-#         ])
-#     )
-
-#     return render_template(
-#         "student_reports.html",
-#         student=student,
-#         reports=reports
-#     )
 # =====================================================
 # REPORTS PAGE
 # =====================================================
@@ -4940,69 +4934,46 @@ def results():
 
 def get_school_settings():
 
-    settings = settings_collection.find_one({
-        "type": "school_settings"
-    })
-
     defaults = {
-
         "type": "school_settings",
-
         "name": "Stella Maris College",
-
         "address": "",
-
         "phone": "",
-
         "email": "",
-
         "website": "",
-
         "motto": "Knowledge • Discipline • Excellence",
-
         "principal": "Mr Ransome Aremo",
-
         "current_session": "2025/2026",
-
         "current_term": "Third Term",
-
         "logo": "images/logo.png",
-
         "stamp": "images/school_stamp.png",
-
         "school_closed": "",
-
         "next_term_begins": ""
-
     }
 
-    if not settings:
+    # MongoDB is unavailable
+    if settings_collection is None:
+        return defaults.copy()
 
+    settings = settings_collection.find_one({"type": "school_settings"})
+
+    if settings is None:
         settings = defaults.copy()
-
         settings_collection.insert_one(settings)
+        return settings
 
-    else:
+    changed = False
 
-        changed = False
+    for key, value in defaults.items():
+        if key not in settings:
+            settings[key] = value
+            changed = True
 
-        for key, value in defaults.items():
-
-            if key not in settings:
-
-                settings[key] = value
-
-                changed = True
-
-        if changed:
-
-            settings_collection.update_one(
-
-                {"type": "school_settings"},
-
-                {"$set": settings}
-
-            )
+    if changed:
+        settings_collection.update_one(
+            {"type": "school_settings"},
+            {"$set": settings}
+        )
 
     return settings
 # =====================================
@@ -5479,7 +5450,6 @@ def update_school_settings():
     flash("School information updated successfully.", "success")
 
     return redirect(url_for("portal_settings"))
-print(settings_collection.find_one({"type": "school_settings"}))
 # =====================================================
 # UPDATE ACADEMIC SETTINGS
 # =====================================================
@@ -5788,9 +5758,12 @@ def enter_result(student_id):
     # LOAD STUDENT
     # =====================================
 
-    student = students_collection.find_one({
-        "student_id": student_id
-    })
+    student = None
+
+    if students_collection:
+        student = students_collection.find_one({
+            "student_id": student_id
+        })
 
     if not student:
 
