@@ -1,0 +1,257 @@
+/* ==========================================
+   STELLA MARIS COLLEGE PORTAL
+   BASE CSS
+========================================== */
+
+/* ==========================
+   RESET
+========================== */
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ==========================
+   ROOT VARIABLES
+========================== */
+
+:root{
+
+    --primary:#0B3D91;
+    --primary-light:#1565C0;
+
+    --secondary:#F4F7FB;
+
+    --success:#28A745;
+    --danger:#DC3545;
+    --warning:#F39C12;
+    --info:#17A2B8;
+
+    --dark:#1F2937;
+    --gray:#6B7280;
+
+    --white:#FFFFFF;
+
+    --border:#E5E7EB;
+
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+
+    --radius:16px;
+
+    --transition:.3s ease;
+
+    --sidebar-width:280px;
+
+    --topbar-height:80px;
+
+}
+
+/* ==========================
+   HTML
+========================== */
+
+html{
+
+    scroll-behavior:smooth;
+
+    font-size:16px;
+
+}
+
+/* ==========================
+   BODY
+========================== */
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:var(--secondary);
+
+    color:var(--dark);
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+}
+
+/* ==========================
+   HEADINGS
+========================== */
+
+h1{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+}
+
+h2{
+
+    font-size:1.6rem;
+
+    font-weight:600;
+
+}
+
+h3{
+
+    font-size:1.3rem;
+
+    font-weight:600;
+
+}
+
+h4{
+
+    font-size:1rem;
+
+    font-weight:600;
+
+}
+
+h5{
+
+    font-size:.9rem;
+
+}
+
+h6{
+
+    font-size:.8rem;
+
+}
+
+/* ==========================
+   PARAGRAPH
+========================== */
+
+p{
+
+    color:var(--gray);
+
+    line-height:1.7;
+
+}
+
+/* ==========================
+   LINKS
+========================== */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+/* ==========================
+   LIST
+========================== */
+
+ul{
+
+    list-style:none;
+
+}
+
+/* ==========================
+   IMAGE
+========================== */
+
+img{
+
+    max-width:100%;
+
+    display:block;
+
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+button{
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+}
+
+/* ==========================
+   INPUTS
+========================== */
+
+input,
+select,
+textarea{
+
+    font-family:inherit;
+
+    outline:none;
+
+}
+
+/* ==========================
+   TABLE
+========================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+/* ==========================
+   UTILITIES
+========================== */
+
+.hidden{
+
+    display:none;
+
+}
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.text-right{
+
+    text-align:right;
+
+}
+
+.mt-1{
+
+    margin-top:10px;
+
+}
+
+.mt-2{
+
+    margin-top:20px;
+
+}
+
+.mt-3{
+
+    margin-top:30px;
+
+}

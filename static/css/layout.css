@@ -1,0 +1,125 @@
+/* ==========================================
+   LAYOUT
+========================================== */
+
+/* ==========================
+   MAIN APP WRAPPER
+========================== */
+
+.main{
+
+    margin-left:var(--sidebar-width);
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:var(--secondary);
+
+    transition:var(--transition);
+
+}
+
+/* ==========================
+   PAGE CONTENT
+========================== */
+
+.main-container{
+
+    flex:1;
+
+    padding:30px;
+
+}
+
+/* ==========================
+   PAGE HEADER
+========================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:30px;
+
+}
+
+.page-title h1{
+
+    color:var(--primary);
+
+    margin-bottom:8px;
+
+}
+
+.page-title p{
+
+    color:var(--gray);
+
+    font-size:15px;
+
+}
+
+/* ==========================
+   BREADCRUMB
+========================== */
+
+.breadcrumb{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:25px;
+
+    font-size:14px;
+
+    color:var(--gray);
+
+}
+
+.breadcrumb a{
+
+    color:var(--primary);
+
+    font-weight:600;
+
+}
+
+/* ==========================
+   CONTENT CARD
+========================== */
+
+.content-card{
+
+    background:var(--white);
+
+    border-radius:var(--radius);
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ==========================
+   SECTION SPACING
+========================== */
+
+.section{
+
+    margin-bottom:30px;
+
+}

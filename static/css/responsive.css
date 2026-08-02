@@ -1,0 +1,243 @@
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
+
+/* ==========================
+   LARGE TABLETS
+========================== */
+
+@media (max-width:1200px){
+
+    .main{
+
+        margin-left:240px;
+
+    }
+
+    .sidebar{
+
+        width:240px;
+
+    }
+
+    .search-box{
+
+        width:260px;
+
+    }
+
+}
+
+/* ==========================
+   TABLETS
+========================== */
+
+@media (max-width:992px){
+
+    .sidebar{
+
+        position:fixed;
+
+        left:-280px;
+
+        transition:.3s;
+
+        z-index:1000;
+
+    }
+
+    .sidebar.active{
+
+        left:0;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+        width:100%;
+
+    }
+
+    .menu-toggle{
+
+        display:flex;
+
+    }
+
+    .topbar{
+
+        padding:15px;
+
+    }
+
+    .search-box{
+
+        width:180px;
+
+    }
+
+    .dashboard-row{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .stats-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width:768px){
+
+    .main-container{
+
+        padding:15px;
+
+    }
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        height:auto;
+
+        gap:15px;
+
+        padding:15px;
+
+    }
+
+    .topbar-left,
+
+    .topbar-right{
+
+        width:100%;
+
+        justify-content:space-between;
+
+        flex-wrap:wrap;
+
+    }
+
+    .search-box{
+
+        width:100%;
+
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .widgets-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .student-profile{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .passport-section{
+
+        flex-direction:column;
+
+    }
+
+    .action-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .action-buttons .btn{
+
+        width:100%;
+
+    }
+
+    table{
+
+        display:block;
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+    }
+
+}
+
+/* ==========================
+   SMALL PHONES
+========================== */
+
+@media (max-width:480px){
+
+    body{
+
+        font-size:14px;
+
+    }
+
+    h1{
+
+        font-size:24px;
+
+    }
+
+    h2{
+
+        font-size:20px;
+
+    }
+
+    .card,
+
+    .widget,
+
+    .form-card{
+
+        padding:18px;
+
+    }
+
+    .login-container{
+
+        width:95%;
+
+        padding:25px;
+
+    }
+
+    .logo{
+
+        font-size:56px;
+
+    }
+
+    .btn{
+
+        width:100%;
+
+    }
+
+}

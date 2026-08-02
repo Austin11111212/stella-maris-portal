@@ -613,54 +613,75 @@ table td{
     color:#c62828;
 }
 
-/* =========================
-   📱 RESPONSIVE
-========================= */
+/* ==========================
+RESPONSIVE
+========================== */
 
-@media (max-width:900px){
+@media (max-width:768px){
 
-    .student-header{
-
-        flex-direction:column;
+    body{
+        overflow-x:hidden;
     }
-
-    table{
-
-        display:block;
-
-        overflow-x:auto;
-    }
-}
-
-@media (max-width:500px){
 
     .login-container{
-
-        width:92%;
-
-        padding:28px;
-    }
-
-    h2{
-
-        font-size:24px;
-    }
-
-    .logo{
-
-        font-size:60px;
+        position:relative;
+        top:auto;
+        left:auto;
+        transform:none;
+        width:95%;
+        max-width:100%;
+        margin:30px auto;
+        padding:20px;
     }
 
     .dashboard-container{
-
         width:100%;
-
-        padding:15px;
+        padding:10px;
     }
 
     .topbar{
+        padding:15px;
+    }
 
-        padding:20px;
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .student-header{
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+    }
+
+    .report-card{
+        padding:15px;
+    }
+
+    .school-header img{
+        width:70px;
+        height:70px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    input,
+    select,
+    textarea{
+        font-size:16px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    button,
+    .btn{
+        font-size:15px;
+        padding:12px;
     }
 
 }

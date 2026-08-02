@@ -1,0 +1,161 @@
+/* =====================================================
+   CARDS
+===================================================== */
+
+.cards-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    transition:.3s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(0,0,0,.12);
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:6px;
+    height:100%;
+    background:var(--primary);
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.card-title{
+    font-size:15px;
+    font-weight:600;
+    color:#64748b;
+}
+
+.card-icon{
+    width:55px;
+    height:55px;
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    font-size:22px;
+}
+
+.card-icon.blue{
+    background:#2563eb;
+}
+
+.card-icon.green{
+    background:#16a34a;
+}
+
+.card-icon.orange{
+    background:#f59e0b;
+}
+
+.card-icon.red{
+    background:#dc2626;
+}
+
+.card-body h2{
+    font-size:36px;
+    color:#0f172a;
+    margin-bottom:6px;
+}
+
+.card-body p{
+    color:#64748b;
+    font-size:14px;
+}
+
+.card-footer{
+    margin-top:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.card-footer small{
+    color:#94a3b8;
+}
+
+.card-trend{
+    font-size:13px;
+    font-weight:600;
+}
+
+.card-trend.up{
+    color:#16a34a;
+}
+
+.card-trend.down{
+    color:#dc2626;
+}
+
+/* =====================================================
+   DASHBOARD PANELS
+===================================================== */
+
+.panel{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    margin-bottom:30px;
+}
+
+.panel-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.panel-title h3{
+    color:var(--primary);
+    font-size:22px;
+}
+
+.panel-title a{
+    color:var(--primary);
+    font-weight:600;
+    font-size:14px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:768px){
+
+    .cards-grid{
+        grid-template-columns:1fr;
+        gap:18px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .card-body h2{
+        font-size:30px;
+    }
+
+}

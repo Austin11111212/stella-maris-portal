@@ -1,0 +1,421 @@
+/* =====================================================
+   WIDGETS
+===================================================== */
+
+.widgets-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:25px;
+
+    margin-top:30px;
+
+}
+
+/* =====================================================
+   GENERAL WIDGET
+===================================================== */
+
+.widget{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+
+    transition:.3s ease;
+
+}
+
+.widget:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.12);
+
+}
+
+.widget-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.widget-header h3{
+
+    color:var(--primary);
+
+    font-size:20px;
+
+}
+
+.widget-header a{
+
+    color:var(--primary);
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+/* =====================================================
+   SCHOOL INFO
+===================================================== */
+
+.school-widget{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.school-widget img{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:4px solid var(--primary);
+
+}
+
+.school-widget h4{
+
+    color:var(--primary);
+
+    margin-bottom:8px;
+
+}
+
+.school-widget p{
+
+    margin:5px 0;
+
+    color:#64748b;
+
+}
+
+/* =====================================================
+   LIVE CLOCK
+===================================================== */
+
+.clock-widget{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+.clock-icon{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:#fff;
+
+    font-size:32px;
+
+}
+
+.clock-time{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    color:var(--primary);
+
+}
+
+.clock-date{
+
+    color:#64748b;
+
+    margin-top:6px;
+
+}
+
+/* =====================================================
+   ATTENDANCE
+===================================================== */
+
+.attendance-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+    text-align:center;
+
+}
+
+.attendance-item h2{
+
+    color:var(--primary);
+
+    font-size:34px;
+
+}
+
+.attendance-item p{
+
+    color:#64748b;
+
+}
+
+/* =====================================================
+   TEACHER SUMMARY
+===================================================== */
+
+.teacher-summary{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    text-align:center;
+
+}
+
+.teacher-summary h2{
+
+    color:var(--primary);
+
+    font-size:34px;
+
+}
+
+.teacher-summary p{
+
+    color:#64748b;
+
+}
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+.notification-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.notification-item{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:flex-start;
+
+}
+
+.notification-icon{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#fff;
+
+    font-size:18px;
+
+}
+
+.notification-primary{
+
+    background:#2563eb;
+
+}
+
+.notification-success{
+
+    background:#16a34a;
+
+}
+
+.notification-warning{
+
+    background:#f59e0b;
+
+}
+
+.notification-danger{
+
+    background:#dc2626;
+
+}
+
+.notification-content h4{
+
+    margin-bottom:5px;
+
+}
+
+.notification-content small{
+
+    color:#64748b;
+
+}
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+.calendar-widget{
+
+    text-align:center;
+
+}
+
+.calendar-widget h1{
+
+    font-size:58px;
+
+    color:var(--primary);
+
+}
+
+.calendar-widget h3{
+
+    margin:8px 0;
+
+}
+
+.calendar-widget p{
+
+    color:#64748b;
+
+}
+
+/* =====================================================
+   ACTIVITIES
+===================================================== */
+
+.activity-list{
+
+    list-style:none;
+
+}
+
+.activity-list li{
+
+    padding:12px 0;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+.activity-list li:last-child{
+
+    border-bottom:none;
+
+}
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+.event-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+.event-item:last-child{
+
+    border-bottom:none;
+
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:768px){
+
+    .school-widget{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .clock-widget{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .attendance-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .teacher-summary{
+
+        flex-direction:column;
+
+        gap:20px;
+
+    }
+
+}

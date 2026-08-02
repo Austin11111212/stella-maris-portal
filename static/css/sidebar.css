@@ -1,0 +1,194 @@
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:var(--sidebar-width);
+
+    height:100vh;
+
+    background:linear-gradient(
+        180deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+    color:var(--white);
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow-y:auto;
+
+    box-shadow:var(--shadow);
+
+    z-index:1000;
+
+}
+
+/* ==========================
+   LOGO
+========================== */
+
+.logo-area{
+
+    padding:30px 20px;
+
+    text-align:center;
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+.logo-area img{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:white;
+
+    padding:6px;
+
+}
+
+.logo-area h2{
+
+    color:white;
+
+    margin-top:15px;
+
+    font-size:24px;
+
+}
+
+.logo-area p{
+
+    color:#dbeafe;
+
+    font-size:13px;
+
+}
+
+/* ==========================
+   MENU
+========================== */
+
+.menu{
+
+    flex:1;
+
+    padding:20px;
+
+}
+
+.menu-title{
+
+    margin:25px 0 10px;
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    color:#cbd5e1;
+
+}
+
+.menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:14px 18px;
+
+    margin-bottom:8px;
+
+    border-radius:12px;
+
+    color:white;
+
+    transition:var(--transition);
+
+}
+
+.menu a i{
+
+    width:22px;
+
+    text-align:center;
+
+}
+
+.menu a:hover{
+
+    background:rgba(255,255,255,.12);
+
+    transform:translateX(6px);
+
+}
+
+.menu a.active{
+
+    background:white;
+
+    color:var(--primary);
+
+    font-weight:600;
+
+}
+
+/* ==========================
+   LOGOUT
+========================== */
+
+.sidebar-bottom{
+
+    padding:20px;
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+}
+
+.logout-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    background:#dc3545;
+
+    color:white;
+
+    transition:var(--transition);
+
+}
+
+.logout-btn:hover{
+
+    background:#b71c1c;
+
+}
